@@ -85,6 +85,34 @@
       });
     }
   }
+  /* 流れ星：夜のあいだだけ、ときどき流れる
+     ご利用案内（紫〜紺）のあたりは控えめ → 夜が深くなるほど少し増える → 宇宙では出さない */
+  var shootLayer = document.querySelector('.shoot-layer');
+  function nightRate() {
+    var info = document.querySelector('#info'), fut = document.querySelector('#future'), stage = document.querySelector('.space-stage');
+    if (!info || !fut || !stage) return 0;
+    var c = (window.scrollY || window.pageYOffset) + window.innerHeight * 0.5;
+    var a = info.offsetTop, b = fut.offsetTop, s = fut.offsetTop + fut.offsetHeight;
+    if (c < a || c > s) return 0;              // 夜の前と、宇宙に入ってからは出さない
+    if (c < b) return 0.35 * (c - a) / (b - a); // 紫〜紺：控えめ
+    return 0.35 + 0.65 * (c - b) / (s - b);     // 星空が深くなるほど少し増やす
+  }
+  function shootOnce() {
+    if (!shootLayer || reduce) return;
+    var r = nightRate();
+    if (r < 0.03 || Math.random() > r * 0.13) return; // rate1で約3秒に1本、rate0.35で約9秒に1本
+    var el = document.createElement('span');
+    var len = 90 + Math.random() * 160;
+    var dur = 0.8 + Math.random() * 0.7;
+    el.className = 'shoot';
+    el.style.cssText = 'left:' + (Math.random() * 72).toFixed(1) + '%;top:' + (5 + Math.random() * 48).toFixed(1) +
+      '%;width:' + len.toFixed(0) + 'px;opacity:' + (0.5 + Math.random() * 0.5).toFixed(2) +
+      ';--ang:' + (18 + Math.random() * 22).toFixed(0) + 'deg;--dur:' + dur.toFixed(2) + 's;--dist:' + (len * 2.4).toFixed(0) + 'px';
+    shootLayer.appendChild(el);
+    setTimeout(function () { el.remove(); }, dur * 1000 + 300);
+  }
+  if (shootLayer && !reduce) setInterval(shootOnce, 400);
+
   function onScroll() {
     if (!ticking) { ticking = true; requestAnimationFrame(update); }
   }

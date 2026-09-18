@@ -170,8 +170,16 @@ dl.info-card>div:last-child{border-bottom:0}
 .stars{position:absolute;inset:0;z-index:1;background-image:var(--stars-a,none),var(--stars-b,none);background-size:620px 620px,940px 940px;-webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.25),#000 45%);mask-image:linear-gradient(to bottom,rgba(0,0,0,.25),#000 45%)}
 .stars::after{content:"";position:absolute;inset:0;background-image:var(--stars-c,none);background-size:780px 780px;animation:blink 4.5s ease-in-out infinite alternate}
 @keyframes blink{from{opacity:.15}to{opacity:1}}
-.shooting{position:absolute;top:16%;left:16%;z-index:1;width:150px;height:2px;border-radius:2px;background:linear-gradient(90deg,rgba(255,255,255,0),#fff);opacity:0;animation:shoot 8s ease-in 2.5s infinite}
-@keyframes shoot{0%,88%{opacity:0;transform:rotate(16deg) translateX(0)}91%{opacity:1}100%{opacity:0;transform:rotate(16deg) translateX(340px)}}
+/* 流れ星：夜のあいだだけ、ときどき流れる（JSが1本ずつ作る） */
+.shoot-layer{position:fixed;left:0;right:0;top:-4vh;height:108vh;z-index:0;pointer-events:none;overflow:hidden}
+.shoot{position:absolute;height:2px;border-radius:2px;transform-origin:0 50%;
+  background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.55) 55%,#fff);
+  box-shadow:0 0 6px rgba(255,255,255,.55);animation:shoot var(--dur) ease-in forwards}
+@keyframes shoot{
+  0%{opacity:0;transform:rotate(var(--ang)) translateX(0) scaleX(.35)}
+  18%{opacity:1}
+  100%{opacity:0;transform:rotate(var(--ang)) translateX(var(--dist)) scaleX(1)}
+}
 .future-quote{margin-top:.55em;font-family:var(--ff-hand);font-weight:600;font-size:clamp(22px,6.6vw,64px);line-height:1.6;letter-spacing:.05em;color:#fff;text-shadow:0 0 22px rgba(170,195,255,.55),0 0 60px rgba(120,150,255,.35)}
 .s-night .lead{margin-top:1.8em}
 .s-night .lead:first-child{margin-top:0}
