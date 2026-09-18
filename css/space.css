@@ -3,7 +3,11 @@ main>section.s-space{background:#05071a}
 .space-stage{
   /* 画面の高さの85%まで（最大760px）。スマホでも1画面に収まる */
   position:relative;height:min(85vh,150vw,760px);height:min(85svh,150vw,760px);min-height:440px;overflow:hidden;
-  background:radial-gradient(ellipse 120% 70% at 50% 108%,#0d1640 0%,#05071a 55%,#020309 100%);
+  /* 夜空の絵をそのまま続ける（ここだけ絵が途切れないように） */
+  background:#05071a url("../assets/src/sky-night2-pc.jpg") center/cover no-repeat;
+}
+@media (orientation:portrait){
+  .space-stage{background-image:url("../assets/src/sky-night2-sp.jpg")}
 }
 .space-stage .stars{-webkit-mask-image:none;mask-image:none;opacity:var(--star-o,0)}
 
