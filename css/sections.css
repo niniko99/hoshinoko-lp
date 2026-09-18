@@ -170,7 +170,6 @@ dl.info-card>div:last-child{border-bottom:0}
 .stars{position:absolute;inset:0;z-index:1;background-image:var(--stars-a,none),var(--stars-b,none);background-size:620px 620px,940px 940px;-webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.25),#000 45%);mask-image:linear-gradient(to bottom,rgba(0,0,0,.25),#000 45%)}
 .stars::after{content:"";position:absolute;inset:0;background-image:var(--stars-c,none);background-size:780px 780px;animation:blink 4.5s ease-in-out infinite alternate}
 @keyframes blink{from{opacity:.15}to{opacity:1}}
-.moon{--m:clamp(44px,6vw,74px);position:absolute;top:11%;right:13%;z-index:1;width:var(--m);aspect-ratio:1;border-radius:50%;box-shadow:calc(var(--m) * .24) calc(var(--m) * -.1) 0 0 #fff1bf;filter:drop-shadow(0 0 16px rgba(255,236,170,.55));rotate:-20deg}
 .shooting{position:absolute;top:16%;left:16%;z-index:1;width:150px;height:2px;border-radius:2px;background:linear-gradient(90deg,rgba(255,255,255,0),#fff);opacity:0;animation:shoot 8s ease-in 2.5s infinite}
 @keyframes shoot{0%,88%{opacity:0;transform:rotate(16deg) translateX(0)}91%{opacity:1}100%{opacity:0;transform:rotate(16deg) translateX(340px)}}
 .future-quote{margin-top:.55em;font-family:var(--ff-hand);font-weight:600;font-size:clamp(22px,6.6vw,64px);line-height:1.6;letter-spacing:.05em;color:#fff;text-shadow:0 0 22px rgba(170,195,255,.55),0 0 60px rgba(120,150,255,.35)}
