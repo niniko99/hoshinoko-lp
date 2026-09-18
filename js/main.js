@@ -43,10 +43,27 @@
   var hero = document.querySelector('.s-hero');
   var ticking = false;
 
+  /* 背景の空：スクロールに合わせて、次の空へゆっくり移り変わる
+     s2=昼／s3=夕方前／s4=夕方／s5=夜。この目印の下端を通るころに切り替わる */
+  var skies = document.querySelectorAll('.sky-layer .sky');
+  var skyMarks = ['#hero', '#day', '#staff', '#today'];
+  function skyUpdate(y, vh) {
+    if (skies.length < 2) return;
+    var c = y + vh * 0.4, F = vh * 0.2;
+    for (var i = 1; i < skies.length; i++) {
+      var el = document.querySelector(skyMarks[i - 1]);
+      if (!el) continue;
+      var b = el.offsetTop + el.offsetHeight;
+      var o = Math.min(1, Math.max(0, (c - (b - F)) / (2 * F)));
+      skies[i].style.opacity = o.toFixed(3);
+    }
+  }
+
   function update() {
     ticking = false;
     var y = window.scrollY || window.pageYOffset;
     var vh = window.innerHeight;
+    skyUpdate(y, vh);
 
     if (header) {
       header.classList.toggle('is-scrolled', y > 40);
