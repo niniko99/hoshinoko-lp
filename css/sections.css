@@ -176,5 +176,8 @@ dl.info-card>div:last-child{border-bottom:0}
 .future-quote{margin-top:.55em;font-family:var(--ff-hand);font-weight:600;font-size:clamp(22px,6.6vw,64px);line-height:1.6;letter-spacing:.05em;color:#fff;text-shadow:0 0 22px rgba(170,195,255,.55),0 0 60px rgba(120,150,255,.35)}
 .s-night .lead{margin-top:1.8em}
 .s-night .lead:first-child{margin-top:0}
+/* 夜の街の下を暗くして、次の宇宙へ溶けるようにする */
+.s-night::after{content:"";position:absolute;left:0;right:0;bottom:0;height:34%;z-index:1;pointer-events:none;
+  background:linear-gradient(to bottom,rgba(3,5,15,0) 0%,rgba(3,5,15,.45) 55%,#03050f 100%)}
 .town{position:absolute;left:0;right:0;bottom:-1px;z-index:1;height:clamp(120px,18vw,240px)}
 .town svg{width:100%;height:100%}

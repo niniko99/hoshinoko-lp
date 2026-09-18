@@ -7,7 +7,7 @@
 
   var photo = $('.pbd-photo'), earth = $('.earth'), close = $('.earth-close'), marker = $('.dot-marker');
   var here = $('.here'), dist = $('.distance'), dNum = $('.d-num'), stars = $('.stars');
-  var deco = $('.star-deco'), scrim = $('.stage-scrim'), replay = $('.replay');
+  var scrim = $('.stage-scrim'), replay = $('.replay');
 
   // NASA PIA23645 の元画像サイズと、地球（点）の位置（横・縦の割合）
   var IW = 5230, IH = 5175, DOT = { x: 0.5942, y: 0.5198 };
@@ -86,9 +86,7 @@
     if (scrim) scrim.style.opacity = smooth(range(t, T.close[0] + 0.4, T.close[1] + 0.6)).toFixed(3);
 
     // 星（最後の絵には星が描いてあるので消す）
-    var starO = (range(t, 0, 0.6) * (1 - range(t, T.close[0], T.close[1]))).toFixed(3);
-    stars.style.setProperty('--star-o', starO);
-    if (deco) deco.style.opacity = starO;
+    stars.style.setProperty('--star-o', (range(t, 0, 0.6) * (1 - range(t, T.close[0], T.close[1]))).toFixed(3));
 
     marker.style.opacity = fade(t, [T.here[0] - 0.4, T.here[1] - 0.4, T.here[2], T.here[3]]).toFixed(3);
     here.style.opacity = fade(t, T.here).toFixed(3);

@@ -24,10 +24,9 @@ main>section.s-space{background:#05071a}
 /* 最後の画面で、下のほうだけ少し暗くして文字を読みやすくする */
 .stage-scrim{position:absolute;inset:0;opacity:0;background:linear-gradient(to bottom,rgba(3,6,22,0) 38%,rgba(3,6,22,.42) 72%,rgba(3,6,22,.62) 100%)}
 
-/* ポスターのような黄色い星 */
-.star-deco{position:absolute;inset:0;opacity:0}
-.star-deco svg{position:absolute;width:var(--s);height:var(--s);fill:#ffd75e;stroke:#ffd75e;stroke-width:2;stroke-linejoin:round;animation:deco var(--t) ease-in-out var(--dl) infinite alternate}
-@keyframes deco{from{opacity:.45;transform:scale(.9)}to{opacity:1;transform:scale(1.08)}}
+/* 上の「夜の街（黒い家）」から、宇宙へなめらかにつなぐ */
+.stage-top-fade{position:absolute;left:0;right:0;top:0;height:34%;z-index:2;pointer-events:none;
+  background:linear-gradient(to bottom,#03050f 0%,rgba(3,5,15,.92) 10%,rgba(3,5,15,.5) 22%,rgba(3,5,15,0) 100%)}
 
 .dot-marker{position:absolute;left:0;top:0;width:0;height:0;opacity:0}
 .dot-marker::before{content:"";position:absolute;left:-6px;top:-6px;width:12px;height:12px;border-radius:50%;background:radial-gradient(circle,rgba(210,235,255,.85) 0 18%,rgba(160,205,255,.3) 45%,rgba(160,205,255,0) 72%)}
