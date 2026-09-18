@@ -7,11 +7,23 @@ main>section.s-space{background:#05071a}
 }
 .space-stage .stars{-webkit-mask-image:none;mask-image:none;opacity:var(--star-o,0)}
 
-.pbd-photo{position:absolute;left:0;top:0;max-width:none;opacity:0;will-change:opacity}
+.pbd-photo{position:absolute;left:0;top:0;max-width:none;opacity:0;will-change:opacity,transform}
 
-.earth{position:absolute;left:0;top:0;width:1000px;height:1000px;transform-origin:50% 50%;will-change:transform}
-.earth img{position:relative;width:100%;height:100%}
-.earth-glow{position:absolute;inset:-12%;border-radius:50%;background:radial-gradient(closest-side,rgba(130,190,255,.5) 58%,rgba(100,160,255,.2) 70%,rgba(90,140,255,0) 100%)}
+.earth{position:absolute;left:0;top:0;width:1000px;height:1000px;transform-origin:50% 50%;opacity:0;will-change:transform}
+/* 地球の絵は四角いので、まるく切り抜く（外側のふちはふんわり消す） */
+.earth img{position:relative;width:100%;height:100%;-webkit-mask-image:radial-gradient(closest-side,#000 88%,transparent 97%);mask-image:radial-gradient(closest-side,#000 88%,transparent 97%)}
+
+/* 最後の画面：ポスターの地球 */
+.earth-close{position:absolute;inset:0;opacity:0}
+.earth-close img{width:100%;height:100%;max-width:none;object-fit:cover}
+
+/* 最後の画面で、下のほうだけ少し暗くして文字を読みやすくする */
+.stage-scrim{position:absolute;inset:0;opacity:0;background:linear-gradient(to bottom,rgba(3,6,22,0) 38%,rgba(3,6,22,.42) 72%,rgba(3,6,22,.62) 100%)}
+
+/* ポスターのような黄色い星 */
+.star-deco{position:absolute;inset:0;opacity:0}
+.star-deco svg{position:absolute;width:var(--s);height:var(--s);fill:#ffd75e;stroke:#ffd75e;stroke-width:2;stroke-linejoin:round;animation:deco var(--t) ease-in-out var(--dl) infinite alternate}
+@keyframes deco{from{opacity:.45;transform:scale(.9)}to{opacity:1;transform:scale(1.08)}}
 
 .dot-marker{position:absolute;left:0;top:0;width:0;height:0;opacity:0}
 .dot-marker::before{content:"";position:absolute;left:-6px;top:-6px;width:12px;height:12px;border-radius:50%;background:radial-gradient(circle,rgba(210,235,255,.85) 0 18%,rgba(160,205,255,.3) 45%,rgba(160,205,255,0) 72%)}

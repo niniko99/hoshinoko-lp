@@ -60,6 +60,18 @@
     box.innerHTML = html;
   })();
 
+  /* 宇宙の画面：ポスターのような黄色い星 */
+  (function spaceStars() {
+    var box = document.querySelector('.star-deco');
+    if (!box) return;
+    var R = rng(41), html = '';
+    for (var i = 0; i < 14; i++) {
+      html += '<svg viewBox="0 0 24 24" style="left:' + f1(2 + R() * 94) + '%;top:' + f1(2 + R() * 92) +
+        '%;--s:' + Math.round(9 + R() * 14) + 'px;--t:' + f1(2.5 + R() * 3) + 's;--dl:-' + f1(R() * 4) + 's"><use href="#i-star"/></svg>';
+    }
+    box.innerHTML = html;
+  })();
+
   /* 夜の街：家の窓にあかり */
   (function town() {
     var box = document.querySelector('.town');

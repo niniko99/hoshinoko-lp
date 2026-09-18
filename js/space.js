@@ -1,42 +1,41 @@
-/* ===== ⑨ 地球が小さくなって、あの青い点へ（画面に入ったら自動で再生） ===== */
+/* ===== ⑨ あの青い点から、地球へ（画面に入ったら自動で再生） ===== */
 (function () {
   'use strict';
   var stage = document.querySelector('.space-stage');
   if (!stage) return;
   var $ = function (s) { return stage.querySelector(s); };
 
-  var photo = $('.pbd-photo'), earth = $('.earth'), marker = $('.dot-marker'), here = $('.here');
-  var dist = $('.distance'), dNum = $('.d-num'), stars = $('.stars'), replay = $('.replay');
+  var photo = $('.pbd-photo'), earth = $('.earth'), close = $('.earth-close'), marker = $('.dot-marker');
+  var here = $('.here'), dist = $('.distance'), dNum = $('.d-num'), stars = $('.stars');
+  var deco = $('.star-deco'), scrim = $('.stage-scrim'), replay = $('.replay');
 
   // NASA PIA23645 の元画像サイズと、地球（点）の位置（横・縦の割合）
   var IW = 5230, IH = 5175, DOT = { x: 0.5942, y: 0.5198 };
-  var EARTH_BOX = 1000, GLOBE = 800; // .earth の大きさと、その中の地球の直径
+  // .earth の箱の大きさと、その絵の中の地球の直径の割合
+  var EARTH_BOX = 1000, GLOBE_RATIO = 0.9;
 
   // タイムライン（秒）：[出はじめ, 出きる] または [出はじめ, 出きる, 消えはじめ, 消えきる]
   var T = {
-    rise: [0.3, 2.1],        // 地球が昇ってくる
-    shrink: [2.1, 6.3],      // 点まで小さくなる
-    photo: [5.9, 7.2],       // 本物の写真へ
-    marker: [7.0, 7.5],
-    here: [7.3, 8.2],        // ここに、私たちがいる。
-    c1: [8.6, 9.4, 11.8, 12.4],
-    c2: [12.7, 13.7],        // この美しい世界を…
-    brand: [13.2, 14.2],     // Kids Club 星の子
-    company: [14.2, 15.0],   // PALE BLUE DOT
-    credit: [15.0, 15.6]
+    photo:    [0.2, 1.6],          // 写真があらわれる
+    here:     [1.2, 2.2, 3.2, 3.9],// ここに、私たちがいる。
+    zoom:     [2.8, 7.2],          // 青い点 → 地球（近づいていく）
+    photoOut: [3.2, 5.8],
+    close:    [6.6, 8.0],          // ポスターの地球へ切り替え
+    c1:       [8.4, 9.2, 11.6, 12.2],
+    c2:       [12.5, 13.5],
+    brand:    [13.0, 14.0],
+    company:  [14.0, 14.8],
+    credit:   [14.8, 15.4]
   };
   var END = 15.8;
-  var fades = [
-    [marker, T.marker], [here, T.here], [$('.c1'), T.c1], [$('.c2'), T.c2], [$('.c2 .final'), T.c2],
-    [$('.c2 .final-brand'), T.brand], [$('.c2 .company-block'), T.company], [$('.space-credit'), T.credit]
-  ];
 
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var W, H, dot = { x: 0, y: 0 }, k0, k1, current = 0;
+  var W, H, dot = { x: 0, y: 0 }, big, current = 0;
   var clamp = function (v, a, b) { return Math.min(b, Math.max(a, v)); };
   var lerp = function (a, b, t) { return a + (b - a) * t; };
   var smooth = function (t) { return t * t * (3 - 2 * t); };
   var range = function (t, a, b) { return clamp((t - a) / (b - a), 0, 1); };
+  var fade = function (t, r) { var o = range(t, r[0], r[1]); return r.length === 4 ? o * (1 - range(t, r[2], r[3])) : o; };
 
   function layout() {
     W = stage.clientWidth; H = stage.clientHeight;
@@ -50,14 +49,13 @@
     photo.style.width = pw + 'px';
     photo.style.left = left + 'px';
     photo.style.top = top + 'px';
-    dot.x = left + DOT.x * pw;
-    dot.y = top + DOT.y * ph;
+    // 写真は「青い点」を中心に拡大する
+    photo.style.transformOrigin = ((dot.x = left + DOT.x * pw) - left) / pw * 100 + '% ' +
+      ((dot.y = top + DOT.y * ph) - top) / ph * 100 + '%';
+
     marker.style.transform = 'translate(' + dot.x + 'px,' + dot.y + 'px)';
     here.style.transform = 'translate(' + (dot.x - 46) + 'px,' + (dot.y - 46) + 'px) translate(-100%,-100%)';
-
-    var D0 = Math.max(W, H) * 1.5;
-    k0 = { d: D0, x: W / 2, y: H * 0.7 + D0 / 2 };
-    k1 = { d: Math.min(W, H) * 0.6, x: W / 2, y: H * 0.46 };
+    big = Math.max(W, H) * 1.8; // 近づききったときの地球の直径
   }
 
   function formatKm(km) {
@@ -69,34 +67,45 @@
   var lastKm = '';
   function render(t) {
     current = t;
-    var d, x, y, km;
-    if (t <= T.rise[1]) {
-      var a = smooth(range(t, T.rise[0], T.rise[1]));
-      d = Math.exp(lerp(Math.log(k0.d), Math.log(k1.d), a));
-      x = lerp(k0.x, k1.x, a); y = lerp(k0.y, k1.y, a);
-      km = Math.exp(lerp(Math.log(400), Math.log(36000), a));
-    } else {
-      var u = range(t, T.shrink[0], T.shrink[1]), e = u * u; // だんだん速く遠ざかる
-      d = Math.exp(lerp(Math.log(k1.d), Math.log(5), e));
-      x = lerp(k1.x, dot.x, smooth(u)); y = lerp(k1.y, dot.y, smooth(u));
-      km = Math.exp(lerp(Math.log(36000), Math.log(6e9), e));
-    }
-    earth.style.transform = 'translate(' + (x - EARTH_BOX / 2).toFixed(1) + 'px,' + (y - EARTH_BOX / 2).toFixed(1) + 'px) scale(' + (d / GLOBE).toFixed(5) + ')';
-    earth.style.opacity = (1 - range(t, T.shrink[1] - 0.2, T.shrink[1] + 0.5)).toFixed(3);
 
-    photo.style.opacity = smooth(range(t, T.photo[0], T.photo[1])).toFixed(3);
-    stars.style.setProperty('--star-o', (range(t, 0, 0.8) * (0.9 - 0.65 * range(t, T.photo[0], T.photo[1]))).toFixed(3));
+    // 写真（あの青い点）
+    var out = range(t, T.photoOut[0], T.photoOut[1]);
+    photo.style.opacity = (fade(t, T.photo) * (1 - out)).toFixed(3);
+    photo.style.transform = 'scale(' + (1 + 2.2 * smooth(out)).toFixed(4) + ')';
 
-    // 距離の数字は、ことば（c1）が出る前に消す（スマホで重ならないように）
-    dist.style.opacity = (range(t, 0.2, 0.8) * (1 - 0.4 * range(t, T.here[0], T.here[1])) * (1 - range(t, T.c1[0] - 0.6, T.c1[0]))).toFixed(3);
-    var label = t >= T.shrink[1] ? '約60億' : formatKm(km);
+    // 点 → 地球（だんだん近づく）
+    var u = range(t, T.zoom[0], T.zoom[1]), e = u * u; // はじめはゆっくり、だんだん速く
+    var d = Math.exp(lerp(Math.log(5), Math.log(big), e));
+    var x = lerp(dot.x, W / 2, smooth(u)), y = lerp(dot.y, H / 2, smooth(u));
+    earth.style.transform = 'translate(' + (x - EARTH_BOX / 2).toFixed(1) + 'px,' + (y - EARTH_BOX / 2).toFixed(1) +
+      'px) scale(' + (d / (EARTH_BOX * GLOBE_RATIO)).toFixed(5) + ')';
+    earth.style.opacity = (range(t, T.zoom[0], T.zoom[0] + 0.4) * (1 - range(t, T.close[0], T.close[1]))).toFixed(3);
+
+    // ポスターの地球（最後の画面）
+    close.style.opacity = smooth(range(t, T.close[0], T.close[1])).toFixed(3);
+    if (scrim) scrim.style.opacity = smooth(range(t, T.close[0] + 0.4, T.close[1] + 0.6)).toFixed(3);
+
+    // 星（最後の絵には星が描いてあるので消す）
+    var starO = (range(t, 0, 0.6) * (1 - range(t, T.close[0], T.close[1]))).toFixed(3);
+    stars.style.setProperty('--star-o', starO);
+    if (deco) deco.style.opacity = starO;
+
+    marker.style.opacity = fade(t, [T.here[0] - 0.4, T.here[1] - 0.4, T.here[2], T.here[3]]).toFixed(3);
+    here.style.opacity = fade(t, T.here).toFixed(3);
+
+    // 地球までの距離（60億km → 0）
+    var km = Math.exp(lerp(Math.log(6e9), Math.log(400), e));
+    dist.style.opacity = (fade(t, [T.photo[0] + 0.6, T.photo[1] + 0.4, T.zoom[1] - 0.6, T.zoom[1]])).toFixed(3);
+    var label = u >= 1 ? '0' : formatKm(km);
     if (label !== lastKm) { dNum.textContent = label; lastKm = label; }
 
-    fades.forEach(function (f) {
-      var r = f[1], o = range(t, r[0], r[1]);
-      if (r.length === 4) o *= 1 - range(t, r[2], r[3]);
-      f[0].style.opacity = o.toFixed(3);
-    });
+    // ことば
+    $('.c1').style.opacity = fade(t, T.c1).toFixed(3);
+    $('.c2').style.opacity = fade(t, T.c2).toFixed(3);
+    $('.c2 .final').style.opacity = fade(t, T.c2).toFixed(3);
+    $('.c2 .final-brand').style.opacity = fade(t, T.brand).toFixed(3);
+    $('.c2 .company-block').style.opacity = fade(t, T.company).toFixed(3);
+    $('.space-credit').style.opacity = fade(t, T.credit).toFixed(3);
   }
 
   var startAt = 0, running = false;
