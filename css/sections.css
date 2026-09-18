@@ -66,12 +66,7 @@
 .s-day{padding:calc(var(--pad-y)*.8) 0;background:linear-gradient(to bottom,#e6eefb,#f2ecf8)}
 .num{font-family:var(--ff-en);font-weight:400;font-variant-numeric:tabular-nums;letter-spacing:.03em}
 .week-lead{display:flex;justify-content:center;flex-wrap:wrap;gap:4px 22px;margin-top:1em;font-family:var(--ff-hand);font-weight:600;font-size:clamp(15px,1.9vw,19px);color:var(--ink-soft)}
-.week{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:12px;max-width:960px;margin:2.2em auto 0;text-align:left}
-.week li{display:grid;grid-template-columns:7.6em 1fr;align-items:baseline;gap:4px 12px;padding:16px 20px;border-radius:18px;background:rgba(255,255,255,.74)}
-.week b{font-family:var(--ff-en);font-weight:400;font-size:clamp(19px,2.2vw,22px);color:var(--day);text-shadow:1.5px 1.5px 0 rgba(120,160,220,.35)}
-.week p{font-family:var(--ff-hand);font-weight:600;font-size:17px;line-height:1.6}
-.week small{display:block;font-family:var(--ff-body);font-weight:500;font-size:13px;line-height:1.7;color:var(--ink-soft)}
-.lessons{max-width:840px;margin:2.8em auto 0}
+.lessons{max-width:840px;margin:2.4em auto 0}
 .lessons h3,.holiday h3{font-family:var(--ff-hand);font-weight:600;font-size:clamp(20px,2.6vw,26px);letter-spacing:.08em}
 .lesson-list{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:.9em}
 .lesson-list span{padding:.35em 1em;border-radius:999px;background:#fff;box-shadow:0 6px 16px rgba(60,110,170,.1);font-size:14px;font-weight:700}
