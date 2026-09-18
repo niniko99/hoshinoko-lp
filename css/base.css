@@ -30,7 +30,8 @@ body{
   letter-spacing:.04em;
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;
-  background:linear-gradient(to bottom,#2f7fd0 0 50%,var(--space) 50% 100%);
+  /* 画面のいちばん外側の色。空の絵が出るまでの一瞬や、画面のはしに見える色（帯にならないよう、なめらかに） */
+  background:linear-gradient(to bottom,#dbeafb 0%,#cfe0f7 35%,#3a3f80 75%,#05071a 100%);
 }
 img,svg{display:block;max-width:100%}
 p,h1,h2,h3,ul,ol,dl,dd,figure{margin:0;padding:0}
@@ -39,7 +40,8 @@ a{color:inherit}
 a:focus-visible{outline:3px solid var(--star);outline-offset:4px;border-radius:6px}
 
 /* 背景の空（画面に固定）。セクションは色を持たず、この空が全部透けて見える */
-.sky-layer{position:fixed;inset:0;z-index:0;pointer-events:none;background:#eaf6fd}
+/* 画面より少し大きくしておく（スマホでバーが出入りしても、すき間の帯が出ないように） */
+.sky-layer{position:fixed;left:0;right:0;top:-4vh;height:108vh;z-index:0;pointer-events:none;background:#eaf6fd}
 .sky{position:absolute;inset:0;opacity:0}
 .sky.s1{opacity:1}
 .sky img{width:100%;height:100%;max-width:none;object-fit:cover}

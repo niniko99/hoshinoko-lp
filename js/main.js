@@ -46,7 +46,7 @@
   /* 背景の空：スクロールに合わせて、次の空へゆっくり移り変わる
      s2=昼／s3=夕方前／s4=夕方／s5=夜。この目印の下端を通るころに切り替わる */
   var skies = document.querySelectorAll('.sky-layer .sky');
-  var skyMarks = ['#hero', '#day', '#staff', '#today'];
+  var skyMarks = ['#hero', '#try', '#together', '#today'];
   function skyUpdate(y, vh) {
     if (skies.length < 2) return;
     var c = y + vh * 0.4, F = vh * 0.2;
