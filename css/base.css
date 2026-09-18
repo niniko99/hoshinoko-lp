@@ -99,7 +99,7 @@ html.js .reveal.is-in{opacity:1;transform:none}
 
 /* 写真の枠（あとで実際の写真に差し替える） */
 .photos{display:flex;justify-content:center;flex-wrap:wrap;gap:clamp(16px,3vw,32px);margin-top:clamp(44px,6vw,72px)}
-.ph{width:min(300px,78vw);background:#fff;padding:10px 10px 14px;border-radius:6px;box-shadow:0 14px 34px rgba(40,60,100,.14)}
+.ph{width:min(300px,78vw);background:rgba(255,255,255,.78);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);padding:10px 10px 14px;border-radius:6px;box-shadow:0 14px 34px rgba(40,60,100,.14)}
 .photos.three .ph{width:min(262px,78vw)}
 .ph-tilt-l{rotate:-2.5deg}
 .ph-tilt-r{rotate:2deg}
