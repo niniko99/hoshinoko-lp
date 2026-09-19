@@ -1,12 +1,13 @@
-/* ===== 動き：ふわっと表示・ヘッダー・雲の奥行き・1文字ずつ ===== */
+/* ===== 動き：ふわっと表示・ヘッダー・空の色の流れ・流れ星 ===== */
 (function () {
   'use strict';
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var $ = function (s) { return document.querySelector(s); };
 
   /* 「今日も最高に楽しかった！」を1文字ずつに分ける */
-  var big = document.querySelector('.today-big');
+  var big = $('.today-big');
   if (big && !reduce) {
-    var i = 0;
+    var n = 0;
     big.querySelectorAll('.l').forEach(function (line) {
       var text = line.textContent;
       line.textContent = '';
@@ -14,7 +15,7 @@
         var s = document.createElement('span');
         s.className = 'ch';
         s.setAttribute('aria-hidden', 'true');
-        s.style.setProperty('--i', i++);
+        s.style.setProperty('--i', n++);
         s.textContent = ch;
         line.appendChild(s);
       });
@@ -35,75 +36,72 @@
     targets.forEach(function (el) { io.observe(el); });
   }
 
-  /* ヘッダー：背景の明るさに合わせて色を変える／宇宙のシーンでは隠す */
-  var header = document.querySelector('.site-header');
-  var darkSections = document.querySelectorAll('main > section[data-tone="dark"]');
-  var spaceStage = document.querySelector('.space-stage');
-  var parallax = document.querySelectorAll('[data-parallax]');
-  var hero = document.querySelector('.s-hero');
-  var ticking = false;
-
-  /* 背景の空：スクロールに合わせて、次の空へゆっくり移り変わる
-     s2=昼／s3=夕方前／s4=夕方／s5=夜。この目印の下端を通るころに切り替わる */
-  var skies = document.querySelectorAll('.sky-layer .sky');
-  var skyMarks = ['#hero', '#try', '#together', '#today'];
-  function skyUpdate(y, vh) {
-    if (skies.length < 2) return;
-    var c = y + vh * 0.4, F = vh * 0.2;
-    for (var i = 1; i < skies.length; i++) {
-      var el = document.querySelector(skyMarks[i - 1]);
-      if (!el) continue;
-      var b = el.offsetTop + el.offsetHeight;
-      var o = Math.min(1, Math.max(0, (c - (b - F)) / (2 * F)));
-      skies[i].style.opacity = o.toFixed(3);
+  /* 空の色の流れ：ページと一緒に流れる、ひと続きの空
+     鮮やかな青空を長め（〜いっぱい遊ぼう）→ 青紫 → 紫 → 深い紫〜ネイビー → 星空 → 宇宙 */
+  var world = $('.world-bg'), worldStars = $('.world-stars'), main = $('main');
+  function paintWorld() {
+    if (!world || !main) return;
+    var H = main.offsetHeight || 1;
+    var at = function (sel, where) {
+      var e = $(sel);
+      if (!e) return 0;
+      var y = e.offsetTop + (where === 'bottom' ? e.offsetHeight : where === 'mid' ? e.offsetHeight / 2 : 0);
+      return Math.max(0, Math.min(100, y / H * 100));
+    };
+    var stops = [
+      ['#2f7be0', 0], ['#2f7be0', at('#hero', 'bottom')],
+      ['#3a86e6', at('#play', 'bottom')],   // 鮮やかな青空を長めに
+      ['#4a7ee2', at('#can', 'bottom')],
+      ['#6a6fd6', at('#day', 'mid')],       // 青紫
+      ['#8a63c8', at('#staff', 'mid')],     // 紫
+      ['#6a4cae', at('#voices', 'bottom')],
+      ['#3a3688', at('#price', 'bottom')],  // 深い紫〜ネイビー
+      ['#1f2260', at('#faq', 'bottom')],
+      ['#0f1440', at('#contact', 'bottom')],
+      ['#070a24', at('#future', 'bottom')], // 星空 → 宇宙
+      ['#05071a', 100]
+    ];
+    world.style.background = 'linear-gradient(to bottom,' + stops.map(function (s) { return s[0] + ' ' + s[1].toFixed(2) + '%'; }).join(',') + ')';
+    if (worldStars) { // 星：スタッフのあたりからうっすら、夜が深くなるほど多く
+      var m = 'linear-gradient(to bottom,transparent 0%,transparent ' + at('#staff', 'top').toFixed(1) + '%,rgba(0,0,0,.3) ' +
+        at('#price', 'top').toFixed(1) + '%,#000 ' + at('#future', 'top').toFixed(1) + '%)';
+      worldStars.style.webkitMaskImage = m;
+      worldStars.style.maskImage = m;
     }
   }
 
+  /* ヘッダー：スクロールしたらすりガラスに／地球の場面では隠す */
+  var header = $('.site-header'), stage = $('.earth-stage'), ticking = false;
   function update() {
     ticking = false;
-    var y = window.scrollY || window.pageYOffset;
-    var vh = window.innerHeight;
-    skyUpdate(y, vh);
-
+    var y = window.scrollY || window.pageYOffset, vh = window.innerHeight;
     if (header) {
       header.classList.toggle('is-scrolled', y > 40);
-      var mid = header.offsetHeight / 2, dark = false;
-      darkSections.forEach(function (sec) {
-        var r = sec.getBoundingClientRect();
-        if (r.top <= mid && r.bottom >= mid) dark = true;
-      });
-      header.setAttribute('data-tone', dark ? 'dark' : 'light');
-      if (spaceStage) {
-        var t = spaceStage.getBoundingClientRect();
+      if (stage) {
+        var t = stage.getBoundingClientRect();
         header.classList.toggle('is-hidden', t.top <= vh * 0.2 && t.bottom > vh * 0.5);
       }
     }
-
-    if (!reduce && hero && y < hero.offsetHeight * 1.2) {
-      parallax.forEach(function (el) {
-        el.style.transform = 'translate3d(0,' + (y * parseFloat(el.getAttribute('data-parallax'))).toFixed(1) + 'px,0)';
-      });
-    }
   }
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+
   /* 流れ星：夜のあいだだけ、ときどき流れる
-     ご利用案内（紫〜紺）のあたりは控えめ → 夜が深くなるほど少し増える → 宇宙では出さない */
-  var shootLayer = document.querySelector('.shoot-layer');
+     料金〜お問い合わせ（紫〜紺）は控えめ → 星空が深くなるほど少し増える → 地球の場面では出さない */
+  var shootLayer = $('.shoot-layer');
   function nightRate() {
-    var info = document.querySelector('#info'), fut = document.querySelector('#future'), stage = document.querySelector('.space-stage');
-    if (!info || !fut || !stage) return 0;
+    var a = $('#price'), b = $('#future'), e = $('#earth');
+    if (!a || !b || !e) return 0;
     var c = (window.scrollY || window.pageYOffset) + window.innerHeight * 0.5;
-    var a = info.offsetTop, b = fut.offsetTop, s = fut.offsetTop + fut.offsetHeight;
-    if (c < a || c > s) return 0;              // 夜の前と、宇宙に入ってからは出さない
-    if (c < b) return 0.35 * (c - a) / (b - a); // 紫〜紺：控えめ
-    return 0.35 + 0.65 * (c - b) / (s - b);     // 星空が深くなるほど少し増やす
+    var A = a.offsetTop, B = b.offsetTop, S = e.offsetTop;
+    if (c < A || c > S) return 0;
+    if (c < B) return 0.35 * (c - A) / (B - A);
+    return 0.35 + 0.65 * (c - B) / (S - B);
   }
   function shootOnce() {
-    if (!shootLayer || reduce) return;
     var r = nightRate();
     if (r < 0.03 || Math.random() > r * 0.13) return; // rate1で約3秒に1本、rate0.35で約9秒に1本
     var el = document.createElement('span');
-    var len = 90 + Math.random() * 160;
-    var dur = 0.8 + Math.random() * 0.7;
+    var len = 90 + Math.random() * 160, dur = 0.8 + Math.random() * 0.7;
     el.className = 'shoot';
     el.style.cssText = 'left:' + (Math.random() * 72).toFixed(1) + '%;top:' + (5 + Math.random() * 48).toFixed(1) +
       '%;width:' + len.toFixed(0) + 'px;opacity:' + (0.5 + Math.random() * 0.5).toFixed(2) +
@@ -113,10 +111,10 @@
   }
   if (shootLayer && !reduce) setInterval(shootOnce, 400);
 
-  function onScroll() {
-    if (!ticking) { ticking = true; requestAnimationFrame(update); }
-  }
   window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll);
+  window.addEventListener('resize', function () { paintWorld(); onScroll(); });
+  window.addEventListener('load', paintWorld);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(paintWorld);
+  paintWorld();
   update();
 })();
