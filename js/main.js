@@ -36,45 +36,77 @@
     targets.forEach(function (el) { io.observe(el); });
   }
 
-  /* 空の色の流れ：ページと一緒に流れる、ひと続きの空
-     鮮やかな青空を長め（〜いっぱい遊ぼう）→ 青紫 → 紫 → 深い紫〜ネイビー → 星空 → 宇宙 */
-  var world = $('.world-bg'), worldStars = $('.world-stars'), main = $('main');
+  /* 背景：まゆちゃんの見本の絵（_ref/まゆちゃん_色のイメージ.jpg）のとおりに作る。ページと一緒に流れる
+     ・色と並び：見本から取った実際の色をそのまま使う（mayu-sky-strip.png ＝ 見本の左66%を細く縮めたもの）。
+       なめらかなグラデなので、ページの高さに合わせて伸ばしても見た目は変わらない
+     ・星・天の川：こちらで描く（art.js のタイル）。どの画面サイズでもぼやけず、ページの長さにも合わせられる
+     ・明るい星（宵の明星）：見本の絵から小さく切り抜いて置く
+     ・最後のアニメーションも、この星空の上で再生する */
+  var IMG = { w: 667, h: 2000 };
+  var SKY_END = 0.78;               // 見本の絵の上から78%まで（その下は小さな地球と文字なので使わない）を、ページ全体に合わせる
+  var NIGHT = 0.485, DEEP = 0.62;   // 星が出はじめる位置／星空が深くなる位置（見本の絵の上からの割合）
+  var MILKY = [0.52, 0.75];         // 天の川の帯（同上）
+  var PLANET = { x: 0.829, y: 0.444 };
+  var world = $('.world-bg'), planet = $('.world-planet'), worldStars = $('.world-stars'), milky = $('.world-milky'), main = $('main');
+  var nightTop = 0, clouds = [];
   function paintWorld() {
     if (!world || !main) return;
-    var H = main.offsetHeight || 1;
-    var at = function (sel, where) {
-      var e = $(sel);
-      if (!e) return 0;
-      var y = e.offsetTop + (where === 'bottom' ? e.offsetHeight : where === 'mid' ? e.offsetHeight / 2 : 0);
-      return Math.max(0, Math.min(100, y / H * 100));
-    };
-    var stops = [
-      ['#2f7be0', 0], ['#2f7be0', at('#hero', 'bottom')],
-      ['#3a86e6', at('#play', 'bottom')],   // 鮮やかな青空を長めに
-      ['#4a7ee2', at('#can', 'bottom')],
-      ['#6a6fd6', at('#day', 'mid')],       // 青紫
-      ['#8a63c8', at('#staff', 'mid')],     // 紫
-      ['#6a4cae', at('#voices', 'bottom')],
-      ['#3a3688', at('#price', 'bottom')],  // 深い紫〜ネイビー
-      ['#1f2260', at('#faq', 'bottom')],
-      ['#0f1440', at('#contact', 'bottom')],
-      ['#070a24', at('#future', 'bottom')], // 星空 → 宇宙
-      ['#05071a', 100]
-    ];
-    world.style.background = 'linear-gradient(to bottom,' + stops.map(function (s) { return s[0] + ' ' + s[1].toFixed(2) + '%'; }).join(',') + ')';
-    if (worldStars) { // 星：スタッフのあたりからうっすら、夜が深くなるほど多く
-      var m = 'linear-gradient(to bottom,transparent 0%,transparent ' + at('#staff', 'top').toFixed(1) + '%,rgba(0,0,0,.3) ' +
-        at('#price', 'top').toFixed(1) + '%,#000 ' + at('#future', 'top').toFixed(1) + '%)';
+    var W = main.clientWidth, H = main.offsetHeight || 1;
+    var sh = H / SKY_END;                                  // 伸ばしたあとの、見本の絵の高さ
+    var rowY = function (r) { return r * sh; };            // 絵の上から r の位置が、ページのどこに来るか
+    var pct = function (y) { return (y / H * 100).toFixed(1) + '%'; };
+    world.style.backgroundSize = '100% ' + sh.toFixed(0) + 'px';
+    world.style.backgroundPosition = '0 0';
+    nightTop = main.offsetTop + rowY(NIGHT);
+    if (planet) {  // 明るい星（宵の明星）：見本の絵から小さく切り抜いて、絵のとおりの大きさで置く
+      var ps = Math.max(W / IMG.w, 1), d = Math.round(44 * ps);
+      planet.style.width = planet.style.height = d + 'px';
+      planet.style.left = (PLANET.x * W - d / 2).toFixed(1) + 'px';
+      planet.style.top = (rowY(PLANET.y) - d / 2).toFixed(1) + 'px';
+      planet.style.backgroundSize = (IMG.w * ps).toFixed(1) + 'px ' + (IMG.h * ps).toFixed(1) + 'px';
+      planet.style.backgroundPosition = (d / 2 - PLANET.x * IMG.w * ps).toFixed(1) + 'px ' + (d / 2 - PLANET.y * IMG.h * ps).toFixed(1) + 'px';
+    }
+    // 雲：青空のところに2つ、ピンクの夕焼けに1つ、紫のあたりに薄く1つ（見本の空の色の上に重ねる）
+    var vh = window.innerHeight || 800, ch = Math.round(Math.max(300, Math.min(vh * 0.66, 620)));
+    clouds = [];
+    [['.cloud-a', 0.115, 0.24], ['.cloud-b', 0.225, 0.17], ['.cloud-c', 0.335, 0.12], ['.cloud-d', 0.425, 0.08]].forEach(function (a) {
+      var el = $(a[0]);
+      if (!el) return;
+      var top = rowY(a[1]) - ch * 0.62;
+      el.style.top = top.toFixed(0) + 'px';
+      el.style.height = ch + 'px';
+      clouds.push({ el: el, mid: main.offsetTop + top + ch / 2, k: a[2] });  // k＝流れる速さ（奥ほどゆっくり）
+    });
+    // 夕焼けの光のにじみ（ピンクの帯のまんなか）
+    var glow = $('.world-glow');
+    if (glow) {
+      var gh = Math.round(vh * 1.15);
+      glow.style.top = (rowY(0.345) - gh / 2).toFixed(0) + 'px';
+      glow.style.height = gh + 'px';
+    }
+    if (worldStars) {
+      var m = 'linear-gradient(to bottom,transparent 0%,transparent ' + pct(rowY(0.44)) + ',rgba(0,0,0,.16) ' +
+        pct(rowY(NIGHT)) + ',rgba(0,0,0,.5) ' + pct(rowY(0.56)) + ',#000 ' + pct(rowY(DEEP)) + ')';
       worldStars.style.webkitMaskImage = m;
       worldStars.style.maskImage = m;
+    }
+    if (milky) {
+      milky.style.top = rowY(MILKY[0]).toFixed(0) + 'px';
+      milky.style.height = (rowY(MILKY[1]) - rowY(MILKY[0])).toFixed(0) + 'px';
     }
   }
 
   /* ヘッダー：スクロールしたらすりガラスに／地球の場面では隠す */
-  var header = $('.site-header'), stage = $('.earth-stage'), ticking = false;
+  var header = $('.site-header'), stage = $('.space-stage'), ticking = false;
   function update() {
     ticking = false;
     var y = window.scrollY || window.pageYOffset, vh = window.innerHeight;
+    // 雲：スクロールに合わせて、ゆっくり流れる（奥の層ほどゆっくり）
+    for (var i = 0; i < (reduce ? 0 : clouds.length); i++) {
+      var c = clouds[i], d = (y + vh / 2 - c.mid) * c.k;
+      d = Math.max(-320, Math.min(320, d));
+      c.el.style.transform = 'translate3d(' + (d * 0.4).toFixed(1) + 'px,' + d.toFixed(1) + 'px,0) scaleX(var(--fx))';
+    }
     if (header) {
       header.classList.toggle('is-scrolled', y > 40);
       if (stage) {
@@ -86,16 +118,16 @@
   function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
 
   /* 流れ星：夜のあいだだけ、ときどき流れる
-     料金〜お問い合わせ（紫〜紺）は控えめ → 星空が深くなるほど少し増える → 地球の場面では出さない */
+     星空のはじまり（ご利用案内）は控えめ → 星空が深くなるほど少し増える → 地球の場面では出さない */
   var shootLayer = $('.shoot-layer');
   function nightRate() {
-    var a = $('#price'), b = $('#future'), e = $('#earth');
-    if (!a || !b || !e) return 0;
+    var b = $('#future'), e = $('#earth');
+    if (!b || !e || !nightTop) return 0;
     var c = (window.scrollY || window.pageYOffset) + window.innerHeight * 0.5;
-    var A = a.offsetTop, B = b.offsetTop, S = e.offsetTop;
+    var A = nightTop, B = Math.max(b.offsetTop, A + 1), S = e.offsetTop;
     if (c < A || c > S) return 0;
     if (c < B) return 0.35 * (c - A) / (B - A);
-    return 0.35 + 0.65 * (c - B) / (S - B);
+    return 0.35 + 0.65 * (c - B) / Math.max(S - B, 1);
   }
   function shootOnce() {
     var r = nightRate();

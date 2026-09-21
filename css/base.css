@@ -39,13 +39,44 @@ ul,ol{list-style:none}
 a{color:inherit}
 a:focus-visible{outline:3px solid var(--star);outline-offset:4px;border-radius:6px}
 
-/* 背景：ページと一緒に流れる、ひと続きの空（青空 → 紫 → 星空 → 宇宙）
-   色の切り替わる位置は、JSが各セクションの場所に合わせて決める */
+/* 背景：まゆちゃんの見本の絵のとおりに作る（青空 → ピンク → 紫 → 藍色 → 星空）。ページと一緒に流れる
+   色は見本から取った実物（mayu-sky-strip.png ＝ 見本の左66%を細く縮めたもの。
+   縦に大きく伸ばしても筋が出ないように、細かいざらつきをならしてある）。
+   星・天の川はこちらで描く（art.js）。位置と大きさは JS（main.js の paintWorld）が決める */
 main{position:relative;color:#fff}
-.world-bg{position:absolute;inset:0;z-index:0;pointer-events:none;
-  background:linear-gradient(to bottom,#1f5fd0 0%,#3d8ae6 30%,#7d6cd0 55%,#2c2f7a 75%,#05071a 100%)}
-.world-stars{position:absolute;inset:0;background-image:var(--stars-a,none),var(--stars-b,none);background-size:620px 620px,940px 940px;
-  -webkit-mask-image:var(--star-mask,linear-gradient(to bottom,transparent 55%,#000 85%));mask-image:var(--star-mask,linear-gradient(to bottom,transparent 55%,#000 85%))}
+.world-bg{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;
+  background:#2a20c7 url("../assets/src/mayu-sky-strip.png") 0 0/100% 128% no-repeat}
+.world-planet{position:absolute;left:0;top:-200px;width:44px;height:44px;background:url("../assets/src/mayu-sky.jpg") no-repeat;
+  -webkit-mask-image:radial-gradient(closest-side,#000 40%,transparent);mask-image:radial-gradient(closest-side,#000 40%,transparent)}
+/* 夕焼けの光のにじみ（ピンクの帯のところ。位置と高さは main.js が決める） */
+.world-glow{position:absolute;left:-15%;right:-15%;top:-900px;height:0;mix-blend-mode:screen;
+  background:radial-gradient(closest-side,rgba(255,214,170,.42),rgba(255,178,140,.18) 46%,rgba(255,160,130,0) 78%)}
+/* 雲：こうの水彩の雲だけを取り出して（art.js）、空の色の上に薄く重ねる。位置と高さは main.js が決める
+   スクロールに合わせて、ゆっくり流れる（奥行きが出るように、層ごとに速さを変える） */
+.world-cloud{--fx:1;position:absolute;left:-12%;right:-12%;top:-900px;height:0;
+  background-image:var(--clouds,none);background-repeat:no-repeat;background-position:center bottom;background-size:cover;
+  -webkit-mask-image:linear-gradient(to bottom,transparent,#000 32%,#000 76%,transparent);
+  mask-image:linear-gradient(to bottom,transparent,#000 32%,#000 76%,transparent)}
+.cloud-a{opacity:.8;animation:cloud-drift 70s ease-in-out infinite alternate}
+.cloud-b{--fx:-1;opacity:.5;transform:scaleX(-1);animation:cloud-drift 95s ease-in-out infinite alternate-reverse}
+.cloud-c{opacity:.32;animation:cloud-drift 120s ease-in-out infinite alternate}
+.cloud-d{--fx:-1;opacity:.15;transform:scaleX(-1);animation:cloud-drift 150s ease-in-out infinite alternate-reverse}
+/* 止まっていても、雲はゆっくり流れる */
+@keyframes cloud-drift{
+  from{background-position:calc(50% - 42px) bottom}
+  to{background-position:calc(50% + 42px) bottom}
+}
+/* 星：夜になってから、深くなるほど多く見えるように（見える範囲は main.js が決める） */
+.world-stars{position:absolute;inset:0;background-image:var(--stars-a,none),var(--stars-b,none);background-size:560px 560px,900px 900px}
+/* 天の川：細かい星が集まって、ゆるやかに流れる帯（位置と高さは main.js が決める） */
+.world-milky{position:absolute;left:0;right:0;top:-200px;height:0;overflow:hidden;
+  -webkit-mask-image:linear-gradient(to bottom,transparent,#000 20%,#000 80%,transparent);
+  mask-image:linear-gradient(to bottom,transparent,#000 20%,#000 80%,transparent)}
+.world-milky i{position:absolute;left:-60%;right:-60%;top:-6%;bottom:-6%;transform:rotate(6deg)}
+.world-milky .glow{background:linear-gradient(to right,rgba(120,140,255,0) 30%,rgba(140,160,255,.22) 41%,rgba(185,200,255,.36) 50%,rgba(140,160,255,.22) 59%,rgba(120,140,255,0) 70%)}
+.world-milky .dust{background-image:var(--stars-c,none);background-size:260px 260px;
+  -webkit-mask-image:linear-gradient(to right,transparent 32%,rgba(0,0,0,.5) 41%,#000 50%,rgba(0,0,0,.5) 59%,transparent 68%);
+  mask-image:linear-gradient(to right,transparent 32%,rgba(0,0,0,.5) 41%,#000 50%,rgba(0,0,0,.5) 59%,transparent 68%)}
 main>section{position:relative;z-index:1;overflow:hidden}
 .site-footer{position:relative;z-index:1}
 .wrap{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding-inline:var(--gutter);text-align:center}
@@ -133,6 +164,12 @@ html.js .reveal.is-in{opacity:1;transform:none}
   .ph-box{padding:8px;font-size:10.5px;gap:4px}
   .ph-box svg{width:24px;height:24px}
 }
+
+/* 要所要所に、写真をちょこっと散らす（まとめて1か所ではなく、ページのあちこちに） */
+.scatter{display:flex;justify-content:center;align-items:flex-start;flex-wrap:wrap;gap:clamp(14px,2.6vw,34px);margin-top:clamp(38px,5vw,66px)}
+.scatter .ph{width:min(236px,43vw)}
+.scatter .ph:nth-child(odd){rotate:-2.6deg;translate:0 8px}
+.scatter .ph:nth-child(even){rotate:2.2deg;translate:0 -10px}
 
 /* ===== ボタン ===== */
 .btn-cta{

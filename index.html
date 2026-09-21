@@ -26,7 +26,7 @@
 .site-header{top:28px}
 .replay{top:calc(46px + env(safe-area-inset-top,0px))}
 </style>
-<div class="draft-bar">確認用の下書き（9/19 11:12版）｜【要確認】は仮の内容です</div>
+<div class="draft-bar">確認用の下書き（9/21 17:47版）｜【要確認】は仮の内容です</div>
 <header class="site-header" data-tone="light">
   <a class="brand" href="#top" aria-label="Kids Club 星の子 トップへ">
     <svg class="brand-star" aria-hidden="true"><use href="#i-star"/></svg>
@@ -40,7 +40,16 @@
 
 <main id="top">
   <!-- 背景：ページと一緒に流れる、ひと続きの空（青空 → 紫 → 星空 → 宇宙）。色はJSで各セクションの位置に合わせる -->
-  <div class="world-bg" aria-hidden="true"><div class="world-stars"></div></div>
+  <div class="world-bg" aria-hidden="true">
+    <div class="world-glow"></div>
+    <div class="world-cloud cloud-a"></div>
+    <div class="world-cloud cloud-b"></div>
+    <div class="world-cloud cloud-c"></div>
+    <div class="world-cloud cloud-d"></div>
+    <div class="world-planet"></div>
+    <div class="world-stars"></div>
+    <div class="world-milky"><i class="glow"></i><i class="dust"></i></div>
+  </div>
 
   <!-- 1 世界観 -->
   <section class="s-hero" id="hero">
@@ -82,10 +91,6 @@
       <li class="g reveal" style="--d:.08s"><div class="ph-box"><svg><use href="#i-camera"/></svg><span>写真：工作・ものづくり</span></div></li>
       <li class="g reveal" style="--d:.16s"><div class="ph-box"><svg><use href="#i-camera"/></svg><span>写真：実験・サイエンス</span></div></li>
       <li class="g g-wide reveal" style="--d:.24s"><div class="ph-box"><svg><use href="#i-camera"/></svg><span>写真：外遊び・自然あそび</span></div></li>
-      <li class="g reveal"><div class="ph-box"><svg><use href="#i-camera"/></svg><span>写真：クッキング</span></div></li>
-      <li class="g g-tall reveal" style="--d:.08s"><div class="ph-box"><svg><use href="#i-camera"/></svg><span>写真：みんなで遊んでいるところ</span></div></li>
-      <li class="g reveal" style="--d:.16s"><div class="ph-box"><svg><use href="#i-camera"/></svg><span>写真：遠足・おでかけ</span></div></li>
-      <li class="g reveal" style="--d:.24s"><div class="ph-box"><svg><use href="#i-camera"/></svg><span>写真：アート・お絵かき</span></div></li>
     </ul>
   </section>
 
@@ -106,6 +111,10 @@
       <li class="can reveal" style="--d:.24s;--c:var(--yellow-soft)"><svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><path d="M12 30h40v13a11 11 0 0 1-11 11H23a11 11 0 0 1-11-11z"/><path d="M7 30h50M27 30v-3.5h10V30"/><path d="M24 20c-3-3 3-5.5 0-9M32 20c-3-3 3-5.5 0-9M40 20c-3-3 3-5.5 0-9"/></svg><b>料理</b><span>パン作り・夢のごはん</span></li>
       <li class="can reveal" style="--d:.32s;--c:var(--blue-soft)"><svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><rect x="14" y="20" width="36" height="36" rx="10"/><path d="M24 20v-4a8 8 0 0 1 16 0v4"/><path d="M22 38h20v10H22z"/></svg><b>遠足</b><span>ピクニック・おでかけ</span></li>
     </ul>
+    <ul class="scatter">
+      <li class="ph reveal"><div class="ph-box"><svg><use href="#i-camera"/></svg><span>写真：実験に夢中</span></div></li>
+      <li class="ph reveal" style="--d:.12s"><div class="ph-box"><svg><use href="#i-camera"/></svg><span>写真：つくったもの</span></div></li>
+    </ul>
   </section>
 
   <!-- 8 1日の流れ -->
@@ -119,6 +128,11 @@
       <li class="reveal" style="--d:.4s"><svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><circle cx="22" cy="17" r="6"/><circle cx="43" cy="24" r="5"/><path d="M12 54V36a10 10 0 0 1 20 0v18"/><path d="M35 54V40a8 8 0 0 1 16 0v14"/><path d="M30 42h7"/></svg><b>お迎え</b></li>
     </ol>
     <p class="today-big reveal" aria-label="今日も最高に楽しかった！"><span class="l">今日も最高に</span><span class="l">楽しかった！</span></p>
+    <ul class="scatter">
+      <li class="ph reveal"><div class="ph-box"><svg><use href="#i-camera"/></svg><span>写真：おやつの時間</span></div></li>
+      <li class="ph reveal" style="--d:.12s"><div class="ph-box"><svg><use href="#i-camera"/></svg><span>写真：みんなで遊ぶ</span></div></li>
+      <li class="ph reveal pc-only" style="--d:.24s"><div class="ph-box"><svg><use href="#i-camera"/></svg><span>写真：お迎えのころ</span></div></li>
+    </ul>
   </section>
 
   <!-- 9 スタッフ -->
@@ -126,11 +140,7 @@
     <h2 class="sec-title reveal"><small>Staff</small>みんな大切なひとり。</h2>
     <ul class="staff-list">
       <li class="staff reveal"><div class="face">似顔絵</div><b>まゆ先生</b><p class="tbd">【ひとこと紹介】</p></li>
-      <li class="staff reveal" style="--d:.06s"><div class="face">似顔絵</div><b>くみこ先生</b><p class="tbd">【ひとこと紹介】</p></li>
-      <li class="staff reveal" style="--d:.12s"><div class="face">似顔絵</div><b>佐藤先生</b><p class="tbd">【ひとこと紹介】</p></li>
-      <li class="staff reveal" style="--d:.18s"><div class="face">似顔絵</div><b>石井先生</b><p class="tbd">【ひとこと紹介】</p></li>
-      <li class="staff reveal" style="--d:.24s"><div class="face">似顔絵</div><b>特別講師</b><p class="tbd">【お名前・ひとこと紹介】</p></li>
-      <li class="staff reveal" style="--d:.3s"><div class="face">似顔絵</div><b>アドバイザー</b><p class="tbd">【お名前・ひとこと紹介】</p></li>
+      <li class="staff reveal" style="--d:.1s"><div class="face">似顔絵</div><b>くみこ先生</b><p class="tbd">【ひとこと紹介】</p></li>
     </ul>
   </section>
 
@@ -141,6 +151,10 @@
       <li class="voice reveal"><p class="tbd">【保護者の方の声が入ります】</p></li>
       <li class="voice reveal" style="--d:.1s"><p class="tbd">【保護者の方の声が入ります】</p></li>
       <li class="voice reveal" style="--d:.2s"><p class="tbd">【保護者の方の声が入ります】</p></li>
+    </ul>
+    <ul class="scatter">
+      <li class="ph reveal"><div class="ph-box"><svg><use href="#i-camera"/></svg><span>写真：いつもの一コマ</span></div></li>
+      <li class="ph reveal" style="--d:.12s"><div class="ph-box"><svg><use href="#i-camera"/></svg><span>写真：笑っている顔</span></div></li>
     </ul>
   </section>
 
@@ -208,23 +222,30 @@
     <p class="future-quote reveal" style="--d:.35s">「生きるって楽しい！」</p>
   </section>
 
-  <!-- 16 地球がどんどん小さくなって、Pale Blue Dot へ（スクロールで進む） -->
-  <section class="s-earth" id="earth" aria-label="Pale Blue Dot">
-    <div class="earth-track">
-      <div class="earth-stage">
-        <div class="stage-top-fade" aria-hidden="true"></div>
-        <img class="pbd-photo" src="assets/src/PIA23645.jpg" alt="ボイジャー1号が約60億km離れた場所から撮影した地球。光の筋の中に、小さな青い点として写っている" decoding="async" loading="lazy">
-        <div class="earth" aria-hidden="true"><img src="assets/src/poster-earth-globe.jpg" alt="" decoding="async" loading="lazy"></div>
-        <p class="distance" aria-hidden="true"><span class="d-label">地球から</span><span class="d-num">400</span><span class="d-unit">km</span></p>
-        <p class="pbd-caption">Pale Blue Dot<br><span>1990.2.14　Voyager 1</span></p>
+  <!-- 16 PALE BLUE DOT（画面に入ったら自動で再生。背景はまゆちゃんの絵の星空） -->
+  <section class="s-space" id="earth" aria-label="PALE BLUE DOT">
+    <div class="space-stage">
+      <div class="pbd-wrap"><img class="pbd-photo" src="assets/src/PIA23645.jpg" alt="ボイジャー1号が約60億km離れた場所から撮影した地球。光の筋の中に、小さな青い点として写っている" decoding="async"></div>
+      <div class="earth" aria-hidden="true"><div class="earth-glow"></div><img src="assets/src/earth-japan-top.jpg" alt="" decoding="async"></div>
+      <div class="dot-marker" aria-hidden="true"><span class="ring"></span></div>
+      <div class="here"><p class="here-text">ここに、<br>私たちがいる。</p><p class="here-cap">Pale Blue Dot<br>1990.2.14&nbsp; Voyager 1</p></div>
+      <p class="distance" aria-hidden="true"><span class="d-label">地球から</span><span class="d-num">0</span><span class="d-unit">km</span></p>
+      <div class="space-copy c1"><p>この小さな地球で、<br>たくさんの出会いと体験を。</p><p>そして、これからもずっと——</p></div>
+      <div class="space-copy c2">
+        <p class="final">この美しい世界を楽しむために<br>生まれてきた、すべての人へ。</p>
+        <p class="final-brand"><span>Kids Club</span>星の子</p>
+        <div class="company-block">
+          <img class="pbd-mark" src="assets/src/earth-mark.png" alt="" width="36" height="36">
+          <p class="run-by">Kids Club 星の子 を運営する</p>
+          <p class="company">PALE BLUE DOT</p>
+        </div>
       </div>
+      <button class="replay" type="button">もう一度見る</button>
     </div>
   </section>
 </main>
 
 <footer class="site-footer">
-  <p class="run-by">Kids Club 星の子 を運営する</p>
-  <p class="company">PALE BLUE DOT</p>
   <p class="footer-contact">〒336-0967 埼玉県さいたま市緑区美園3-6-29 ／ <a href="tel:08015457154">080-1545-7154</a></p>
   <p class="credit">「ペイル・ブルー・ドット」写真：NASA/JPL-Caltech（1990年2月14日 ボイジャー1号撮影／2020年 再処理版）<br>当サイトは、NASAの推薦・提携を受けたものではありません。</p>
   <p class="copyright">© PALE BLUE DOT</p>
