@@ -158,6 +158,10 @@ html.js .reveal.is-in{opacity:1;transform:none}
   background:repeating-linear-gradient(45deg,#f6f9fd 0 10px,#fff 10px 20px);
 }
 .ph-box svg{width:34px;height:34px;fill:none;stroke:currentColor;stroke-width:3;stroke-linejoin:round}
+/* 実際の写真が入った枠：点線とスキマ模様を消して、写真そのものの形で見せる */
+.ph-box.filled{display:block;aspect-ratio:auto;padding:0;border:0;background:#e9eef6;overflow:hidden}
+.ph-box.filled img{width:100%;height:auto;display:block;border-radius:3px}
+.g .ph-box.filled img{height:100%;object-fit:cover}
 @media (max-width:640px){
   .photos{gap:14px}
   .ph,.photos.three .ph{width:calc(50% - 7px);padding:6px 6px 9px}
@@ -170,6 +174,11 @@ html.js .reveal.is-in{opacity:1;transform:none}
 .scatter .ph{width:min(236px,43vw)}
 .scatter .ph:nth-child(odd){rotate:-2.6deg;translate:0 8px}
 .scatter .ph:nth-child(even){rotate:2.2deg;translate:0 -10px}
+/* スマホでも2枚ずつ横に並べる（1枚ずつ縦に積むと「散らした感じ」が出ないため） */
+@media (max-width:640px){
+  .scatter{gap:10px}
+  .scatter .ph{width:calc(50% - 5px)}
+}
 
 /* ===== ボタン ===== */
 .btn-cta{

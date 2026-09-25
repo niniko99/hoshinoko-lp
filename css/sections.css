@@ -45,13 +45,23 @@ main section{padding:var(--pad-y) var(--gutter)}
 .b-blue{background:radial-gradient(closest-side,#d6e8fb 66%,rgba(214,232,251,.55) 84%,rgba(214,232,251,0))}
 @media (max-width:640px){.blobs{grid-template-columns:repeat(2,minmax(0,1fr));max-width:420px}}
 
-/* 5 子どもたちの写真（大小まぜて並べる） */
-.gallery{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:clamp(120px,16vw,200px);gap:clamp(8px,1.4vw,16px);max-width:1080px;margin:0 auto}
+/* 5 子どもたちの写真（上に3枚そろえて、いちばん下は1枚まるごと大きく） */
+.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(8px,1.4vw,16px);max-width:1080px;margin:0 auto}
 .g{border-radius:18px;overflow:hidden;background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 14px 34px rgba(10,20,70,.18)}
-.g-tall{grid-row:span 2}
-.g-wide{grid-column:span 2}
-.g .ph-box{height:100%;aspect-ratio:auto;border-radius:14px;margin:6px;height:calc(100% - 12px)}
-@media (max-width:640px){.gallery{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:120px}}
+.g .ph-box{border-radius:14px;margin:6px}
+.g .ph-box.filled{aspect-ratio:1}
+.g .ph-box.filled img{width:100%;height:100%;object-fit:cover}
+/* いちばん下の1枚は切らずに、写真そのままの形で大きく見せる */
+.g-full{grid-column:1/-1;justify-self:center;width:min(100%,760px)}
+.g-full .ph-box.filled{aspect-ratio:auto}
+.g-full .ph-box.filled img{height:auto}
+@media (max-width:640px){
+  .gallery{grid-template-columns:repeat(2,minmax(0,1fr))}
+  /* 3枚目は横いっぱいに。こちらも切らずにそのままの形で */
+  .g-mwide{grid-column:1/-1}
+  .g-mwide .ph-box.filled{aspect-ratio:auto}
+  .g-mwide .ph-box.filled img{height:auto}
+}
 
 /* 7 できること */
 .cans{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(14px,3vw,34px);max-width:1000px;margin:2.4em auto 0}
@@ -82,9 +92,18 @@ main section{padding:var(--pad-y) var(--gutter)}
 .staff-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(12px,2vw,22px);max-width:560px;margin:2.4em auto 0}
 .staff{padding:22px 14px;border-radius:24px;text-align:center;color:var(--ink);background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.55);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
 .face{display:grid;place-items:center;width:clamp(76px,10vw,104px);aspect-ratio:1;margin:0 auto 10px;border-radius:50%;border:2px dashed rgba(39,51,77,.3);background:rgba(255,255,255,.7);color:var(--ink-soft);font-size:12px}
+/* 似顔絵が入ったら、点線をやめて丸く切り抜く */
+.face.filled{border:0;background:none;overflow:hidden}
+.face.filled img{width:100%;height:100%;object-fit:cover;display:block}
 .staff b{display:block;font-family:var(--ff-hand);font-weight:600;font-size:18px}
 .staff p{margin-top:.3em;font-size:13px;line-height:1.7}
-@media (max-width:640px){.staff-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* スマホでは1列にして、似顔絵を左・ひとことを右に。2列だと1行11文字で読みにくいため */
+@media (max-width:640px){
+  .staff-list{grid-template-columns:1fr;max-width:360px}
+  .staff{display:grid;grid-template-columns:76px 1fr;align-content:center;gap:2px 14px;text-align:left;padding:16px 18px}
+  .staff .face{grid-row:span 2;align-self:center;margin:0}
+  .staff p{margin-top:.35em}
+}
 
 /* 10 保護者の声 */
 .voices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,2vw,22px);max-width:1000px;margin:2.4em auto 0}
