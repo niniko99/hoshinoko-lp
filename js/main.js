@@ -86,7 +86,7 @@
     if (tex) {
       var tw = Math.round(Math.max(W * 1.35, 640));
       tex.style.backgroundSize = tw + 'px ' + Math.round(tw * 1316 / 720) + 'px';
-      var m = 'linear-gradient(to bottom,transparent 0%,#000 ' + pct(rowY(0.14)) + ',#000 100%)';
+      var m = 'linear-gradient(to bottom,transparent 0%,#000 ' + pct(rowY(0.05)) + ',#000 100%)';
       tex.style.webkitMaskImage = m;
       tex.style.maskImage = m;
     }
@@ -98,10 +98,11 @@
     }
     if (worldStars) {
       // 星は、いちばん上から下までずっと見えている。
-      // 空の色が明るいところ（水色〜薄紫〜ピンク）だけ控えめにして、暗くなるほど濃くする
-      var m = 'linear-gradient(to bottom,rgba(0,0,0,.55) 0%,rgba(0,0,0,.4) ' + pct(rowY(0.22)) +
-        ',rgba(0,0,0,.36) ' + pct(rowY(0.33)) + ',rgba(0,0,0,.52) ' + pct(rowY(0.44)) +
-        ',rgba(0,0,0,.74) ' + pct(rowY(NIGHT + 0.035)) + ',#000 ' + pct(rowY(DEEP)) + ')';
+      // ただし昼の空ではうっすらと（出しすぎると最初から夜に見えてしまう）、
+      // 夕方からだんだん増えて、夜に向かってしっかり見えるようにする
+      var m = 'linear-gradient(to bottom,rgba(0,0,0,.1) 0%,rgba(0,0,0,.2) ' + pct(rowY(0.22)) +
+        ',rgba(0,0,0,.32) ' + pct(rowY(0.33)) + ',rgba(0,0,0,.56) ' + pct(rowY(0.44)) +
+        ',rgba(0,0,0,.8) ' + pct(rowY(NIGHT + 0.035)) + ',#000 ' + pct(rowY(DEEP)) + ')';
       worldStars.style.webkitMaskImage = m;
       worldStars.style.maskImage = m;
     }
