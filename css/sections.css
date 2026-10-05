@@ -10,16 +10,20 @@ main section{padding:var(--pad-y) var(--gutter)}
 .marker{font-size:1.1em;-webkit-text-stroke:.5px currentColor;padding:0 .12em .08em;
   background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 16' preserveAspectRatio='none'%3E%3Cfilter id='s'%3E%3CfeGaussianBlur stdDeviation='.55'/%3E%3C/filter%3E%3Cpath filter='url(%23s)' d='M4 10C60 5 110 12 164 9C212 6 258 11 296 8C258 13 212 9 164 12C110 15 60 8 4 10Z' fill='%23ffffff' opacity='.5'/%3E%3C/svg%3E") no-repeat left calc(100% - .04em)/100% .3em}
 
-/* 1 世界観（ポスターの上部のような青空の絵） */
+/* 1 世界観（こうの絵の宇宙のところだけを使う。雲と紙飛行機は入っていない）
+   下のふちは、うしろのまゆちゃんの空へ、すうっと溶けこませる */
 .s-hero{
   min-height:100vh;min-height:100svh;display:grid;place-items:center;text-align:center;padding-top:120px;padding-bottom:30vh;
 }
-/* トップだけ、こうの青空の絵。下のふちは、うしろのまゆちゃんの空へ、すうっと溶けこませる */
 .s-hero::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
-  background:url("../assets/src/poster-sky-pc.jpg") center bottom/cover no-repeat;
-  -webkit-mask-image:linear-gradient(to bottom,#000 55%,transparent 96%);mask-image:linear-gradient(to bottom,#000 55%,transparent 96%)}
+  background:url("../assets/src/hero-space-pc.jpg") center top/100% auto no-repeat;
+  -webkit-mask-image:linear-gradient(to bottom,#000 16%,transparent 30%);mask-image:linear-gradient(to bottom,#000 16%,transparent 30%)}
 @media (orientation:portrait){
-  .s-hero::after{background-image:url("../assets/src/poster-sky-sp.jpg")}
+  /* スマホは縦に長いので、絵を少し大きめにして、地球と土星が画面に入る位置で見せる */
+  .s-hero::after{background-image:url("../assets/src/hero-space-sp.jpg");background-size:auto 56%;background-position:62% top;
+    /* 絵は高さ56%で終わるので、その手前（52%）でマスクを消しきる。でないと絵の下端が線になって出る */
+    -webkit-mask-image:linear-gradient(to bottom,#000 24%,rgba(0,0,0,.6) 38%,rgba(0,0,0,.2) 46%,transparent 52%);
+    mask-image:linear-gradient(to bottom,#000 24%,rgba(0,0,0,.6) 38%,rgba(0,0,0,.2) 46%,transparent 52%)}
 }
 .hero-inner{position:relative;z-index:3}
 .hero-copy{font-family:var(--ff-hand);font-weight:600;font-size:clamp(19px,5.2vw,54px);line-height:1.95;letter-spacing:.08em;text-shadow:0 2px 26px rgba(20,70,140,.35)}

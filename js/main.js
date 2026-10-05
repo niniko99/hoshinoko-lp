@@ -48,7 +48,7 @@
   var MILKY = [0.52, 0.75];         // 天の川の帯（同上）
   var PLANET = { x: 0.829, y: 0.444 };
   var world = $('.world-bg'), planet = $('.world-planet'), worldStars = $('.world-stars'), milky = $('.world-milky'), main = $('main');
-  var nightTop = 0, clouds = [];
+  var nightTop = 0;
   function paintWorld() {
     if (!world || !main) return;
     var W = main.clientWidth, H = main.offsetHeight || 1;
@@ -66,17 +66,13 @@
       planet.style.backgroundSize = (IMG.w * ps).toFixed(1) + 'px ' + (IMG.h * ps).toFixed(1) + 'px';
       planet.style.backgroundPosition = (d / 2 - PLANET.x * IMG.w * ps).toFixed(1) + 'px ' + (d / 2 - PLANET.y * IMG.h * ps).toFixed(1) + 'px';
     }
-    // 雲：青空のところに2つ、ピンクの夕焼けに1つ、紫のあたりに薄く1つ（見本の空の色の上に重ねる）
-    var vh = window.innerHeight || 800, ch = Math.round(Math.max(300, Math.min(vh * 0.66, 620)));
-    clouds = [];
-    [['.cloud-a', 0.115, 0.24], ['.cloud-b', 0.225, 0.17], ['.cloud-c', 0.335, 0.12], ['.cloud-d', 0.425, 0.08]].forEach(function (a) {
-      var el = $(a[0]);
-      if (!el) return;
-      var top = rowY(a[1]) - ch * 0.62;
-      el.style.top = top.toFixed(0) + 'px';
-      el.style.height = ch + 'px';
-      clouds.push({ el: el, mid: main.offsetTop + top + ch / 2, k: a[2] });  // k＝流れる速さ（奥ほどゆっくり）
-    });
+    var vh = window.innerHeight || 800;
+    // 星雲のもや：いちばん上（濃い青のところ）にひろげる。明るい水色に入る手前で消える
+    var neb = $('.world-neb');
+    if (neb) {
+      neb.style.top = '0px';
+      neb.style.height = rowY(0.20).toFixed(0) + 'px';
+    }
     // 夕焼けの光のにじみ（ピンクの帯のまんなか）
     var glow = $('.world-glow');
     if (glow) {
@@ -84,9 +80,28 @@
       glow.style.top = (rowY(0.345) - gh / 2).toFixed(0) + 'px';
       glow.style.height = gh + 'px';
     }
+    // 水彩の質感：横幅より少し大きめに出して、星の粒が自然な大きさになるようにする。
+    // いちばん上（こうの絵があるところ）は重ねず、少し下からなじませる
+    var tex = $('.world-tex');
+    if (tex) {
+      var tw = Math.round(Math.max(W * 1.35, 640));
+      tex.style.backgroundSize = tw + 'px ' + Math.round(tw * 1316 / 720) + 'px';
+      var m = 'linear-gradient(to bottom,transparent 0%,#000 ' + pct(rowY(0.14)) + ',#000 100%)';
+      tex.style.webkitMaskImage = m;
+      tex.style.maskImage = m;
+    }
+    // 明るい帯を沈めるベール（見本の 0.13〜0.47 のあたり）
+    var veil = $('.world-veil');
+    if (veil) {
+      veil.style.top = rowY(0.13).toFixed(0) + 'px';
+      veil.style.height = (rowY(0.47) - rowY(0.13)).toFixed(0) + 'px';
+    }
     if (worldStars) {
-      var m = 'linear-gradient(to bottom,transparent 0%,transparent ' + pct(rowY(0.44)) + ',rgba(0,0,0,.16) ' +
-        pct(rowY(NIGHT)) + ',rgba(0,0,0,.5) ' + pct(rowY(0.56)) + ',#000 ' + pct(rowY(DEEP)) + ')';
+      // 星は、いちばん上から下までずっと見えている。
+      // 空の色が明るいところ（水色〜薄紫〜ピンク）だけ控えめにして、暗くなるほど濃くする
+      var m = 'linear-gradient(to bottom,rgba(0,0,0,.55) 0%,rgba(0,0,0,.4) ' + pct(rowY(0.22)) +
+        ',rgba(0,0,0,.36) ' + pct(rowY(0.33)) + ',rgba(0,0,0,.52) ' + pct(rowY(0.44)) +
+        ',rgba(0,0,0,.74) ' + pct(rowY(NIGHT + 0.035)) + ',#000 ' + pct(rowY(DEEP)) + ')';
       worldStars.style.webkitMaskImage = m;
       worldStars.style.maskImage = m;
     }
@@ -101,12 +116,6 @@
   function update() {
     ticking = false;
     var y = window.scrollY || window.pageYOffset, vh = window.innerHeight;
-    // 雲：スクロールに合わせて、ゆっくり流れる（奥の層ほどゆっくり）
-    for (var i = 0; i < (reduce ? 0 : clouds.length); i++) {
-      var c = clouds[i], d = (y + vh / 2 - c.mid) * c.k;
-      d = Math.max(-320, Math.min(320, d));
-      c.el.style.transform = 'translate3d(' + (d * 0.4).toFixed(1) + 'px,' + d.toFixed(1) + 'px,0) scaleX(var(--fx))';
-    }
     if (header) {
       header.classList.toggle('is-scrolled', y > 40);
       if (stage) {

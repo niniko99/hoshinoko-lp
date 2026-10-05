@@ -48,26 +48,39 @@ main{position:relative;color:#fff}
   background:#2a20c7 url("../assets/src/mayu-sky-strip.png") 0 0/100% 128% no-repeat}
 .world-planet{position:absolute;left:0;top:-200px;width:44px;height:44px;background:url("../assets/src/mayu-sky.jpg") no-repeat;
   -webkit-mask-image:radial-gradient(closest-side,#000 40%,transparent);mask-image:radial-gradient(closest-side,#000 40%,transparent)}
-/* 夕焼けの光のにじみ（ピンクの帯のところ。位置と高さは main.js が決める） */
+/* 夕焼けの光のにじみ（ピンクの帯のところ。位置と高さは main.js が決める）
+   白っぽさの元になるので、宇宙寄りにするぶん控えめにしてある */
 .world-glow{position:absolute;left:-15%;right:-15%;top:-900px;height:0;mix-blend-mode:screen;
-  background:radial-gradient(closest-side,rgba(255,214,170,.42),rgba(255,178,140,.18) 46%,rgba(255,160,130,0) 78%)}
-/* 雲：こうの水彩の雲だけを取り出して（art.js）、空の色の上に薄く重ねる。位置と高さは main.js が決める
-   スクロールに合わせて、ゆっくり流れる（奥行きが出るように、層ごとに速さを変える） */
-.world-cloud{--fx:1;position:absolute;left:-12%;right:-12%;top:-900px;height:0;
-  background-image:var(--clouds,none);background-repeat:no-repeat;background-position:center bottom;background-size:cover;
-  -webkit-mask-image:linear-gradient(to bottom,transparent,#000 32%,#000 76%,transparent);
-  mask-image:linear-gradient(to bottom,transparent,#000 32%,#000 76%,transparent)}
-.cloud-a{opacity:.8;animation:cloud-drift 70s ease-in-out infinite alternate}
-.cloud-b{--fx:-1;opacity:.5;transform:scaleX(-1);animation:cloud-drift 95s ease-in-out infinite alternate-reverse}
-.cloud-c{opacity:.32;animation:cloud-drift 120s ease-in-out infinite alternate}
-.cloud-d{--fx:-1;opacity:.15;transform:scaleX(-1);animation:cloud-drift 150s ease-in-out infinite alternate-reverse}
-/* 止まっていても、雲はゆっくり流れる */
-@keyframes cloud-drift{
-  from{background-position:calc(50% - 42px) bottom}
-  to{background-position:calc(50% + 42px) bottom}
-}
-/* 星：夜になってから、深くなるほど多く見えるように（見える範囲は main.js が決める） */
-.world-stars{position:absolute;inset:0;background-image:var(--stars-a,none),var(--stars-b,none);background-size:560px 560px,900px 900px}
+  background:radial-gradient(closest-side,rgba(255,196,150,.18),rgba(255,168,132,.08) 46%,rgba(255,150,124,0) 78%)}
+/* 空がいちばん明るくなるところ（水色〜薄むらさき〜ピンク）に、深い色のベールを1枚かける。
+   見本の色あいは残したまま、宇宙の側へ沈めて、白い文字が読めるようにする。位置と高さは main.js が決める */
+.world-veil{position:absolute;left:0;right:0;top:-900px;height:0;
+  background:linear-gradient(to bottom,
+    rgba(10,26,96,0) 0%,
+    rgba(10,26,96,.42) 21%,
+    rgba(24,20,98,.50) 35%,
+    rgba(44,18,94,.55) 50%,
+    rgba(74,14,78,.50) 65%,
+    rgba(44,16,88,.30) 79%,
+    rgba(30,16,88,0) 100%)}
+/* 水彩の質感：ピトに描いてもらった宇宙の絵から、色を捨てて濃淡と星だけを取り出したもの。
+   overlay で重ねるので、空の色はそのままに、水彩のにじみと細かい星だけが乗る。
+   上下反転を継いであるので、縦にいくら繰り返しても継ぎ目が出ない。位置と大きさは main.js が決める */
+.world-tex{position:absolute;left:0;right:0;top:0;height:100%;mix-blend-mode:overlay;opacity:.92;
+  background-image:url("../assets/src/space-texture.jpg");background-repeat:repeat-y;background-position:center top}
+/* 星雲のもや：いちばん上のあたりに、青むらさきのやわらかい光をひろげる（宇宙の奥ゆき）
+   白ではなく色をつけた光にして、文字が読みづらくならないようにする。位置と高さは main.js が決める */
+.world-neb{position:absolute;left:-20%;right:-20%;top:-900px;height:0;mix-blend-mode:screen;opacity:.85;
+  background:
+    radial-gradient(38% 42% at 16% 30%,rgba(120,110,255,.34),rgba(120,110,255,0) 72%),
+    radial-gradient(34% 38% at 84% 16%,rgba(96,150,255,.30),rgba(96,150,255,0) 72%),
+    radial-gradient(46% 34% at 62% 74%,rgba(150,110,235,.24),rgba(150,110,235,0) 74%)}
+/* 星：いちばん上から下までずっと見えている。空の色が明るいところでは控えめに、
+   暗くなるほど濃く（濃さの変わりかたは main.js が決める）。
+   3枚目はキラキラ（四方向に光がのびる、大きめの星） */
+.world-stars{position:absolute;inset:0;
+  background-image:var(--stars-a,none),var(--stars-b,none),var(--sparkle,none),var(--gold,none);
+  background-size:560px 560px,900px 900px,1500px 1500px,1700px 1700px}
 /* 天の川：細かい星が集まって、ゆるやかに流れる帯（位置と高さは main.js が決める） */
 .world-milky{position:absolute;left:0;right:0;top:-200px;height:0;overflow:hidden;
   -webkit-mask-image:linear-gradient(to bottom,transparent,#000 20%,#000 80%,transparent);

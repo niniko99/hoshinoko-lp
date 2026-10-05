@@ -30,44 +30,68 @@
     root.setProperty('--grain', 'url(' + c.toDataURL() + ')');
   })();
 
-  /* 雲：こうの水彩の空の絵から、雲のところだけを取り出す（青空の部分は透明にする）
-     取り出した雲は、まゆちゃんの見本どおりの空の色の上に重ねて使う（base.css の .world-cloud） */
-  (function clouds() {
-    var img = new Image();
-    img.onload = function () {
-      var w = 768, h = Math.round(img.height * w / img.width);
-      var c = document.createElement('canvas');
-      c.width = w; c.height = h;
-      var g = c.getContext('2d');
-      if (!g) return;
-      g.drawImage(img, 0, 0, w, h);
-      var d;
-      try { d = g.getImageData(0, 0, w, h); } catch (e) { return; }
-      var p = d.data;
-      for (var i = 0; i < p.length; i += 4) {
-        var mx = Math.max(p[i], p[i + 1], p[i + 2]), mn = Math.min(p[i], p[i + 1], p[i + 2]);
-        var sat = mx ? (mx - mn) / mx : 0;      // 青空は色が濃い（彩度が高い）／雲は白っぽい
-        var a = (1 - sat / 0.32) * (mx / 255) * 1.15 - 0.05;
-        p[i + 3] = Math.round(Math.max(0, Math.min(1, a)) * 255);
-      }
-      g.putImageData(d, 0, 0);
-      root.setProperty('--clouds', 'url(' + c.toDataURL() + ')');
-    };
-    img.src = 'assets/src/sky-day3-pc.jpg';
-  })();
-
-  /* 星空のタイル（細かい星。夜が深くなるほど見えるように、main.js が見える範囲を決める） */
+  /* 星空のタイル（細かい星。いちばん上から下までずっと見える。濃さは main.js が決める）
+     こうの絵に寄せて、星はまんべんなくではなく「集まっているところ」と「少ないところ」をつくる */
   function starTile(size, count, seed, maxR) {
     var R = rng(seed), c = '', tints = ['#ffffff', '#ffffff', '#ffffff', '#fff1c4', '#d6e4ff'];
+    var hubs = [];
+    for (var k = 0; k < 5; k++) hubs.push([R() * size, R() * size, size * (0.16 + R() * 0.2)]);
     for (var i = 0; i < count; i++) {
-      var r = Math.pow(R(), 3) * maxR + 0.4;
-      c += '<circle cx="' + f1(R() * size) + '" cy="' + f1(R() * size) + '" r="' + r.toFixed(2) +
-        '" fill="' + tints[Math.floor(R() * tints.length)] + '" fill-opacity="' + (0.35 + R() * 0.65).toFixed(2) + '"/>';
+      var x, y;
+      if (R() < 0.66) {                       // 3分の2は、集まっているところへ寄せる
+        var hb = hubs[Math.floor(R() * hubs.length)];
+        var ang = R() * 6.2832, dd = Math.pow(R(), 0.7) * hb[2];
+        x = (hb[0] + Math.cos(ang) * dd + size) % size;
+        y = (hb[1] + Math.sin(ang) * dd + size) % size;
+      } else {                                // 残りはまんべんなく
+        x = R() * size; y = R() * size;
+      }
+      var r = Math.pow(R(), 3.2) * maxR + 0.32;
+      c += '<circle cx="' + f1(x) + '" cy="' + f1(y) + '" r="' + r.toFixed(2) +
+        '" fill="' + tints[Math.floor(R() * tints.length)] + '" fill-opacity="' + (0.3 + R() * 0.68).toFixed(2) + '"/>';
     }
     var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + size + '" height="' + size + '">' + c + '</svg>';
     return 'url("data:image/svg+xml,' + encodeURIComponent(svg) + '")';
   }
-  root.setProperty('--stars-a', starTile(560, 170, 11, 1.15));
-  root.setProperty('--stars-b', starTile(900, 95, 23, 2.1));
-  root.setProperty('--stars-c', starTile(260, 210, 37, 0.8)); // 天の川の帯（細かい星が集まったところ）
+
+  /* 黄色い星（こうの絵にある、ぽってりした五角の星）。ごく少なく散らす */
+  function goldTile(size, count, seed) {
+    var R = rng(seed), c = '';
+    for (var i = 0; i < count; i++) {
+      var cxv = R() * size, cyv = R() * size, rad = 7 + R() * 6, rot = R() * 72, pts = '';
+      for (var p = 0; p < 10; p++) {
+        var ang = (p * 36 + rot) * Math.PI / 180 - Math.PI / 2;
+        var rr = p % 2 ? rad * 0.47 : rad;
+        pts += f1(cxv + Math.cos(ang) * rr) + ',' + f1(cyv + Math.sin(ang) * rr) + ' ';
+      }
+      c += '<polygon points="' + pts.trim() + '" fill="#ffd968" fill-opacity="' + (0.5 + R() * 0.32).toFixed(2) +
+        '" stroke="#fff0b8" stroke-width="1.2" stroke-opacity="' + (0.3 + R() * 0.3).toFixed(2) + '" stroke-linejoin="round"/>';
+    }
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + size + '" height="' + size + '">' + c + '</svg>';
+    return 'url("data:image/svg+xml,' + encodeURIComponent(svg) + '")';
+  }
+
+  /* キラキラ（四方向にのびる光をもつ、大きめの星）。宇宙っぽさはこれで出る */
+  function sparkleTile(size, count, seed) {
+    var R = rng(seed), c = '', tints = ['#ffffff', '#ffffff', '#fff3cd', '#cfe0ff'];
+    for (var i = 0; i < count; i++) {
+      var x = R() * size, y = R() * size, s = 3.4 + Math.pow(R(), 2) * 7.5;
+      var o = (0.4 + R() * 0.5).toFixed(2), t = tints[Math.floor(R() * tints.length)], k = s * 0.3;
+      // 中心から上下左右へすっとのびる、細い光の十字
+      c += '<path d="M' + f1(x) + ' ' + f1(y - s) + 'Q' + f1(x + k) + ' ' + f1(y - k) + ' ' + f1(x + s) + ' ' + f1(y) +
+        'Q' + f1(x + k) + ' ' + f1(y + k) + ' ' + f1(x) + ' ' + f1(y + s) +
+        'Q' + f1(x - k) + ' ' + f1(y + k) + ' ' + f1(x - s) + ' ' + f1(y) +
+        'Q' + f1(x - k) + ' ' + f1(y - k) + ' ' + f1(x) + ' ' + f1(y - s) +
+        'Z" fill="' + t + '" fill-opacity="' + o + '"/>';
+      c += '<circle cx="' + f1(x) + '" cy="' + f1(y) + '" r="' + (s * 0.2).toFixed(2) + '" fill="' + t + '" fill-opacity="' + o + '"/>';
+    }
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + size + '" height="' + size + '">' + c + '</svg>';
+    return 'url("data:image/svg+xml,' + encodeURIComponent(svg) + '")';
+  }
+
+  root.setProperty('--stars-a', starTile(560, 420, 11, 1.0));   // ごく細かい星をたくさん
+  root.setProperty('--stars-b', starTile(900, 170, 23, 2.3));   // ときどき大きめの星
+  root.setProperty('--stars-c', starTile(260, 210, 37, 0.8));   // 天の川の帯（細かい星が集まったところ）
+  root.setProperty('--sparkle', sparkleTile(1500, 3, 53));      // 光がのびる星は、ごくたまに
+  root.setProperty('--gold', goldTile(1700, 2, 71));            // 黄色い星も、ごくたまに
 })();
