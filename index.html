@@ -10,9 +10,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Zen+Maru+Gothic:wght@400;500;700&family=Josefin+Sans:wght@300;400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/base.css">
-<link rel="stylesheet" href="css/sections.css">
-<link rel="stylesheet" href="css/space.css">
+<link rel="stylesheet" href="css/base.css?v=10061728">
+<link rel="stylesheet" href="css/sections.css?v=10061728">
+<link rel="stylesheet" href="css/space.css?v=10061728">
 </head>
 <body>
 
@@ -26,7 +26,7 @@
 .site-header{top:28px}
 .replay{top:calc(46px + env(safe-area-inset-top,0px))}
 </style>
-<div class="draft-bar">確認用の下書き（10/6 15:17版）｜【要確認】は仮の内容です</div>
+<div class="draft-bar">確認用の下書き（10/6 19:35版）｜【要確認】は仮の内容です</div>
 <header class="site-header" data-tone="light">
   <a class="brand" href="#top" aria-label="Kids Club 星の子 トップへ">
     <svg class="brand-star" aria-hidden="true"><use href="#i-star"/></svg>
@@ -42,6 +42,7 @@
   <!-- 背景：ページと一緒に流れる、ひと続きの宇宙。星はいちばん上から下までずっと見えていて、
        空の色だけが変わっていく（青 → 水色 → ピンク → 紫 → 藍 → 深い星空）。位置はJSが決める -->
   <div class="world-bg" aria-hidden="true">
+    <div class="world-clouds"></div>
     <div class="world-glow"></div>
     <div class="world-tex"></div>
     <div class="world-planet"></div>
@@ -179,6 +180,10 @@
       <p>子どもたちにとって星の子が、<br>「行かなきゃいけない場所」ではなく、</p>
       <p><b>「今日も行きたい場所」でありたい。</b></p>
     </div>
+    <div class="cta-mid reveal">
+      <p>こんなふうに過ごす毎日を、<br class="sp">一度のぞいてみませんか。</p>
+      <a class="btn-mid" href="#contact">見学してみる</a>
+    </div>
   </section>
 
   <!-- 10 ここなら、自分のままでいられる -->
@@ -234,6 +239,10 @@
       <p>普段はあまり話さない子が、星の子で過ごした日は<br>楽しかったことがお家でも伝わってくる。</p>
       <p>「今日はこれをした！」<br>「こんなことがあった〜！」</p>
       <p>子どもたちのそんな姿が、星の子がどんな場所なのかを<br><b>いちばんよく教えてくれている気がします。</b></p>
+    </div>
+    <div class="cta-mid reveal">
+      <p>星の子の空気を、<br class="sp">実際に感じてみてください。</p>
+      <a class="btn-mid" href="#contact">見学してみる</a>
     </div>
   </section>
 
@@ -335,8 +344,8 @@
 <!-- 流れ星（夜のあいだだけ、ときどき流れる） -->
 <div class="shoot-layer" aria-hidden="true"></div>
 
-<script src="js/art.js"></script>
-<script src="js/main.js"></script>
-<script src="js/space.js"></script>
+<script src="js/art.js?v=10061728"></script>
+<script src="js/main.js?v=10061728"></script>
+<script src="js/space.js?v=10061728"></script>
 </body>
 </html>
