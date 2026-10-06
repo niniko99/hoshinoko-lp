@@ -43,34 +43,35 @@
      ・明るい星（宵の明星）：見本の絵から小さく切り抜いて置く
      ・最後のアニメーションも、この星空の上で再生する */
   var IMG = { w: 667, h: 2000 };
-  // 空の色は day-sky-strip.png＝実際の空の絵（朝・夏の青空・夕方・夕焼け・夜）から
-  // 1行ずつ色を取って、1日ぶんにつないだもの。
+  // 空の色は mayu-sky-strip2.png＝まゆちゃんの見本の色そのもの。
+  // 鮮やかな青 → 水色 → 薄むらさき → ピンク → むらさき → 藍 → 宇宙。
+  // （実際の空の写真から色を取り直したことがあるが、白っぽく・くすんで見えたので見本の色に戻した）
   // 以下の数字は、すべて「ページの上から何割の位置か」。画像の高さ＝ページの高さ
   var SKY_END = 1;
-  var NIGHT = 0.825, DEEP = 0.895;  // 星が見えはじめる位置／星空が深くなる位置
-  var MILKY = [0.87, 0.99];         // 天の川の帯
-  var LIGHT_END = 0.775;            // ここまでは空が明るい（文字を濃い色にする範囲。料金欄の下で切りかえる）
-  var TEX_IN = 0.79;                // 宇宙の水彩の質感を出しはじめる位置（昼のあいだは出さない）
-  var SUNSET = 0.755;               // 夕焼けがいちばん濃いところ
-  var PLANET = { x: 0.829, y: 0.444, page: 0.855 };  // x,y＝見本の絵のどこを切り抜くか／page＝ページのどこに置くか
+  var NIGHT = 0.745, DEEP = 0.86;   // 星が見えはじめる位置／星空が深くなる位置
+  var MILKY = [0.80, 0.97];         // 天の川の帯
+  var LIGHT_END = 0.645;            // ここまでは空が明るい（文字を濃い色にする範囲）
+  var TEX_IN = 0.66;                // 宇宙の水彩の質感を出しはじめる位置（昼のあいだは出さない）
+  var SUNSET = 0.49;                // 空がいちばんピンクになるところ
+  var PLANET = { x: 0.829, y: 0.444, page: 0.80 };  // x,y＝見本の絵のどこを切り抜くか／page＝ページのどこに置くか
   // 薄い横すじの雲。空の絵から「白いところ」だけを抜いて、横に引きのばしたもの（白＋透明）。
   // 色を持っていないので、うしろの空が青でもピンクでもそのまま馴染む。
   //   page＝ページのどこに置くか／k＝帯の高さの倍率／op＝濃さ／x＝横にずらす量／flip＝左右反転
   // 同じ絵でも、濃さ・向き・横位置・大きさを変えて置くと、くり返しに見えない
   var CLOUDS = [
     { src: 'assets/src/cloudfield-2.png', page: 0.045, k: 1.35, op: 0.78, x: 10 },
-    { src: 'assets/src/cloudfield-1.png', page: 0.108, k: 1.55, op: 0.92, x: 62, flip: true },
-    { src: 'assets/src/cloudfield-3.png', page: 0.170, k: 1.30, op: 0.70, x: 30 },
-    { src: 'assets/src/cloudfield-1.png', page: 0.233, k: 1.60, op: 0.90, x: 84 },
-    { src: 'assets/src/cloudfield-2.png', page: 0.295, k: 1.35, op: 0.66, x: 45, flip: true },
-    { src: 'assets/src/cloudfield-3.png', page: 0.358, k: 1.55, op: 0.92, x: 8, flip: true },
-    { src: 'assets/src/cloudfield-1.png', page: 0.420, k: 1.30, op: 0.70, x: 70 },
-    { src: 'assets/src/cloudfield-2.png', page: 0.482, k: 1.55, op: 0.88, x: 24, flip: true },
-    { src: 'assets/src/cloudfield-3.png', page: 0.545, k: 1.35, op: 0.74, x: 55 },
-    { src: 'assets/src/cloudfield-1.png', page: 0.608, k: 1.55, op: 0.88, x: 16, flip: true },
-    { src: 'assets/src/cloudfield-2.png', page: 0.670, k: 1.40, op: 0.84, x: 78 },
-    { src: 'assets/src/cloudfield-3.png', page: 0.730, k: 1.35, op: 0.72, x: 38, flip: true },
-    { src: 'assets/src/cloudfield-1.png', page: 0.785, k: 1.20, op: 0.34, x: 60 }
+    { src: 'assets/src/cloudfield-1.png', page: 0.103, k: 1.55, op: 0.92, x: 62, flip: true },
+    { src: 'assets/src/cloudfield-3.png', page: 0.160, k: 1.30, op: 0.70, x: 30 },
+    { src: 'assets/src/cloudfield-1.png', page: 0.218, k: 1.60, op: 0.90, x: 84 },
+    { src: 'assets/src/cloudfield-2.png', page: 0.275, k: 1.35, op: 0.66, x: 45, flip: true },
+    { src: 'assets/src/cloudfield-3.png', page: 0.333, k: 1.55, op: 0.92, x: 8, flip: true },
+    { src: 'assets/src/cloudfield-1.png', page: 0.390, k: 1.30, op: 0.70, x: 70 },
+    { src: 'assets/src/cloudfield-2.png', page: 0.448, k: 1.55, op: 0.86, x: 24, flip: true },
+    { src: 'assets/src/cloudfield-3.png', page: 0.505, k: 1.35, op: 0.72, x: 55 },
+    { src: 'assets/src/cloudfield-1.png', page: 0.563, k: 1.50, op: 0.78, x: 16, flip: true },
+    { src: 'assets/src/cloudfield-2.png', page: 0.620, k: 1.35, op: 0.62, x: 78 },
+    { src: 'assets/src/cloudfield-3.png', page: 0.672, k: 1.20, op: 0.40, x: 38, flip: true },
+    { src: 'assets/src/cloudfield-1.png', page: 0.718, k: 1.10, op: 0.20, x: 60 }
   ];
   var world = $('.world-bg'), planet = $('.world-planet'), worldStars = $('.world-stars'), milky = $('.world-milky'), main = $('main');
   // 雲のレイヤーを一度だけ作る
@@ -151,9 +152,9 @@
     if (worldStars) {
       // 昼のあいだは星を出さない（ここが「ずっと夜に見える」原因だった）。
       // 夕焼けのおわりに一番星がぽつぽつ出て、夜に向かってしっかり増える
-      var m = 'linear-gradient(to bottom,transparent 0%,transparent ' + pct(rowY(0.755)) +
-        ',rgba(0,0,0,.10) ' + pct(rowY(0.80)) + ',rgba(0,0,0,.40) ' + pct(rowY(0.835)) +
-        ',rgba(0,0,0,.75) ' + pct(rowY(0.865)) + ',#000 ' + pct(rowY(DEEP)) + ')';
+      var m = 'linear-gradient(to bottom,transparent 0%,transparent ' + pct(rowY(0.63)) +
+        ',rgba(0,0,0,.10) ' + pct(rowY(0.70)) + ',rgba(0,0,0,.40) ' + pct(rowY(0.76)) +
+        ',rgba(0,0,0,.75) ' + pct(rowY(0.81)) + ',#000 ' + pct(rowY(DEEP)) + ')';
       worldStars.style.webkitMaskImage = m;
       worldStars.style.maskImage = m;
     }

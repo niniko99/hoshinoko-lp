@@ -17,10 +17,10 @@ main section{padding:var(--pad-y) var(--gutter)}
   min-height:100vh;min-height:100svh;display:grid;place-items:center;text-align:center;padding-top:120px;padding-bottom:30vh;
 }
 .s-hero::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
-  background:url("../assets/src/hero-sky-pc.jpg") center bottom/cover no-repeat;
-  -webkit-mask-image:linear-gradient(to bottom,#000 62%,transparent 97%);mask-image:linear-gradient(to bottom,#000 62%,transparent 97%)}
+  background:url("../assets/src/hero-photo-pc.jpg") center bottom/cover no-repeat;
+  -webkit-mask-image:linear-gradient(to bottom,#000 74%,transparent 99%);mask-image:linear-gradient(to bottom,#000 74%,transparent 99%)}
 @media (orientation:portrait){
-  .s-hero::after{background-image:url("../assets/src/hero-sky-sp.jpg")}
+  .s-hero::after{background-image:url("../assets/src/hero-photo-sp.jpg")}
 }
 .hero-inner{position:relative;z-index:3}
 /* 1枚目の文字は藍色。まっ黒い紺だと空の感じが消えてしまうので、青みを残したまま読める濃さにした。

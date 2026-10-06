@@ -45,7 +45,7 @@ a:focus-visible{outline:3px solid var(--star);outline-offset:4px;border-radius:6
    星・天の川はこちらで描く（art.js）。位置と大きさは JS（main.js の paintWorld）が決める */
 main{position:relative;color:#fff}
 .world-bg{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;
-  background:#0a1030 url("../assets/src/day-sky-strip.png") 0 0/100% 100% no-repeat}
+  background:#2a20c7 url("../assets/src/mayu-sky-strip2.png") 0 0/100% 100% no-repeat}
 /* 雲：薄い横すじの雲。白い雲の形だけを持った絵（まわりは透明）。
    色を持っていないので、うしろの空が青でもピンクでもその色のまま白い雲になる。
    上下のふちは絵そのものに溶かしこんであるので、CSSのマスクは要らない。
