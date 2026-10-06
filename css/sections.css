@@ -254,3 +254,15 @@ dl.info-card>div:last-child{border-bottom:0}
 .on-light .can-note,.on-light .flow b,.on-light .flow-note,.on-light .cta-mid p,
 .on-light .sec-title small,.on-light .tbd-note,.on-light .h-info{
   text-shadow:0 1px 2px rgba(10,22,66,.72),0 1px 10px rgba(10,22,66,.55)}
+
+/* ===== 夕日の帯（空の明るさが155〜172まで上がるところ）にのる文字 =====
+   ここだけは白だと沈んで読めないので、濃い藍むらさきにする。
+   空のピンク・むらさきと同じ系統の色なので、雰囲気は変わらない。
+   うしろに白い光をうすく敷いて、空から浮かせる。
+   どの文字に付けるかは main.js が空の明るさを見て決める（.on-deep）
+   ※同じセクションでも、空が暗くなるところから下は白のまま */
+.on-deep,.on-light .on-deep,.on-light .on-deep small,.on-light .on-deep p{color:#2e1a63;
+  text-shadow:0 1px 10px rgba(255,255,255,.62),0 0 26px rgba(255,255,255,.42)}
+.on-deep small{opacity:.72}
+/* ふきだしやカードは自前の色を持っているので、そのまま */
+.on-deep .kv,.on-deep .voice,.on-deep .btn-mid,.on-deep .btn-cta{text-shadow:none}

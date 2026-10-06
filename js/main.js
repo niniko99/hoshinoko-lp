@@ -59,6 +59,19 @@
   //   op＝濃さ／x＝横にずらす量／flip＝左右反転
   // 置き場所は決め打ちではなく、ページの中の「文字も写真もない余白」をさがして入れる
   // （文字に雲がかぶると読みづらくなるため。下の findGaps を見てください）
+  // 夕日のところ（空がいちばん明るい帯）は、白い文字だと沈んで読めない。
+  // この4つのセクションの中にある文字を、空の明るさを見て濃い色に切りかえる
+  var DEEP_SECS = ['kidsvoice', 'belonging', 'staff', 'voices'];
+  var DEEP_MIN = 105;      // 空の明るさがこれ以上なら濃い色に。下回ったら白のまま
+  // mayu-sky-strip2.png の明るさ（ページの上から5%きざみ）。いちばん明るいのは30〜55%あたり
+  var SKY_LUM = [97, 104, 119, 127, 132, 143, 156, 165, 172, 171, 161, 155, 128, 81, 57, 44, 28, 31, 16, 4, 3];
+  function skyLum(f) {
+    var x = Math.max(0, Math.min(1, f)) * (SKY_LUM.length - 1), i = Math.floor(x), t = x - i;
+    return i >= SKY_LUM.length - 1 ? SKY_LUM[SKY_LUM.length - 1] : SKY_LUM[i] + (SKY_LUM[i + 1] - SKY_LUM[i]) * t;
+  }
+  // ふわっと表示の動き（transform）が入っていてもずれない、ページの上からの位置
+  function docTop(el) { var y = 0; while (el) { y += el.offsetTop; el = el.offsetParent; } return y; }
+
   var CLOUD_MIN = 96;      // この高さより狭い余白には入れない
   var CLOUD_FROM = 0.02;   // 雲を置く範囲（ページの上から何割〜何割か）。夜の手前まで
   var CLOUD_TO = 0.72;
@@ -108,9 +121,7 @@
     // （.wrap 自体は中身をまるごと覆ってしまうので外す）
     var blocks = main.querySelectorAll(
       ':scope > section > *:not(.wrap), :scope > section .wrap > *');
-    // 位置は offsetTop を足し上げて測る。
-    // ふわっと表示の動き（transform）が入っていても、ずれない測りかた
-    var docTop = function (el) { var y = 0; while (el) { y += el.offsetTop; el = el.offsetParent; } return y; };
+    // 位置は docTop（offsetTop の足し上げ）で測る。ふわっと表示の動きの影響を受けない
     var spans = [];
     for (var i = 0; i < blocks.length; i++) {
       var h = blocks[i].offsetHeight;
@@ -216,6 +227,19 @@
     for (var si = 0; si < secs.length; si++) {
       var s = secs[si];
       s.classList.toggle('on-light', s.id !== 'hero' && (s.offsetTop + s.offsetHeight / 2) / H < LIGHT_END);
+    }
+    // 夕日の帯にのる文字は、白だと沈むので濃い色にする。
+    // 同じセクションの中でも、空が暗くなるところから下は白のまま（下まで一律にすると今度はそこが読めない）
+    var deepSel = '.sec-title,.read,.mid-word,.big-word,.lead,.photo-words,.cta-mid,.swipe-hint';
+    for (var di = 0; di < DEEP_SECS.length; di++) {
+      var sec = document.getElementById(DEEP_SECS[di]);
+      if (!sec) continue;
+      var items = sec.querySelectorAll(deepSel);
+      for (var ii = 0; ii < items.length; ii++) {
+        var el = items[ii];
+        var mid = (docTop(el) - main.offsetTop + el.offsetHeight / 2) / H;
+        el.classList.toggle('on-deep', skyLum(mid) >= DEEP_MIN);
+      }
     }
   }
 
