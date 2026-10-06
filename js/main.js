@@ -43,10 +43,13 @@
      ・明るい星（宵の明星）：見本の絵から小さく切り抜いて置く
      ・最後のアニメーションも、この星空の上で再生する */
   var IMG = { w: 667, h: 2000 };
-  var SKY_END = 0.78;               // 見本の絵の上から78%まで（その下は小さな地球と文字なので使わない）を、ページ全体に合わせる
-  var NIGHT = 0.485, DEEP = 0.62;   // 星が出はじめる位置／星空が深くなる位置（見本の絵の上からの割合）
-  var MILKY = [0.52, 0.75];         // 天の川の帯（同上）
-  var PLANET = { x: 0.829, y: 0.444 };
+  // 空の色は mayu-sky-strip2.png（見本の色そのまま。昼を長く、夜を後半にまとめ直したもの）。
+  // 以下の数字は、すべて「ページの上から何割の位置か」。画像の高さ＝ページの高さ
+  var SKY_END = 1;
+  var NIGHT = 0.74, DEEP = 0.85;    // 星が見えはじめる位置／星空が深くなる位置
+  var MILKY = [0.77, 0.95];         // 天の川の帯
+  var LIGHT_END = 0.63;             // ここまでは空が明るい（文字を濃い色にする範囲）
+  var PLANET = { x: 0.829, y: 0.444, page: 0.66 };  // x,y＝見本の絵のどこを切り抜くか／page＝ページのどこに置くか
   var world = $('.world-bg'), planet = $('.world-planet'), worldStars = $('.world-stars'), milky = $('.world-milky'), main = $('main');
   var nightTop = 0;
   function paintWorld() {
@@ -62,26 +65,19 @@
       var ps = Math.max(W / IMG.w, 1), d = Math.round(44 * ps);
       planet.style.width = planet.style.height = d + 'px';
       planet.style.left = (PLANET.x * W - d / 2).toFixed(1) + 'px';
-      planet.style.top = (rowY(PLANET.y) - d / 2).toFixed(1) + 'px';
+      planet.style.top = (rowY(PLANET.page) - d / 2).toFixed(1) + 'px';
       planet.style.backgroundSize = (IMG.w * ps).toFixed(1) + 'px ' + (IMG.h * ps).toFixed(1) + 'px';
       planet.style.backgroundPosition = (d / 2 - PLANET.x * IMG.w * ps).toFixed(1) + 'px ' + (d / 2 - PLANET.y * IMG.h * ps).toFixed(1) + 'px';
     }
     var vh = window.innerHeight || 800;
-    // 星雲のもや：いちばん上（濃い青のところ）にひろげる。明るい水色に入る手前で消える
-    var neb = $('.world-neb');
-    if (neb) {
-      neb.style.top = '0px';
-      neb.style.height = rowY(0.20).toFixed(0) + 'px';
-    }
     // 夕焼けの光のにじみ（ピンクの帯のまんなか）
     var glow = $('.world-glow');
     if (glow) {
       var gh = Math.round(vh * 1.15);
-      glow.style.top = (rowY(0.345) - gh / 2).toFixed(0) + 'px';
+      glow.style.top = (rowY(0.52) - gh / 2).toFixed(0) + 'px';
       glow.style.height = gh + 'px';
     }
-    // 水彩の質感：横幅より少し大きめに出して、星の粒が自然な大きさになるようにする。
-    // いちばん上（こうの絵があるところ）は重ねず、少し下からなじませる
+    // 水彩の質感：横幅より少し大きめに出して、星の粒が自然な大きさになるようにする
     var tex = $('.world-tex');
     if (tex) {
       var tw = Math.round(Math.max(W * 1.35, 640));
@@ -90,25 +86,25 @@
       tex.style.webkitMaskImage = m;
       tex.style.maskImage = m;
     }
-    // 明るい帯を沈めるベール（見本の 0.13〜0.47 のあたり）
-    var veil = $('.world-veil');
-    if (veil) {
-      veil.style.top = rowY(0.13).toFixed(0) + 'px';
-      veil.style.height = (rowY(0.47) - rowY(0.13)).toFixed(0) + 'px';
-    }
     if (worldStars) {
-      // 星は、いちばん上から下までずっと見えている。
-      // ただし昼の空ではうっすらと（出しすぎると最初から夜に見えてしまう）、
-      // 夕方からだんだん増えて、夜に向かってしっかり見えるようにする
-      var m = 'linear-gradient(to bottom,rgba(0,0,0,.1) 0%,rgba(0,0,0,.2) ' + pct(rowY(0.22)) +
-        ',rgba(0,0,0,.32) ' + pct(rowY(0.33)) + ',rgba(0,0,0,.56) ' + pct(rowY(0.44)) +
-        ',rgba(0,0,0,.8) ' + pct(rowY(NIGHT + 0.035)) + ',#000 ' + pct(rowY(DEEP)) + ')';
+      // 昼のあいだはごくうっすら。日が暮れるあたり（6〜7割）からだんだん増えて、
+      // 夜に向かってしっかり見えるようにする
+      var m = 'linear-gradient(to bottom,rgba(0,0,0,.07) 0%,rgba(0,0,0,.11) ' + pct(rowY(0.40)) +
+        ',rgba(0,0,0,.2) ' + pct(rowY(0.58)) + ',rgba(0,0,0,.44) ' + pct(rowY(0.68)) +
+        ',rgba(0,0,0,.8) ' + pct(rowY(NIGHT + 0.02)) + ',#000 ' + pct(rowY(DEEP)) + ')';
       worldStars.style.webkitMaskImage = m;
       worldStars.style.maskImage = m;
     }
     if (milky) {
       milky.style.top = rowY(MILKY[0]).toFixed(0) + 'px';
       milky.style.height = (rowY(MILKY[1]) - rowY(MILKY[0])).toFixed(0) + 'px';
+    }
+    // 空が明るいところ（ページの上から63%まで）にあるセクションは、
+    // 白い文字だと読めないので、濃い色にする印をつける
+    var secs = main.querySelectorAll(':scope > section');
+    for (var si = 0; si < secs.length; si++) {
+      var s = secs[si];
+      s.classList.toggle('on-light', (s.offsetTop + s.offsetHeight / 2) / H < LIGHT_END);
     }
   }
 

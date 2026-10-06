@@ -167,3 +167,21 @@ dl.info-card>div:last-child{border-bottom:0}
   100%{opacity:0;transform:rotate(var(--ang)) translateX(var(--dist)) scaleX(1)}
 }
 
+
+/* ===== 空が明るいところ（ページの上から63%まで）＝昼の空の上 =====
+   白い文字だと読めないので、濃い紺にする。影も、濃い影ではなく白っぽい薄い影に変える。
+   どのセクションに付けるかは main.js が位置を見て決める（.on-light） */
+.on-light{color:#16264f}
+.on-light .sec-title,.on-light .big-word,.on-light .mid-word,.on-light .today-big,
+.on-light .hero-copy,.on-light .hero-brand,.on-light .price-note,.on-light .contact-lead{
+  text-shadow:0 1px 12px rgba(255,255,255,.55)}
+.on-light .sec-title small{color:rgba(22,38,79,.7)}
+.on-light .hero-brand span{color:rgba(22,38,79,.86)}
+.on-light .scroll-cue{border-color:rgba(22,38,79,.5)}
+.on-light .scroll-cue span{background:#16264f}
+.on-light .tbd-note.light,.on-light .h-info.light{color:rgba(22,38,79,.72)}
+.on-light .h-info.light small{color:rgba(22,38,79,.56)}
+.on-light .btn-sub{border-color:rgba(22,38,79,.55);color:#16264f}
+/* 「やってみたい！」の手書き風の線も、白だと見えないので濃い色に差し替える */
+.on-light .marker{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 16' preserveAspectRatio='none'%3E%3Cfilter id='s'%3E%3CfeGaussianBlur stdDeviation='.55'/%3E%3C/filter%3E%3Cpath filter='url(%23s)' d='M4 10C60 5 110 12 164 9C212 6 258 11 296 8C258 13 212 9 164 12C110 15 60 8 4 10Z' fill='%232a3f73' opacity='.5'/%3E%3C/svg%3E")}
