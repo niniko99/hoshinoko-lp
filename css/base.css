@@ -191,15 +191,27 @@ html.js .reveal.is-in{opacity:1;transform:none}
   .ph-box svg{width:24px;height:24px}
 }
 
-/* 要所要所に、写真をちょこっと散らす（まとめて1か所ではなく、ページのあちこちに） */
+/* 要所要所に、写真をちょこっと散らす（まとめて1か所ではなく、ページのあちこちに）
+   ひとつの並びには、縦長なら縦長だけ・横長なら横長だけを置く。
+   向きが混ざると高さをそろえられず、どれも小さくしか出せないため */
 .scatter{display:flex;justify-content:center;align-items:flex-start;flex-wrap:wrap;gap:clamp(14px,2.6vw,34px);margin-top:clamp(38px,5vw,66px)}
 .scatter .ph{width:min(236px,43vw)}
 .scatter .ph:nth-child(odd){rotate:-2.6deg;translate:0 8px}
 .scatter .ph:nth-child(even){rotate:2.2deg;translate:0 -10px}
+/* 横長が並ぶところ：幅を広げても縦に伸びないので、大きめに出せる */
+.scatter.wide .ph{width:min(312px,46vw)}
+/* 縦長が並ぶところ：幅を広げるとぐっと縦に伸びるので、少しだけ大きく */
+.scatter.tall .ph{width:min(254px,43vw)}
 /* スマホでも2枚ずつ横に並べる（1枚ずつ縦に積むと「散らした感じ」が出ないため） */
 @media (max-width:640px){
   .scatter{gap:10px}
   .scatter .ph{width:calc(50% - 5px)}
+  .scatter.tall .ph{width:calc(50% - 5px)}
+  /* 横長だけは半分にすると小さくなりすぎるので、1枚ずつ大きく見せる */
+  .scatter.wide{gap:16px}
+  .scatter.wide .ph{width:min(100%,420px)}
+  .scatter.wide .ph:nth-child(odd){translate:0 0}
+  .scatter.wide .ph:nth-child(even){translate:0 0}
 }
 
 /* ===== ボタン ===== */

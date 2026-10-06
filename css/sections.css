@@ -62,13 +62,16 @@ main section{padding:var(--pad-y) var(--gutter)}
 /* スマホでは横にスワイプして見る。1枚ずつ大きく見えるので、
    遠足のバスのように「全体を見たい写真」も切らずに出せる */
 @media (max-width:640px){
-  .gallery{display:flex;grid-template-columns:none;gap:12px;
+  .gallery{display:flex;grid-template-columns:none;gap:12px;align-items:center;
     overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
     padding:4px var(--gutter) 10px;margin-inline:calc(-1 * var(--gutter));
     scroll-padding-inline:var(--gutter);max-width:none}
   .gallery::-webkit-scrollbar{display:none}
   .gallery{scrollbar-width:none}
-  .g{flex:0 0 82%;scroll-snap-align:center}
+  .g{flex:0 0 78%;scroll-snap-align:center}
+  /* 横長の写真は幅を広くとる。そろえると縦長より小さく見えてしまうため
+     （帯の中では align-items:center で上下まんなかに来る） */
+  .g-mwide,.g-full{flex:0 0 94%}
   /* 横スワイプのときは、どの写真も切らずにそのままの形で見せる */
   .g .ph-box.filled{aspect-ratio:auto}
   .g .ph-box.filled img{height:auto}
