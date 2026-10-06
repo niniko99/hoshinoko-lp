@@ -56,22 +56,26 @@
   var PLANET = { x: 0.829, y: 0.444, page: 0.80 };  // x,y＝見本の絵のどこを切り抜くか／page＝ページのどこに置くか
   // 薄い横すじの雲。空の絵から「白いところ」だけを抜いて、横に引きのばしたもの（白＋透明）。
   // 色を持っていないので、うしろの空が青でもピンクでもそのまま馴染む。
-  //   page＝ページのどこに置くか／k＝帯の高さの倍率／op＝濃さ／x＝横にずらす量／flip＝左右反転
-  // 同じ絵でも、濃さ・向き・横位置・大きさを変えて置くと、くり返しに見えない
+  //   op＝濃さ／x＝横にずらす量／flip＝左右反転
+  // 置き場所は決め打ちではなく、ページの中の「文字も写真もない余白」をさがして入れる
+  // （文字に雲がかぶると読みづらくなるため。下の findGaps を見てください）
+  var CLOUD_MIN = 96;      // この高さより狭い余白には入れない
+  var CLOUD_FROM = 0.02;   // 雲を置く範囲（ページの上から何割〜何割か）。夜の手前まで
+  var CLOUD_TO = 0.72;
   var CLOUDS = [
-    { src: 'assets/src/cloudfield-2.png', page: 0.045, k: 1.35, op: 0.78, x: 10 },
-    { src: 'assets/src/cloudfield-1.png', page: 0.103, k: 1.55, op: 0.92, x: 62, flip: true },
-    { src: 'assets/src/cloudfield-3.png', page: 0.160, k: 1.30, op: 0.70, x: 30 },
-    { src: 'assets/src/cloudfield-1.png', page: 0.218, k: 1.60, op: 0.90, x: 84 },
-    { src: 'assets/src/cloudfield-2.png', page: 0.275, k: 1.35, op: 0.66, x: 45, flip: true },
-    { src: 'assets/src/cloudfield-3.png', page: 0.333, k: 1.55, op: 0.92, x: 8, flip: true },
-    { src: 'assets/src/cloudfield-1.png', page: 0.390, k: 1.30, op: 0.70, x: 70 },
-    { src: 'assets/src/cloudfield-2.png', page: 0.448, k: 1.55, op: 0.86, x: 24, flip: true },
-    { src: 'assets/src/cloudfield-3.png', page: 0.505, k: 1.35, op: 0.72, x: 55 },
-    { src: 'assets/src/cloudfield-1.png', page: 0.563, k: 1.50, op: 0.78, x: 16, flip: true },
-    { src: 'assets/src/cloudfield-2.png', page: 0.620, k: 1.35, op: 0.62, x: 78 },
-    { src: 'assets/src/cloudfield-3.png', page: 0.672, k: 1.20, op: 0.40, x: 38, flip: true },
-    { src: 'assets/src/cloudfield-1.png', page: 0.718, k: 1.10, op: 0.20, x: 60 }
+    { src: 'assets/src/cloudfield-2.png', op: 0.80, x: 10 },
+    { src: 'assets/src/cloudfield-1.png', op: 0.92, x: 62, flip: true },
+    { src: 'assets/src/cloudfield-3.png', op: 0.72, x: 30 },
+    { src: 'assets/src/cloudfield-1.png', op: 0.90, x: 84 },
+    { src: 'assets/src/cloudfield-2.png', op: 0.68, x: 45, flip: true },
+    { src: 'assets/src/cloudfield-3.png', op: 0.92, x: 8, flip: true },
+    { src: 'assets/src/cloudfield-1.png', op: 0.72, x: 70 },
+    { src: 'assets/src/cloudfield-2.png', op: 0.86, x: 24, flip: true },
+    { src: 'assets/src/cloudfield-3.png', op: 0.74, x: 55 },
+    { src: 'assets/src/cloudfield-1.png', op: 0.80, x: 16, flip: true },
+    { src: 'assets/src/cloudfield-2.png', op: 0.66, x: 78 },
+    { src: 'assets/src/cloudfield-3.png', op: 0.58, x: 38, flip: true },
+    { src: 'assets/src/cloudfield-1.png', op: 0.44, x: 60 }
   ];
   var world = $('.world-bg'), planet = $('.world-planet'), worldStars = $('.world-stars'), milky = $('.world-milky'), main = $('main');
   // 雲のレイヤーを一度だけ作る
@@ -93,6 +97,45 @@
       cloudOn.push(false);
     }
   }
+  /* ページの中の「文字も写真もない、たての空き」をさがす。
+     見出し・本文・写真・カードなど、中身の入っている箱の上下の位置をぜんぶ集めて、
+     重なっているものをつなぎ、そのあいだに残ったすき間を返す。
+     ここにしか雲を置かないので、雲が文字にかぶることがない */
+  function findGaps() {
+    if (!main) return [];
+    var top0 = main.offsetTop, H = main.offsetHeight || 1;
+    // セクションの直下のかたまりと、.wrap の中のかたまりの両方を見る
+    // （.wrap 自体は中身をまるごと覆ってしまうので外す）
+    var blocks = main.querySelectorAll(
+      ':scope > section > *:not(.wrap), :scope > section .wrap > *');
+    // 位置は offsetTop を足し上げて測る。
+    // ふわっと表示の動き（transform）が入っていても、ずれない測りかた
+    var docTop = function (el) { var y = 0; while (el) { y += el.offsetTop; el = el.offsetParent; } return y; };
+    var spans = [];
+    for (var i = 0; i < blocks.length; i++) {
+      var h = blocks[i].offsetHeight;
+      if (h < 2) continue;
+      var t = docTop(blocks[i]);
+      spans.push([t, t + h]);
+    }
+    if (!spans.length) return [];
+    spans.sort(function (a, b) { return a[0] - b[0]; });
+    var merged = [spans[0].slice()];
+    for (var j = 1; j < spans.length; j++) {
+      var last = merged[merged.length - 1];
+      if (spans[j][0] <= last[1]) { if (spans[j][1] > last[1]) last[1] = spans[j][1]; }
+      else merged.push(spans[j].slice());
+    }
+    var lo = top0 + H * CLOUD_FROM, hi = top0 + H * CLOUD_TO, gaps = [];
+    for (var k = 1; k < merged.length; k++) {
+      var a = Math.max(merged[k - 1][1], lo), b = Math.min(merged[k][0], hi);
+      if (b - a >= CLOUD_MIN) gaps.push([a, b]);
+    }
+    // 広い余白から順に使う
+    gaps.sort(function (p, q) { return (q[1] - q[0]) - (p[1] - p[0]); });
+    return gaps.slice(0, cloudEls.length).sort(function (p, q) { return p[0] - q[0]; });
+  }
+
   // 雲は、画面のまわりにあるものだけ出す。
   // 14枚ぜんぶ出しっぱなしにすると、スマホで絵がうまく描かれないことがあったため
   function showNearCloudsOnly() {
@@ -123,10 +166,14 @@
       planet.style.backgroundPosition = (d / 2 - PLANET.x * IMG.w * ps).toFixed(1) + 'px ' + (d / 2 - PLANET.y * IMG.h * ps).toFixed(1) + 'px';
     }
     var vh = window.innerHeight || 800;
-    // 雲：横幅と画面の高さの両方を見て帯の高さを決める（スマホで細くなりすぎないように）
+    // 雲：文字も写真もない余白をさがして、そこに収まる大きさで置く。
+    // 余白いっぱいに広げず、上下を少しあけて、文字から離す
+    var gaps = findGaps(), pad = 14;
     for (var ci = 0; ci < cloudEls.length; ci++) {
-      var c = CLOUDS[ci];
-      var ch = Math.round(Math.max(W * 0.35, vh * 0.32) * c.k), ct = Math.round(rowY(c.page) - ch / 2);
+      var g = gaps[ci];
+      if (!g) { cloudEls[ci].style.height = '0px'; cloudBand[ci] = [0, 0]; continue; }
+      var ct = Math.round(g[0] - main.offsetTop + pad);
+      var ch = Math.round((g[1] - g[0]) - pad * 2);
       cloudEls[ci].style.top = ct + 'px';
       cloudEls[ci].style.height = ch + 'px';
       cloudBand[ci] = [main.offsetTop + ct, main.offsetTop + ct + ch];  // ページ全体での位置

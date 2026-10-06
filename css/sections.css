@@ -23,16 +23,12 @@ main section{padding:var(--pad-y) var(--gutter)}
   .s-hero::after{background-image:url("../assets/src/hero-photo-sp.jpg")}
 }
 .hero-inner{position:relative;z-index:3}
-/* 1枚目の文字は藍色。まっ黒い紺だと空の感じが消えてしまうので、青みを残したまま読める濃さにした。
-   うしろに白い光をうすく敷いて、空の水色から浮かせる。
-   （ほかのセクションの「明るい空は濃紺」とは別あつかい。main.js の on-light から外してある）
-   ※もっと青くすると（群青 #1E40A6）空に溶けて逆に読みにくくなる。比べて決めた色 */
+/* 1枚目の文字は白。青空の写真の上なので、濃い影をぴたっと裏に敷いて輪郭を立てる */
 .hero-copy{font-family:var(--ff-hand);font-weight:600;font-size:clamp(19px,5.2vw,54px);line-height:1.95;letter-spacing:.08em;
-  color:#15306e;text-shadow:0 1px 10px rgba(255,255,255,.72),0 0 34px rgba(255,255,255,.46)}
+  color:#fff;text-shadow:0 1px 4px rgba(8,26,74,.62),0 2px 22px rgba(8,26,74,.5)}
 .hero-copy .line{display:block}
 .hero-brand{margin-top:1.5em;font-family:var(--ff-hand);font-weight:600;font-size:clamp(30px,4.4vw,50px);line-height:1.2;letter-spacing:.12em;
-  color:#15306e;text-shadow:0 1px 10px rgba(255,255,255,.72),0 0 30px rgba(255,255,255,.46)}
-.hero-brand span{color:rgba(21,48,110,.82)}
+  color:#fff;text-shadow:0 1px 4px rgba(8,26,74,.62),0 2px 20px rgba(8,26,74,.5)}
 .hero-brand span{display:block;margin-bottom:.5em;font-family:var(--ff-en);font-weight:300;font-size:clamp(13px,1.3vw,16px);letter-spacing:.4em}
 .scroll-cue{position:absolute;left:50%;bottom:26px;z-index:4;width:26px;height:44px;margin-left:-13px;border:2px solid rgba(255,255,255,.7);border-radius:14px}
 .scroll-cue span{position:absolute;left:50%;top:8px;width:4px;height:8px;margin-left:-2px;border-radius:2px;background:#fff;animation:cue 2s ease-in-out infinite}
@@ -63,12 +59,27 @@ main section{padding:var(--pad-y) var(--gutter)}
 .g-full{grid-column:1/-1;justify-self:center;width:min(100%,760px)}
 .g-full .ph-box.filled{aspect-ratio:auto}
 .g-full .ph-box.filled img{height:auto}
+/* スマホでは横にスワイプして見る。1枚ずつ大きく見えるので、
+   遠足のバスのように「全体を見たい写真」も切らずに出せる */
 @media (max-width:640px){
-  .gallery{grid-template-columns:repeat(2,minmax(0,1fr))}
-  /* 3枚目は横いっぱいに。こちらも切らずにそのままの形で */
-  .g-mwide{grid-column:1/-1}
-  .g-mwide .ph-box.filled{aspect-ratio:auto}
-  .g-mwide .ph-box.filled img{height:auto}
+  .gallery{display:flex;grid-template-columns:none;gap:12px;
+    overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
+    padding:4px var(--gutter) 10px;margin-inline:calc(-1 * var(--gutter));
+    scroll-padding-inline:var(--gutter);max-width:none}
+  .gallery::-webkit-scrollbar{display:none}
+  .gallery{scrollbar-width:none}
+  .g{flex:0 0 82%;scroll-snap-align:center}
+  /* 横スワイプのときは、どの写真も切らずにそのままの形で見せる */
+  .g .ph-box.filled{aspect-ratio:auto}
+  .g .ph-box.filled img{height:auto}
+  .g-full{width:auto}
+}
+
+/* 横スワイプできることの合図。スマホのときだけ出す */
+.swipe-hint{display:none}
+@media (max-width:640px){
+  .swipe-hint{display:block;margin-top:.8em;text-align:center;
+    font-size:11px;letter-spacing:.2em;opacity:.8}
 }
 
 /* 7 できること */
@@ -84,12 +95,18 @@ main section{padding:var(--pad-y) var(--gutter)}
 .flow .ico{width:clamp(64px,9vw,96px);aspect-ratio:1;margin:0 auto;padding:18%;border-radius:50%;background:rgba(255,255,255,.88);fill:none;stroke:var(--ink);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;box-shadow:0 10px 24px rgba(10,20,70,.2)}
 .flow b{display:block;margin-top:.7em;font-family:var(--ff-hand);font-weight:600;font-size:clamp(15px,1.8vw,19px);line-height:1.5}
 .flow li:not(:last-child)::after{content:"";position:absolute;top:clamp(26px,3.8vw,42px);right:calc(-1 * clamp(8px,1.6vw,20px) / 2 - 6px);width:12px;height:12px;border-top:2.5px solid rgba(255,255,255,.85);border-right:2.5px solid rgba(255,255,255,.85);rotate:45deg}
+/* スマホでは横にスワイプ。1画面に1つずつ出るので、1日が順に進んでいく感じになる */
 @media (max-width:640px){
-  .flow{grid-template-columns:1fr;gap:18px;max-width:300px}
-  .flow li{display:grid;grid-template-columns:72px 1fr;align-items:center;text-align:left;gap:14px}
-  .flow .ico{width:72px;margin:0}
-  .flow b{margin-top:0}
-  .flow li:not(:last-child)::after{top:auto;bottom:-15px;left:31px;right:auto;rotate:135deg}
+  .flow{display:flex;grid-template-columns:none;gap:14px;max-width:none;
+    overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
+    padding:4px var(--gutter) 10px;margin-inline:calc(-1 * var(--gutter));
+    scroll-padding-inline:var(--gutter);scrollbar-width:none}
+  .flow::-webkit-scrollbar{display:none}
+  .flow li{flex:0 0 58%;scroll-snap-align:center;text-align:center}
+  .flow .ico{width:84px;margin:0 auto}
+  .flow b{margin-top:.7em}
+  /* 次へ進む矢印は、となりのカードとのあいだに出す */
+  .flow li:not(:last-child)::after{top:34px;right:-13px;left:auto;bottom:auto;rotate:45deg}
 }
 .today-big{margin-top:1.2em;text-align:center;font-family:var(--ff-hand);font-weight:600;font-size:clamp(44px,12vw,104px);line-height:1.38;letter-spacing:.03em;text-shadow:0 2px 8px rgba(60,40,120,.35),0 4px 30px rgba(40,30,100,.45)}
 .today-big .l{display:block;white-space:nowrap}
@@ -223,20 +240,17 @@ dl.info-card>div:last-child{border-bottom:0}
 .voice-big p{font-family:var(--ff-hand);font-weight:600;font-size:clamp(16px,2.4vw,22px);line-height:1.8}
 @media (max-width:760px){.voice-big{grid-column:auto}}
 
-/* ===== 空が明るいところ（ページの上から63%まで）＝昼の空の上 =====
-   白い文字だと読めないので、濃い紺にする。影も、濃い影ではなく白っぽい薄い影に変える。
+/* ===== 空が明るいところ（昼〜夕方の空の上）の文字 =====
+   文字は白のまま。ただし明るい空の上だと白はぼやけるので、
+   文字のすぐ裏に濃い影をぴたっと敷いて、輪郭を立てる。
+   （いちばん明るいピンクの空 #EC7EC9 の上では、白はコントラスト2.4しかない。
+     影がないと読めない）
    どのセクションに付けるかは main.js が位置を見て決める（.on-light） */
-.on-light{color:#16264f}
+.on-light{color:#fff}
 .on-light .sec-title,.on-light .big-word,.on-light .mid-word,.on-light .today-big,
-.on-light .hero-copy,.on-light .hero-brand,.on-light .price-note,.on-light .contact-lead{
-  text-shadow:0 1px 12px rgba(255,255,255,.55)}
-.on-light .sec-title small{color:rgba(22,38,79,.7)}
-.on-light .hero-brand span{color:rgba(22,38,79,.86)}
-.on-light .scroll-cue{border-color:rgba(22,38,79,.5)}
-.on-light .scroll-cue span{background:#16264f}
-.on-light .tbd-note.light,.on-light .h-info.light{color:rgba(22,38,79,.72)}
-.on-light .h-info.light small{color:rgba(22,38,79,.56)}
-.on-light .btn-sub{border-color:rgba(22,38,79,.55);color:#16264f}
-/* 「やってみたい！」の手書き風の線も、白だと見えないので濃い色に差し替える */
-.on-light .marker{
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 16' preserveAspectRatio='none'%3E%3Cfilter id='s'%3E%3CfeGaussianBlur stdDeviation='.55'/%3E%3C/filter%3E%3Cpath filter='url(%23s)' d='M4 10C60 5 110 12 164 9C212 6 258 11 296 8C258 13 212 9 164 12C110 15 60 8 4 10Z' fill='%232a3f73' opacity='.5'/%3E%3C/svg%3E")}
+.on-light .price-note,.on-light .contact-lead,.on-light .lead,.on-light .future-quote{
+  text-shadow:0 1px 3px rgba(10,22,66,.62),0 2px 18px rgba(10,22,66,.5)}
+.on-light .read,.on-light .photo-words,.on-light .can b,.on-light .can span,
+.on-light .can-note,.on-light .flow b,.on-light .flow-note,.on-light .cta-mid p,
+.on-light .sec-title small,.on-light .tbd-note,.on-light .h-info{
+  text-shadow:0 1px 2px rgba(10,22,66,.72),0 1px 10px rgba(10,22,66,.55)}
