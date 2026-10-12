@@ -40,20 +40,17 @@ main>section.s-space{padding:0}
 .space-copy p+p{margin-top:.8em}
 .space-copy .final{font-size:clamp(21px,2.8vw,34px)}
 .space-copy .final-brand{margin-top:1.1em;font-size:clamp(26px,3.4vw,40px);line-height:1.3;letter-spacing:.12em}
-.final-brand span{display:block;margin-bottom:.45em;font-family:var(--ff-en);font-weight:300;font-size:14px;letter-spacing:.4em}
+.final-brand .final-brand-label{display:block;margin-bottom:.45em;font-family:var(--ff-en);font-weight:300;font-size:14px;letter-spacing:.4em}
 .company-block{margin-top:1.8em}
-.space-copy .pbd-mark{width:36px;height:36px;object-fit:contain;margin-bottom:.5em;filter:drop-shadow(0 0 14px rgba(90,160,255,.45))}
 .space-copy .run-by{font-family:var(--ff-body);font-weight:500;font-size:12px;line-height:1.8;letter-spacing:.2em;color:rgba(255,255,255,.72)}
 .space-copy .company{margin-top:.1em;padding-left:.3em;font-family:var(--ff-en);font-weight:300;font-size:clamp(24px,3vw,36px);line-height:1.3;letter-spacing:.3em}
 @media (max-width:899px){
   .space-copy{left:var(--gutter);right:var(--gutter);bottom:calc(62px + env(safe-area-inset-bottom));text-align:center}
-  .space-copy .pbd-mark{margin-inline:auto}
 }
 @media (min-width:900px){
   .space-copy{right:6%;top:50%;translate:0 -50%;max-width:640px;text-align:left}
   /* 最後のメッセージと施設名は、PCでも画面の中央でひとまとまりに。 */
   .space-copy.c2{left:var(--gutter);right:var(--gutter);max-width:none;text-align:center}
-  .space-copy.c2 .pbd-mark{margin-inline:auto}
   .space-copy p{white-space:nowrap}
 }
 
@@ -73,9 +70,8 @@ main>section.s-space{padding:0}
   .space-copy{bottom:calc(78px + env(safe-area-inset-bottom))}
   .space-copy p,.space-copy .final{font-size:17px;line-height:1.85}
   .space-copy .final-brand{margin-top:.8em;font-size:22px}
-  .final-brand span{margin-bottom:.35em;font-size:11px}
+  .final-brand .final-brand-label{margin-bottom:.35em;font-size:11px}
   .company-block{margin-top:.8em}
-  .space-copy .pbd-mark{width:26px;height:26px;margin-bottom:.3em}
   .space-copy .run-by{font-size:11px}
   .space-copy .company{font-size:18px}
   .here-text{font-size:16px}
@@ -95,3 +91,11 @@ html:not(.js) .space-copy.c2,html:not(.js) .c2 .final,html:not(.js) .c2 .final-b
 .footer-contact a{color:inherit}
 .credit{max-width:660px;margin:2em auto 0;font-size:11px;line-height:1.9;color:rgba(255,255,255,.5)}
 .copyright{margin-top:1.2em;font-family:var(--ff-en);font-size:12px;letter-spacing:.2em;color:rgba(255,255,255,.45)}
+
+/* 末尾ロゴ：文字を中央に保ち、小さなタコを左右へ対称に添える。 */
+.final-brand .final-brand-name{position:relative;display:inline-block}
+.final-brand .final-brand-name .pbd-mark{position:absolute;right:calc(100% + .35em);top:50%;transform:translateY(-50%)}
+.space-copy .final-brand .pbd-mark{width:28px;height:28px;flex:0 0 auto;object-fit:contain;margin:0;filter:drop-shadow(0 0 8px rgba(90,160,255,.3))}
+@media(max-width:899px){.space-copy .final-brand .pbd-mark{width:18px;height:18px}}
+
+.final-brand .final-brand-name .pbd-mark-right{right:auto;left:calc(100% + .35em)}
