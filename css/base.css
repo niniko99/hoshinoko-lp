@@ -240,3 +240,11 @@ html.js .reveal.is-in{opacity:1;transform:none}
   html.js .reveal{opacity:1;transform:none;transition:none}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important}
 }
+
+/* 提供された空：heroの後から夕方まで。既存の夜には重ねない。 */
+.world-reference{position:absolute;left:0;right:0;pointer-events:none;overflow:hidden;z-index:1;opacity:0;}
+.world-reference-day{background:linear-gradient(to bottom,#2385e8 0%,#79c4f1 25%,#aedcf4 70%,#75a9ed 100%);mask-image:linear-gradient(to bottom,transparent,#000 160px,#000 80%,transparent);-webkit-mask-image:linear-gradient(to bottom,transparent,#000 160px,#000 80%,transparent)}
+.world-reference-evening{background:linear-gradient(to bottom,#75a9ed 0%,#94a6ee 30%,#d9afe5 60%,#ca88c4 80%,#414574 100%);mask-image:linear-gradient(to bottom,transparent,#000 15%,#000 65%,transparent);-webkit-mask-image:linear-gradient(to bottom,transparent,#000 15%,#000 65%,transparent)}
+.reference-picture{position:absolute;left:0;right:0;height:clamp(380px,56.25vw,960px);background-repeat:no-repeat;background-size:cover;mask-image:linear-gradient(to bottom,transparent,#000 12%,#000 72%,transparent);-webkit-mask-image:linear-gradient(to bottom,transparent,#000 12%,#000 72%,transparent)}
+.world-reference-day .reference-picture{top:6%;background-image:linear-gradient(rgba(255,255,255,.12),rgba(255,255,255,.12)),url("../assets/src/mayu-day-sky.jpg");background-position:20% center}
+.world-reference-evening .reference-picture{top:45%;background-image:linear-gradient(rgba(255,255,255,.12),rgba(255,255,255,.12)),url("../assets/src/mayu-evening-sky.jpg");background-position:90% center}

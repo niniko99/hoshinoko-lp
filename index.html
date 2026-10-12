@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Zen+Maru+Gothic:wght@400;500;700&family=Josefin+Sans:wght@300;400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/base.css?v=20261012-header-area1">
+<link rel="stylesheet" href="css/base.css?v=20261012-sky-staff1">
 <link rel="stylesheet" href="css/sections.css?v=20261012-header-area1">
 <link rel="stylesheet" href="css/space.css?v=20261012-final-pair1">
 </head>
@@ -28,7 +28,7 @@
 @media(max-width:360px){.site-header{top:var(--draft-bar-height,48px)}}
 .replay{top:calc(46px + env(safe-area-inset-top,0px))}
 </style>
-<div class="draft-bar" data-nosnippet>更新：<time datetime="2026-10-12T16:50:00+09:00">2026/10/12 16:50</time>（JST）｜【要確認】は仮の内容です</div>
+<div class="draft-bar" data-nosnippet>更新：<time datetime="2026-10-13T08:55:00+09:00">2026/10/13 08:55</time>（JST）｜【要確認】は仮の内容です</div>
 <header class="site-header" data-tone="light">
   <a class="brand" href="#top" aria-label="浦和美園の民間学童 Kids Club 星の子 トップへ">
     <img class="brand-mark" src="assets/src/hoshinoko-octopus-transparent.png" alt="" width="24" height="24" decoding="async">
@@ -46,6 +46,8 @@
        空の色だけが変わっていく（青 → 水色 → ピンク → 紫 → 藍 → 深い星空）。位置はJSが決める -->
   <div class="world-bg" aria-hidden="true">
     <div class="world-clouds"></div>
+    <div class="world-reference world-reference-day"><div class="reference-picture"></div></div>
+    <div class="world-reference world-reference-evening"><div class="reference-picture"></div></div>
     <div class="world-glow"></div>
     <div class="world-tex"></div>
     <div class="world-planet"></div>
@@ -219,13 +221,21 @@
       <p class="swipe-hint" id="staff-hint">横にスワイプして、みんなの紹介を見る <span aria-hidden="true">→</span></p>
       <ul class="staff-list" id="staff-cards" tabindex="0" aria-label="先生とあぽろの紹介" aria-describedby="staff-hint">
         <li class="staff">
-          <div class="staff-photo"><img src="assets/photos/staff/kumiko-cats.jpg" alt="くみこ先生の猫ちゃんたち" loading="lazy" decoding="async"></div>
+          <div class="staff-photo"><img src="assets/photos/staff/kumiko-cherry.jpg" alt="くみこ先生（桜の木の横で手を上げている写真）" loading="lazy" decoding="async"></div>
           <div class="staff-copy"><h3>くみこ先生</h3><p>今日の皆んなはどんなお顔で過ごしてるかなぁと全員に声をかけています。時間があれば歩いていることと、動物が好きで昔から猫ちゃんがいます！</p>
           </div>
         </li>
         <li class="staff">
-          <div class="staff-photo"><img src="assets/photos/staff/tomoe.jpg" alt="ともえ先生（桜の木とスタジアムの前）" loading="lazy" decoding="async"></div>
+          <div class="staff-photo"><img src="assets/photos/staff/tomoe-placeholder.svg" alt="ともえ先生の写真準備中：星と本の仮イラスト" loading="lazy" decoding="async"></div>
           <div class="staff-copy"><h3>ともえ先生</h3><p>子どもたちの「やりたい」「きになる」「好奇心」を応援したり、伸び伸び過ごせるようなサポートをさせていただいております。3人の育児経験有り、保護者の方とは子育てのお悩みについて相談にのったり一緒に解決策を考えたりしています。</p></div>
+        </li>
+        <li class="staff">
+          <div class="staff-photo staff-photo-wide"><img src="assets/photos/staff/ishii-gentle-zoomout-v4.png" alt="石井先生（広いアトリエの中で制作する姿）" loading="lazy" decoding="async"></div>
+          <div class="staff-copy"><h3>石井先生</h3><p>臨床美術士 ／ アトリエ時間 担当。こどもたちに楽しいを、新しい事にチャレンジ を提供したいと思っています。</p></div>
+        </li>
+        <li class="staff">
+          <div class="staff-photo"><img src="assets/photos/staff/dr-rin.jpg" alt="Dr.リン先生" loading="lazy" decoding="async"></div>
+          <div class="staff-copy"><h3>Dr.リン先生</h3><p>自然・科学・探究活動／特別イベント・遠足。身近な自然の不思議から、ワクワクする科学の世界まで！ 子ども達の「なんで？」「やってみたい！」を大切に、実験や自然観察、遠足などを通して、好奇心を広げてくれる先生です。</p></div>
         </li>
         <li class="staff">
           <div class="staff-photo"><img src="assets/photos/staff/wakky.jpg" alt="わっきー先生" loading="lazy" decoding="async"></div>
@@ -234,14 +244,6 @@
         <li class="staff">
           <div class="staff-photo"><img src="assets/photos/staff/nozomi.jpg" alt="のぞみ先生" loading="lazy" decoding="async"></div>
           <div class="staff-copy"><h3>のぞみ先生</h3><p>埼玉県外に在住のため遠隔でのサポートになりますが、星の子を利用する皆さんが、自分らしく安心して過ごせるようにお手伝いしたいと思っています！</p></div>
-        </li>
-        <li class="staff">
-          <div class="staff-photo"><img src="assets/photos/staff/dr-rin.jpg" alt="Dr.リン先生" loading="lazy" decoding="async"></div>
-          <div class="staff-copy"><h3>Dr.リン先生</h3><p>自然・科学・探究活動／特別イベント・遠足。身近な自然の不思議から、ワクワクする科学の世界まで！ 子ども達の「なんで？」「やってみたい！」を大切に、実験や自然観察、遠足などを通して、好奇心を広げてくれる先生です。</p></div>
-        </li>
-        <li class="staff">
-          <div class="staff-photo staff-photo-wide"><img src="assets/photos/staff/ishii-gentle-zoomout-v4.png" alt="石井先生（広いアトリエの中で制作する姿）" loading="lazy" decoding="async"></div>
-          <div class="staff-copy"><h3>石井先生</h3><p>臨床美術士 ／ アトリエ時間 担当。こどもたちに楽しいを、新しい事にチャレンジ を提供したいと思っています。</p></div>
         </li>
         <li class="staff staff-apollo">
           <div class="staff-photo"><img src="assets/photos/staff/apollo.jpg" alt="あぽろ" loading="lazy" decoding="async"></div>
@@ -394,7 +396,7 @@
 <div class="shoot-layer" aria-hidden="true"></div>
 
 <script src="js/art.js?v=10070652"></script>
-<script src="js/main.js?v=10070652"></script>
+<script src="js/main.js?v=20261012-sky-staff1"></script>
 <script src="js/staff.js?v=20261012-staff1"></script>
 <script src="js/space.js?v=10070652"></script>
 </body>
