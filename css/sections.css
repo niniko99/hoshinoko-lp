@@ -117,20 +117,39 @@ main section{padding:var(--pad-y) var(--gutter)}
 .today-big.is-in .ch{opacity:1;transform:none}
 
 /* 9 スタッフ */
-.staff-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(12px,2vw,22px);max-width:560px;margin:2.4em auto 0}
-.staff{padding:22px 14px;border-radius:24px;text-align:center;color:var(--ink);background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.55);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
-.face{display:grid;place-items:center;width:clamp(76px,10vw,104px);aspect-ratio:1;margin:0 auto 10px;border-radius:50%;border:2px dashed rgba(39,51,77,.3);background:rgba(255,255,255,.7);color:var(--ink-soft);font-size:12px}
-/* 似顔絵が入ったら、点線をやめて丸く切り抜く */
-.face.filled{border:0;background:none;overflow:hidden}
-.face.filled img{width:100%;height:100%;object-fit:cover;display:block}
-.staff b{display:block;font-family:var(--ff-hand);font-weight:600;font-size:18px}
-.staff p{margin-top:.3em;font-size:13px;line-height:1.7}
-/* スマホでは1列にして、似顔絵を左・ひとことを右に。2列だと1行11文字で読みにくいため */
+.staff-carousel{max-width:1100px;margin:2.2em auto 0}
+.staff-carousel .swipe-hint{text-align:center;font-size:13px;margin-bottom:14px}
+.staff-list{display:flex;align-items:stretch;gap:20px;overflow-x:auto;padding:6px 0 18px;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:thin;scrollbar-color:rgba(39,51,77,.5) rgba(255,255,255,.25)}
+.staff-list::after{content:"";flex:0 0 var(--staff-tail,0px)}
+.staff{flex:0 0 320px;min-width:0;border-radius:24px;overflow:hidden;text-align:left;color:var(--ink);background:rgba(255,255,255,.86);border:1px solid rgba(255,255,255,.65);scroll-snap-align:start}
+.staff-representative{display:grid;grid-template-columns:minmax(220px,.8fr) minmax(0,1.5fr);align-items:center;max-width:960px;margin:2.2em auto 0;padding:24px;gap:28px}
+.staff-representative .staff-photo{height:auto;padding:0;background:none}
+.staff-representative .staff-photo img{height:auto;max-height:360px}
+.staff-representative .staff-copy{padding:8px 0}
+.staff-photo{height:210px;display:grid;place-items:center;background:rgba(255,253,248,.7);padding:12px}
+.staff-photo img{width:100%;height:100%;min-height:0;object-fit:contain}
+.staff-photo-wide{padding:0}
+.staff-photo-placeholder{color:var(--ink-soft);font-size:13px;background:rgba(255,253,248,.45)}
+.staff-copy{padding:20px 24px 26px;overflow-wrap:anywhere}
+.staff h3{font-family:var(--ff-hand);font-weight:600;font-size:23px;line-height:1.5}
+.staff p{margin-top:.75em;font-size:14px;line-height:1.9}
+.staff .staff-role,.staff .staff-kind{font-size:12px;color:var(--ink-soft);line-height:1.8}
+.staff-extra-photo{width:84px;height:112px;object-fit:contain;margin-top:16px;border-radius:8px}
+.staff-controls{display:flex;justify-content:center;align-items:center;gap:24px;margin-top:14px;color:var(--ink)}
+.staff-controls[hidden]{display:none}
+.staff-controls button{min-height:44px;min-width:96px;padding:8px 16px;border:1px solid rgba(39,51,77,.2);border-radius:999px;background:rgba(255,255,255,.9);color:var(--ink);font:inherit;font-size:14px;cursor:pointer}
+.staff-controls button:disabled{opacity:.45;cursor:default}
+.staff-position{min-width:42px;padding:3px 10px;border-radius:999px;background:rgba(255,255,255,.85);font-size:12px;text-align:center;white-space:nowrap}
+.staff-list:focus-visible,.staff-controls button:focus-visible{outline:3px solid var(--star);outline-offset:3px}
 @media (max-width:640px){
-  .staff-list{grid-template-columns:1fr;max-width:360px}
-  .staff{display:grid;grid-template-columns:76px 1fr;align-content:center;gap:2px 14px;text-align:left;padding:16px 18px}
-  .staff .face{grid-row:span 2;align-self:center;margin:0}
-  .staff p{margin-top:.35em}
+  .staff-list{gap:14px}
+  .staff{flex-basis:84%}
+  .staff-representative{display:block;padding:22px;margin-top:1.6em}
+  .staff-representative .staff-photo{max-width:260px;margin:0 auto 18px}
+  .staff-photo{height:180px}
+  .staff-copy{padding:18px 20px 24px}
+  .staff h3{font-size:22px}
+  .staff-controls{gap:16px}
 }
 
 /* 10 保護者の声 */

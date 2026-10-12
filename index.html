@@ -11,8 +11,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Zen+Maru+Gothic:wght@400;500;700&family=Josefin+Sans:wght@300;400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/base.css?v=10070652">
-<link rel="stylesheet" href="css/sections.css?v=10070652">
-<link rel="stylesheet" href="css/space.css?v=10070652">
+<link rel="stylesheet" href="css/sections.css?v=20261012-staff1">
+<link rel="stylesheet" href="css/space.css?v=20261012-staff1">
 </head>
 <body>
 
@@ -201,11 +201,56 @@
 
   <!-- 11 スタッフ -->
   <section class="s-staff" id="staff">
-    <h2 class="sec-title reveal"><small>Staff</small>みんな大切なひとり。</h2>
-    <ul class="staff-list">
-      <li class="staff reveal"><div class="face filled"><img src="assets/photos/staff-mayu.jpg?v=1007c" alt="まゆ先生の似顔絵" loading="lazy" decoding="async"></div><b>まゆ先生</b><p>子どもたち一人ひとりの「やってみたい！」を大切に。何かを教えるだけではなく、その子が好きなこと、夢中になっていること、その日の気持ちにも寄り添いながら、一緒に笑って、一緒に楽しめる存在でありたいと思っています。</p></li>
-      <li class="staff reveal" style="--d:.1s"><div class="face">似顔絵</div><b>くみこ先生</b><p class="tbd">【ひとこと紹介】</p></li>
-    </ul>
+    <h2 class="sec-title reveal" id="staff-title"><small>Staff</small>みんな大切なひとり。</h2>
+    <article class="staff staff-representative" aria-labelledby="mayu-name">
+          <div class="staff-photo"><img src="assets/photos/staff/mayu.jpg" alt="まゆ先生" loading="lazy" decoding="async"></div>
+          <div class="staff-copy"><h3 id="mayu-name">まゆ先生</h3>
+            <p class="staff-role">Kids Club 星の子 代表<br>NPO法人 星を紡ぐ会 理事長<br>ペダゴー研修生</p>
+            <p>「受け入れること、共有すること」を大切に。</p>
+            <p>子ども達一人ひとりの気持ちや個性を、ありのままに受け入れること。</p>
+            <p>嬉しいことも、驚きも、発見も、一緒に感じ、分かち合うこと。</p>
+            <p>子ども達が自分で考え、自分で選び、夢中になれる毎日を大切にしています。</p>
+          </div>
+    </article>
+    <div class="staff-carousel" role="region" aria-labelledby="staff-title">
+      <p class="swipe-hint" id="staff-hint">横にスワイプして、みんなの紹介を見る <span aria-hidden="true">→</span></p>
+      <ul class="staff-list" id="staff-cards" tabindex="0" aria-label="先生とあぽろの紹介" aria-describedby="staff-hint">
+        <li class="staff">
+          <div class="staff-photo"><img src="assets/photos/staff/kumiko-cats.jpg" alt="くみこ先生の猫ちゃんたち" loading="lazy" decoding="async"></div>
+          <div class="staff-copy"><h3>くみこ先生</h3><p>今日の皆んなはどんなお顔で過ごしてるかなぁと全員に声をかけています。時間があれば歩いていることと、動物が好きで昔から猫ちゃんがいます！</p>
+          </div>
+        </li>
+        <li class="staff">
+          <div class="staff-photo"><img src="assets/photos/staff/tomoe.jpg" alt="ともえ先生（桜の木とスタジアムの前）" loading="lazy" decoding="async"></div>
+          <div class="staff-copy"><h3>ともえ先生</h3><p>子どもたちの「やりたい」「きになる」「好奇心」を応援したり、伸び伸び過ごせるようなサポートをさせていただいております。3人の育児経験有り、保護者の方とは子育てのお悩みについて相談にのったり一緒に解決策を考えたりしています。</p></div>
+        </li>
+        <li class="staff">
+          <div class="staff-photo"><img src="assets/photos/staff/wakky.jpg" alt="わっきー先生" loading="lazy" decoding="async"></div>
+          <div class="staff-copy"><h3>わっきー先生</h3><p>星の子が皆さんの安心できる楽しい居場所になるよう、スタッフと一緒に考えています！子どもたちと同じ目線で遊び、挑戦することが大好きです！</p></div>
+        </li>
+        <li class="staff">
+          <div class="staff-photo"><img src="assets/photos/staff/nozomi.jpg" alt="のぞみ先生" loading="lazy" decoding="async"></div>
+          <div class="staff-copy"><h3>のぞみ先生</h3><p>埼玉県外に在住のため遠隔でのサポートになりますが、星の子を利用する皆さんが、自分らしく安心して過ごせるようにお手伝いしたいと思っています！</p></div>
+        </li>
+        <li class="staff">
+          <div class="staff-photo"><img src="assets/photos/staff/dr-rin.jpg" alt="Dr.リン先生" loading="lazy" decoding="async"></div>
+          <div class="staff-copy"><h3>Dr.リン先生</h3><p>自然・科学・探究活動／特別イベント・遠足。身近な自然の不思議から、ワクワクする科学の世界まで！ 子ども達の「なんで？」「やってみたい！」を大切に、実験や自然観察、遠足などを通して、好奇心を広げてくれる先生です。</p></div>
+        </li>
+        <li class="staff">
+          <div class="staff-photo staff-photo-wide"><img src="assets/photos/staff/ishii-gentle-zoomout-v4.png" alt="石井先生（広いアトリエの中で制作する姿）" loading="lazy" decoding="async"></div>
+          <div class="staff-copy"><h3>石井先生</h3><p>臨床美術士 ／ アトリエ時間 担当。こどもたちに楽しいを、新しい事にチャレンジ を提供したいと思っています。</p></div>
+        </li>
+        <li class="staff staff-apollo">
+          <div class="staff-photo"><img src="assets/photos/staff/apollo.jpg" alt="あぽろ" loading="lazy" decoding="async"></div>
+          <div class="staff-copy"><h3>あぽろ</h3><p class="staff-kind">星の子のロボット</p><p>だっこ だっこ ♡</p></div>
+        </li>
+      </ul>
+      <div class="staff-controls" hidden>
+        <button class="staff-prev" type="button" aria-controls="staff-cards" aria-label="前の紹介を見る"><span aria-hidden="true">←</span> 前へ</button>
+        <span class="staff-position" role="status" aria-live="polite" aria-atomic="true">1 / 7</span>
+        <button class="staff-next" type="button" aria-controls="staff-cards" aria-label="次の紹介を見る">次へ <span aria-hidden="true">→</span></button>
+      </div>
+    </div>
     <div class="read reveal">
       <p>子どもたちには、それぞれのペースがあります。</p>
       <p>だから星の子では、みんなを同じ型にはめるのではなく、<br><b>一人ひとりを見ながら一緒に過ごすこと</b>を大切にしています。</p>
@@ -327,7 +372,7 @@
         <p class="final">この美しい世界を楽しむために<br>生まれてきた、すべての人へ。</p>
         <p class="final-brand"><span>Kids Club</span>星の子</p>
         <div class="company-block">
-          <img class="pbd-mark" src="assets/src/earth-mark.png" alt="" width="36" height="36">
+          <img class="pbd-mark" src="assets/src/hoshinoko-octopus-transparent.png" alt="" width="36" height="36">
           <p class="run-by">Kids Club 星の子 を運営する</p>
           <p class="company">PALE BLUE DOT</p>
         </div>
@@ -348,6 +393,7 @@
 
 <script src="js/art.js?v=10070652"></script>
 <script src="js/main.js?v=10070652"></script>
+<script src="js/staff.js?v=20261012-staff1"></script>
 <script src="js/space.js?v=10070652"></script>
 </body>
 </html>
