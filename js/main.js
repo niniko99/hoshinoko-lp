@@ -4,6 +4,21 @@
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var $ = function (s) { return document.querySelector(s); };
 
+  /* 更新バーは折り返し・フォント・安全領域で高さが変わる。実寸だけヘッダーを下げる。 */
+  var draftBar = $('.draft-bar');
+  if (draftBar) {
+    var syncDraftBarHeight = function () {
+      document.documentElement.style.setProperty('--draft-bar-height', Math.ceil(draftBar.getBoundingClientRect().height) + 'px');
+    };
+    syncDraftBarHeight();
+    if ('ResizeObserver' in window) {
+      new ResizeObserver(syncDraftBarHeight).observe(draftBar);
+    } else {
+      window.addEventListener('resize', syncDraftBarHeight);
+      window.addEventListener('load', syncDraftBarHeight);
+    }
+  }
+
   /* 「今日も最高に楽しかった！」を1文字ずつに分ける */
   var big = $('.today-big');
   if (big && !reduce) {

@@ -51,6 +51,9 @@ main>section.s-space{padding:0}
 }
 @media (min-width:900px){
   .space-copy{right:6%;top:50%;translate:0 -50%;max-width:640px;text-align:left}
+  /* 最後のメッセージと施設名は、PCでも画面の中央でひとまとまりに。 */
+  .space-copy.c2{left:var(--gutter);right:var(--gutter);max-width:none;text-align:center}
+  .space-copy.c2 .pbd-mark{margin-inline:auto}
   .space-copy p{white-space:nowrap}
 }
 

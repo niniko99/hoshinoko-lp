@@ -102,6 +102,8 @@
     fades.forEach(function (f) {
       var r = f[1], o = range(t, r[0], r[1]);
       if (r.length === 4) o *= 1 - range(t, r[2], r[3]);
+      // PCの中央に出す最後のことばと、地球の注釈を重ねない。スマホの演出は従来どおり。
+      if (W >= 900 && (f[0] === here || f[0] === marker)) o *= 1 - range(t, 11.8, 12.4);
       f[0].style.opacity = o.toFixed(3);
     });
   }
