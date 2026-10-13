@@ -183,19 +183,6 @@
     world.style.backgroundSize = '100% ' + sh.toFixed(0) + 'px';
     world.style.backgroundPosition = '0 0';
     nightTop = main.offsetTop + rowY(NIGHT);
-    // 提供された2枚は自然な縦横比のまま重ね、空色の帯でつなぐ。heroと夜の層は触らない。
-    var heroSection = document.getElementById('hero');
-    var dayReference = $('.world-reference-day'), eveningReference = $('.world-reference-evening');
-    if (heroSection && dayReference && eveningReference) {
-      var start = heroSection.offsetTop + heroSection.offsetHeight;
-      var duskStart = Math.max(start, H * .32), finish = H * .74;
-      dayReference.style.top = start + 'px';
-      dayReference.style.height = Math.max(0, H * .44 - start) + 'px';
-      eveningReference.style.top = duskStart + 'px';
-      eveningReference.style.height = Math.max(0, finish - duskStart) + 'px';
-      dayReference.style.opacity = eveningReference.style.opacity = '1';
-    }
-
     if (planet) {  // 明るい星（宵の明星）：見本の絵から小さく切り抜いて、絵のとおりの大きさで置く
       var ps = Math.max(W / IMG.w, 1), d = Math.round(44 * ps);
       planet.style.width = planet.style.height = d + 'px';
