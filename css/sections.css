@@ -40,6 +40,7 @@ main section{padding:var(--pad-y) var(--gutter)}
 .big-word+.big-word{margin-top:.25em}
 #play .big-word{font-size:clamp(24px,7vw,76px)}
 #choose>.mid-word{font-size:clamp(21px,4.6vw,48px);text-align:center}
+#choose>.mid-word+.blobs{margin-top:28px}
 .mid-word{font-family:var(--ff-hand);font-weight:600;font-size:clamp(24px,4.6vw,48px);line-height:1.7;letter-spacing:.08em;text-shadow:0 2px 20px rgba(10,20,70,.3)}
 
 /* 3 自分で選ぶ・決める・やってみる・夢中になる（ポスターの4つの丸） */
