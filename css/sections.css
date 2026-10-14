@@ -132,12 +132,13 @@ main section{padding:var(--pad-y) var(--gutter)}
 .staff-representative .staff-copy{padding:8px 0}
 .staff-photo{width:100%;height:auto;aspect-ratio:3/2;display:grid;place-items:center;overflow:hidden;background:rgba(255,253,248,.7);padding:0}
 .staff-photo img{display:block;width:100%;height:100%;min-height:0;object-fit:cover;object-position:50% 35%}
-.staff-photo img[src*="kumiko-cherry"]{object-position:50% 53%;transform:scale(2.1);transform-origin:50% 48%}
+.staff-photo img[src*="kumiko-cherry"]{object-position:50% 60%;transform:none}
 .staff-photo img[src*="dr-rin"]{object-position:50% 20%}
-.staff-photo img[src*="wakky"]{object-position:48% 24%}
+.staff-photo img[src*="wakky"]{object-position:48% 20%}
 .staff-photo img[src*="nozomi"]{object-position:50% 28%}
-.staff-photo img[src*="apollo"]{object-fit:contain;object-position:center}
-.staff-photo img[src*="tomoe-placeholder"],.staff-photo-wide img{object-fit:contain;object-position:center;transform:none}
+.staff-photo img[src*="apollo"]{object-fit:cover;object-position:center}
+.staff-photo img[src*="tomoe-placeholder"]{object-fit:contain;object-position:center;transform:none}
+.staff-photo-wide img{object-fit:cover;object-position:center;transform:none}
 .staff-photo-wide{padding:0}
 .staff-photo-placeholder{color:var(--ink-soft);font-size:13px;background:rgba(255,253,248,.45)}
 .staff-copy{padding:20px 24px 26px;overflow-wrap:anywhere}
