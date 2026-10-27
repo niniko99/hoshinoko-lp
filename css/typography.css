@@ -14,3 +14,6 @@ body{font-synthesis:none}
 .header-cta,.btn-cta,.btn-mid,.btn-sub{font-family:var(--ff-body);font-weight:700;text-shadow:none}
 .btn-cta,.btn-mid,.btn-sub{line-height:1.6;min-height:44px;max-width:100%;white-space:normal;overflow-wrap:anywhere;text-align:center}
 .staff-controls button,.voices-toggle{font-family:var(--ff-body);font-weight:500;font-size:14px;line-height:1.6;letter-spacing:.06em;text-shadow:none}
+
+/* Reading paragraphs keep one weight, including legacy inline b/strong spans. */
+.read b,.read strong{font-weight:inherit}
