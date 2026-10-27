@@ -18,7 +18,7 @@ main section{padding:var(--pad-y) var(--gutter)}
 }
 .s-hero::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
   background:url("../assets/src/hero-photo-pc.jpg") center bottom/cover no-repeat;
-  -webkit-mask-image:linear-gradient(to bottom,#000 74%,transparent 99%);mask-image:linear-gradient(to bottom,#000 74%,transparent 99%)}
+  -webkit-mask-image:linear-gradient(to bottom,#000 52%,rgba(0,0,0,.94) 62%,rgba(0,0,0,.72) 73%,rgba(0,0,0,.38) 84%,rgba(0,0,0,.12) 93%,transparent 100%);mask-image:linear-gradient(to bottom,#000 52%,rgba(0,0,0,.94) 62%,rgba(0,0,0,.72) 73%,rgba(0,0,0,.38) 84%,rgba(0,0,0,.12) 93%,transparent 100%)}
 @media (orientation:portrait){
   .s-hero::after{background-image:url("../assets/src/hero-photo-sp.jpg")}
 }
