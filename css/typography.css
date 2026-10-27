@@ -1,0 +1,16 @@
+/* Role-based type consistency. Keep display headings and emphasis distinct. */
+body{font-synthesis:none}
+/* Cards use the body face; background-dependent heading shadows never enter cards. */
+.staff,.voice,.kv,.price-card,.info-card,.faq details{font-family:var(--ff-body);font-weight:500;letter-spacing:.04em;text-shadow:none;overflow-wrap:anywhere}
+.kv,.voice p{font-family:var(--ff-body);font-weight:500;text-shadow:none;letter-spacing:.04em}
+.kv-big,.voice-big p{font-family:var(--ff-body);font-weight:700}
+.kv-big{line-height:1.65;background:rgba(255,255,255,.82)}
+.voice-big p{line-height:1.9}
+/* Supporting descriptions share one rhythm; roles retain their smaller muted label. */
+.can-note,.flow-note{font-family:var(--ff-body);font-weight:500;font-size:12px;line-height:1.8;letter-spacing:.04em;opacity:.92}
+.swipe-hint,.staff-carousel .swipe-hint{font-family:var(--ff-body);font-weight:500;font-size:12px;line-height:1.8;letter-spacing:.08em;opacity:.85}
+.sec-title .tax{font-weight:500}
+/* Primary actions stay bold; disclosure and carousel controls stay medium. */
+.header-cta,.btn-cta,.btn-mid,.btn-sub{font-family:var(--ff-body);font-weight:700;text-shadow:none}
+.btn-cta,.btn-mid,.btn-sub{line-height:1.6;min-height:44px;max-width:100%;white-space:normal;overflow-wrap:anywhere;text-align:center}
+.staff-controls button,.voices-toggle{font-family:var(--ff-body);font-weight:500;font-size:14px;line-height:1.6;letter-spacing:.06em;text-shadow:none}
