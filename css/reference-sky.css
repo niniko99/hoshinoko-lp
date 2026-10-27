@@ -7,5 +7,5 @@ html[data-sky-theme] #hero::after{background:none}
 html[data-sky-theme] .reference-ink,html[data-sky-theme] .reference-ink p,html[data-sky-theme] .reference-ink small{color:#27334d!important;text-shadow:none!important}
 html[data-sky-theme] .reference-white,html[data-sky-theme] .reference-white p,html[data-sky-theme] .reference-white small{color:#fff!important;text-shadow:0 1px 3px rgba(10,22,66,.62),0 2px 18px rgba(10,22,66,.5)!important}
 
-/* Purple midtones need a light reading surface rather than a premature white-text switch. */
-html[data-sky-theme] .reference-transition{background:rgba(255,253,248,.86);border-radius:12px;box-shadow:0 0 0 12px rgba(255,253,248,.86)}
+/* Darker text, without a panel, carries the middle evening tones. */
+html[data-sky-theme] .reference-dusk-ink,html[data-sky-theme] .reference-dusk-ink p,html[data-sky-theme] .reference-dusk-ink small{color:#000!important;text-shadow:none!important}

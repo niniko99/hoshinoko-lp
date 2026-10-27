@@ -22,9 +22,9 @@
       var y=top(el)-base+el.offsetHeight/2;
       // The evening image uses its pale peach through purple region, avoiding its star field.
       var sourceRow=((imageHeight-eveningHeight)*.2+y-eveningTop)/imageHeight;
-      var ink=y<join||sourceRow<.48;
+      var ink=y<join||sourceRow<.463;
       var inNight=y>=night;
-      el.classList.toggle('reference-transition',!inNight&&y>=join&&sourceRow>=.37&&sourceRow<.48);
+      el.classList.toggle('reference-dusk-ink',!inNight&&y>=join&&sourceRow>=.37&&sourceRow<.463);
       el.classList.toggle('reference-ink',!inNight&&ink);
       el.classList.toggle('reference-white',!inNight&&!ink);
     });
