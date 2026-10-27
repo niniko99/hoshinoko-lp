@@ -323,3 +323,9 @@ dl.info-card>div:last-child{border-bottom:0}
 /* Parent testimonials: compact centered cards, with natural wrapping on narrow screens. */
 #voices .voices{display:flex;flex-direction:column;align-items:center;max-width:680px}
 #voices .voice{width:fit-content;max-width:100%;padding:20px 22px;white-space:normal;overflow-wrap:anywhere}
+
+/* Center only the third gallery photo within the taller desktop card. */
+@media(min-width:641px){
+  #photos .gallery > .g:nth-child(3){display:flex;align-items:center;justify-content:center}
+  #photos .gallery > .g:nth-child(3) .ph-box.filled{flex:0 0 calc(100% - 12px);min-width:0}
+}
