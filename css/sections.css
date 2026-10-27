@@ -134,7 +134,7 @@ main section{padding:var(--pad-y) var(--gutter)}
 .staff-photo{width:100%;height:auto;aspect-ratio:3/2;display:grid;place-items:center;overflow:hidden;background:rgba(255,253,248,.7);padding:0}
 .staff-photo img{display:block;width:100%;height:100%;min-height:0;object-fit:cover;object-position:50% 35%}
 .staff-photo img[src*="kumiko-cherry"]{object-position:50% 60%;transform:none}
-.staff-photo img[src*="dr-rin"]{object-position:50% 20%}
+.staff-photo img[src*="dr-rin"]{object-position:50% 0%;transform:none}
 .staff-photo img[src*="wakky"]{object-position:48% 20%}
 .staff-photo img[src*="nozomi"]{object-position:50% 28%}
 .staff-photo img[src*="apollo"]{object-fit:cover;object-position:center}
@@ -300,3 +300,14 @@ dl.info-card>div:last-child{border-bottom:0}
 .on-deep small{opacity:.72}
 /* ふきだしやカードは自前の色を持っているので、そのまま */
 .on-deep .kv,.on-deep .voice,.on-deep .btn-mid,.on-deep .btn-cta{text-shadow:none}
+
+/* Opt-in disclosure: the no-JavaScript page keeps every original voice visible. */
+.voices-list-collapsible > [hidden]{display:none!important}
+.voices-controls{display:flex;justify-content:center;margin:1.4em auto 0}
+.voices-toggle{min-width:140px;min-height:44px;padding:10px 24px;border:1px solid rgba(39,51,77,.22);border-radius:999px;background:rgba(255,253,248,.94);color:var(--ink);font:500 14px/1.6 var(--ff-body);letter-spacing:.06em;cursor:pointer;text-shadow:none}
+.voices-toggle:hover{background:#fffdf8}
+.voices-toggle:focus-visible{outline:3px solid #ffe1b2;outline-offset:4px}
+
+.staff-photo img[src*="tomoe-smile"]{object-position:50% 20%;transform:none}
+/* Keep the complete experiment photo within its gallery frame. */
+.ph-box img[src*="photo-science-table"]{object-fit:contain;object-position:center;transform:none}

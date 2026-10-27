@@ -5,17 +5,9 @@
   var triggers = Array.prototype.slice.call(document.querySelectorAll('.story-open'));
   var close = dialog.querySelector('.story-close');
   var content = dialog.querySelector('.story-body');
-  var finalCopy = document.querySelector('.space-copy.c2');
-  var brand = finalCopy.querySelector('.final-brand');
   var opener, scrollY = 0, bodyStyle, htmlOverflow, htmlScrollBehavior;
-
-  function availability() {
-    var ready = parseFloat(getComputedStyle(finalCopy).opacity) > .9 && parseFloat(getComputedStyle(brand).opacity) > .9;
-    triggers.forEach(function (button) { button.disabled = !ready; });
-  }
-  new MutationObserver(availability).observe(finalCopy, { attributes: true, attributeFilter: ['style'] });
-  new MutationObserver(availability).observe(brand, { attributes: true, attributeFilter: ['style'] });
-  availability();
+  // 入口は写真の下へ独立。演出の透明度に関係なく利用できる。
+  triggers.forEach(function (button) { button.disabled = false; });
 
   triggers.forEach(function (button) {
     button.addEventListener('click', function () {

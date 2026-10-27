@@ -6,7 +6,7 @@
   var $ = function (s) { return stage.querySelector(s); };
 
   var photo = $('.pbd-photo'), earth = $('.earth'), marker = $('.dot-marker'), here = $('.here');
-  var dist = $('.distance'), dNum = $('.d-num'), replay = $('.replay');
+  var dist = $('.distance'), dNum = $('.d-num'), replay = stage.parentNode.querySelector('.replay');
 
   // NASA PIA23645 の元画像サイズと、地球（点）の位置（横・縦の割合）
   var IW = 5230, IH = 5175, DOT = { x: 0.5942, y: 0.5198 };
@@ -19,17 +19,14 @@
     rise: [0.3, 2.1],        // 地球が昇ってくる
     shrink: [2.1, 6.3],      // 点まで小さくなる
     photo: [5.9, 7.2],       // 本物の写真へ
-    marker: [7.0, 7.5],
-    here: [7.3, 8.2],        // ここに、私たちがいる。
+    marker: [7.0, 7.5, 11.8, 12.4],
+    here: [7.3, 8.2, 11.8, 12.4],        // ここに、私たちがいる。
     c1: [8.6, 9.4, 11.8, 12.4],
-    c2: [12.7, 13.7],        // この美しい世界を…
-    brand: [13.2, 14.2],     // Kids Club 星の子
-    company: [14.2, 15.0]    // PALE BLUE DOT
+    c2: [12.7, 13.7, 15.8, 17.0],        // この美しい世界を…
   };
-  var END = 15.4;
+  var END = 19.0; // 最後の2秒と停止後は写真だけ。ブランド・再生ボタンは写真の下。
   var fades = [
-    [marker, T.marker], [here, T.here], [$('.c1'), T.c1], [$('.c2'), T.c2], [$('.c2 .final'), T.c2],
-    [$('.c2 .final-brand'), T.brand], [$('.c2 .company-block'), T.company]
+    [marker, T.marker], [here, T.here], [$('.c1'), T.c1], [$('.c2'), T.c2], [$('.c2 .final'), T.c2]
   ];
 
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -102,8 +99,6 @@
     fades.forEach(function (f) {
       var r = f[1], o = range(t, r[0], r[1]);
       if (r.length === 4) o *= 1 - range(t, r[2], r[3]);
-      // PCの中央に出す最後のことばと、地球の注釈を重ねない。スマホの演出は従来どおり。
-      if (W >= 900 && (f[0] === here || f[0] === marker)) o *= 1 - range(t, 11.8, 12.4);
       f[0].style.opacity = o.toFixed(3);
     });
   }
@@ -117,6 +112,7 @@
     replay.classList.add('is-on');
   }
   function play() {
+    if (reduce) { render(END); replay.classList.add('is-on'); return; }
     if (running) return;
     running = true;
     replay.classList.remove('is-on');
@@ -125,7 +121,8 @@
 
   layout();
   if (reduce) {
-    render(END); // 動きを減らす設定の人には、最後の画面をそのまま見せる
+    render(END); // 動きを減らす設定の人には、写真だけの最終画面をそのまま見せる
+    replay.classList.add('is-on');
   } else {
     render(0);
     if ('IntersectionObserver' in window) {
@@ -137,6 +134,9 @@
       play();
     }
   }
-  replay.addEventListener('click', play);
+  replay.addEventListener('click', function () {
+    stage.scrollIntoView({ behavior: 'auto', block: 'center' });
+    play();
+  });
   window.addEventListener('resize', function () { layout(); if (!running) render(current); });
 })();

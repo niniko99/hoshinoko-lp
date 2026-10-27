@@ -240,3 +240,6 @@ html.js .reveal.is-in{opacity:1;transform:none}
   html.js .reveal{opacity:1;transform:none;transition:none}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important}
 }
+
+/* Calm sky tint: retain the original sky image and fade gently into dusk. */
+.world-bg::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(to bottom,rgba(76,137,176,.16) 0%,rgba(76,137,176,.48) 3%,rgba(76,137,176,.48) 13%,rgba(76,137,176,.26) 21%,rgba(76,137,176,0) 31%,rgba(76,137,176,0) 100%)}

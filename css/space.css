@@ -137,3 +137,12 @@ html:not(.js) .space-copy.c2,html:not(.js) .c2 .final,html:not(.js) .c2 .final-b
 
 .story-title-break{display:none}
 @media(max-width:649px){.story-title-break{display:initial}}
+
+/* 写真上は余韻だけを残し、ブランドと操作はその下へ。 */
+.space-signature{padding:32px var(--gutter) 40px;text-align:center;color:#fff}
+.space-signature .final-brand{font-family:var(--ff-hand);font-weight:600;font-size:clamp(26px,3.4vw,40px);line-height:1.3;letter-spacing:.12em}
+.space-signature .pbd-mark{object-fit:contain;filter:drop-shadow(0 0 8px rgba(90,160,255,.3))}
+.space-signature .company-block{margin-top:1.2em}
+.space-signature .company{font-size:clamp(24px,3vw,36px)}
+.space-signature .replay{position:static;margin:22px auto 0}
+@media(max-width:899px){.space-signature{padding:24px var(--gutter) 28px}.space-signature .final-brand{font-size:22px}.space-signature .company{font-size:18px}.space-signature .run-by{font-size:11px}}
