@@ -310,4 +310,6 @@ dl.info-card>div:last-child{border-bottom:0}
 
 .staff-photo img[src*="tomoe-smile"]{object-position:50% 20%;transform:none}
 /* Keep the complete experiment photo within its gallery frame. */
-.ph-box img[src*="photo-science-table"]{object-fit:contain;object-position:center;transform:none}
+/* Match the adjacent 4:3 frames without cropping people or stretching the photo. */
+#can .science-photo{aspect-ratio:4/3;background:#e9eef6}
+#can .science-photo img{width:100%;height:100%;object-fit:contain;object-position:center;transform:none}
