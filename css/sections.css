@@ -319,3 +319,7 @@ dl.info-card>div:last-child{border-bottom:0}
 /* Match only the first portrait pair; keep faces, hands and cake uncropped. */
 #photos .gallery > .g:nth-child(-n+2) .ph-box.filled{aspect-ratio:3/4}
 #photos .gallery > .g:nth-child(-n+2) .ph-box.filled img{width:100%;height:100%;object-fit:contain;object-position:center}
+
+/* Parent testimonials: compact centered cards, with natural wrapping on narrow screens. */
+#voices .voices{display:flex;flex-direction:column;align-items:center;max-width:680px}
+#voices .voice{width:fit-content;max-width:100%;padding:20px 22px;white-space:normal;overflow-wrap:anywhere}
