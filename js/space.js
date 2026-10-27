@@ -72,6 +72,8 @@
   var lastKm = '';
   function render(t) {
     current = t;
+    // Hide complete overlay subtrees, including their animated pseudo-elements.
+    stage.classList.toggle('is-photo-only', t >= T.c2[3]);
     var d, x, y, km;
     if (t <= T.rise[1]) {
       var a = smooth(range(t, T.rise[0], T.rise[1]));

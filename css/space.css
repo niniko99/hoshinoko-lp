@@ -146,3 +146,7 @@ html:not(.js) .space-copy.c2,html:not(.js) .c2 .final,html:not(.js) .c2 .final-b
 .space-signature .company{font-size:clamp(24px,3vw,36px)}
 .space-signature .replay{position:static;margin:22px auto 0}
 @media(max-width:899px){.space-signature{padding:24px var(--gutter) 28px}.space-signature .final-brand{font-size:22px}.space-signature .company{font-size:18px}.space-signature .run-by{font-size:11px}}
+
+/* Final frame: only the untouched NASA photograph remains inside the stage. */
+.space-stage.is-photo-only > :not(.pbd-wrap){visibility:hidden!important}
+.space-stage.is-photo-only .dot-marker .ring{animation:none}
