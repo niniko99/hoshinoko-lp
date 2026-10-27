@@ -1,0 +1,11 @@
+/* Reference daytime/evening sky; original night remains underneath. */
+.reference-sky{position:absolute;left:0;right:0;top:0;height:var(--reference-height,78%);overflow:hidden;pointer-events:none;-webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 calc(100% - var(--reference-night-fade,600px)),transparent 100%);mask-image:linear-gradient(to bottom,#000 0%,#000 calc(100% - var(--reference-night-fade,600px)),transparent 100%)}
+.reference-blue{position:absolute;left:0;right:0;top:0;height:var(--reference-blue-height,42%);background:#fff url("../assets/sky/reference-blue-sky.jpg") center top/100% auto no-repeat}
+.reference-evening{position:absolute;left:0;right:0;top:var(--reference-evening-top,32%);bottom:0;background:url("../assets/sky/reference-evening.jpg") center 20%/auto var(--reference-evening-image-height,220%) no-repeat;-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 var(--reference-day-fade,600px),#000 100%);mask-image:linear-gradient(to bottom,transparent 0,#000 var(--reference-day-fade,600px),#000 100%)}
+/* The reference supplies the top sky; retain all original section spacing. */
+html[data-sky-theme] #hero::after{background:none}
+html[data-sky-theme] .reference-ink,html[data-sky-theme] .reference-ink p,html[data-sky-theme] .reference-ink small{color:#27334d!important;text-shadow:none!important}
+html[data-sky-theme] .reference-white,html[data-sky-theme] .reference-white p,html[data-sky-theme] .reference-white small{color:#fff!important;text-shadow:0 1px 3px rgba(10,22,66,.62),0 2px 18px rgba(10,22,66,.5)!important}
+
+/* Purple midtones need a light reading surface rather than a premature white-text switch. */
+html[data-sky-theme] .reference-transition{background:rgba(255,253,248,.86);border-radius:12px;box-shadow:0 0 0 12px rgba(255,253,248,.86)}
