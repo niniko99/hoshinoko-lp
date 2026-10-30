@@ -18,7 +18,7 @@ main section{padding:var(--pad-y) var(--gutter)}
 }
 .s-hero::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
   background:url("../assets/src/hero-photo-pc.jpg") center bottom/cover no-repeat;
-  -webkit-mask-image:linear-gradient(to bottom,#000 52%,rgba(0,0,0,.94) 62%,rgba(0,0,0,.72) 73%,rgba(0,0,0,.38) 84%,rgba(0,0,0,.12) 93%,transparent 100%);mask-image:linear-gradient(to bottom,#000 52%,rgba(0,0,0,.94) 62%,rgba(0,0,0,.72) 73%,rgba(0,0,0,.38) 84%,rgba(0,0,0,.12) 93%,transparent 100%)}
+  -webkit-mask-image:linear-gradient(to bottom,#000 30%,rgba(0,0,0,.98) 40%,rgba(0,0,0,.90) 50%,rgba(0,0,0,.74) 60%,rgba(0,0,0,.50) 70%,rgba(0,0,0,.26) 80%,rgba(0,0,0,.10) 90%,rgba(0,0,0,.02) 96%,transparent 100%);mask-image:linear-gradient(to bottom,#000 30%,rgba(0,0,0,.98) 40%,rgba(0,0,0,.90) 50%,rgba(0,0,0,.74) 60%,rgba(0,0,0,.50) 70%,rgba(0,0,0,.26) 80%,rgba(0,0,0,.10) 90%,rgba(0,0,0,.02) 96%,transparent 100%)}
 @media (orientation:portrait){
   .s-hero::after{background-image:url("../assets/src/hero-photo-sp.jpg")}
 }
@@ -323,3 +323,9 @@ dl.info-card>div:last-child{border-bottom:0}
 /* Parent testimonials: compact centered cards, with natural wrapping on narrow screens. */
 #voices .voices{display:flex;flex-direction:column;align-items:center;max-width:680px}
 #voices .voice{width:fit-content;max-width:100%;padding:20px 22px;white-space:normal;overflow-wrap:anywhere}
+
+/* Match the current version: keep the knitting photo vertically centered in its desktop card. */
+@media(min-width:641px){
+  #photos .gallery > .g:nth-child(3){display:flex;align-items:center;justify-content:center}
+  #photos .gallery > .g:nth-child(3) .ph-box.filled{flex:0 0 calc(100% - 12px);min-width:0}
+}
