@@ -1,0 +1,325 @@
+/* ===== v3：写真と短い言葉が主役。背景はページと一緒に流れる空 ===== */
+
+/* 共通 */
+main section{padding:var(--pad-y) var(--gutter)}
+.sec-title{text-align:center;font-family:var(--ff-hand);font-weight:600;font-size:clamp(26px,4vw,42px);line-height:1.5;letter-spacing:.08em;text-shadow:0 2px 18px rgba(10,20,70,.3)}
+.sec-title small{display:block;margin-bottom:.6em;font-family:var(--ff-en);font-weight:300;font-size:13px;letter-spacing:.35em;text-transform:uppercase;opacity:.85}
+.sec-title .tax{font-size:.5em;margin-left:.3em;font-family:var(--ff-body)}
+.num{font-family:var(--ff-en);font-weight:400;font-variant-numeric:tabular-nums;letter-spacing:.03em}
+/* 「やってみたい！」だけ、白のまま少し大きく・太く。下に手書き風のうすい線をそっと引く */
+.marker{font-size:1.1em;-webkit-text-stroke:.5px currentColor;padding:0 .12em .08em;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 16' preserveAspectRatio='none'%3E%3Cfilter id='s'%3E%3CfeGaussianBlur stdDeviation='.55'/%3E%3C/filter%3E%3Cpath filter='url(%23s)' d='M4 10C60 5 110 12 164 9C212 6 258 11 296 8C258 13 212 9 164 12C110 15 60 8 4 10Z' fill='%23ffffff' opacity='.5'/%3E%3C/svg%3E") no-repeat left calc(100% - .04em)/100% .3em}
+
+/* 1 世界観（こうの絵の「空」。上が宇宙、まんなかが水色の青空、下が白い雲）
+   まゆちゃんの「背景のテーマは空。宇宙だけじゃなくて、地球の空」に合わせて、雲のある青空を出す。
+   紙飛行機と点線は消してある。下のふちは、うしろのまゆちゃんの空へすうっと溶けこませる */
+.s-hero{
+  min-height:100vh;min-height:100svh;display:grid;place-items:center;text-align:center;padding-top:120px;padding-bottom:30vh;
+}
+.s-hero::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:url("../assets/src/hero-photo-pc.jpg") center bottom/cover no-repeat;
+  -webkit-mask-image:linear-gradient(to bottom,#000 52%,rgba(0,0,0,.94) 62%,rgba(0,0,0,.72) 73%,rgba(0,0,0,.38) 84%,rgba(0,0,0,.12) 93%,transparent 100%);mask-image:linear-gradient(to bottom,#000 52%,rgba(0,0,0,.94) 62%,rgba(0,0,0,.72) 73%,rgba(0,0,0,.38) 84%,rgba(0,0,0,.12) 93%,transparent 100%)}
+@media (orientation:portrait){
+  .s-hero::after{background-image:url("../assets/src/hero-photo-sp.jpg")}
+}
+.hero-inner{position:relative;z-index:3}
+/* 1枚目の文字は白。青空の写真の上なので、濃い影をぴたっと裏に敷いて輪郭を立てる */
+.hero-copy{font-family:var(--ff-hand);font-weight:600;font-size:clamp(19px,5.2vw,54px);line-height:1.95;letter-spacing:.08em;
+  color:#fff;text-shadow:0 1px 4px rgba(8,26,74,.62),0 2px 22px rgba(8,26,74,.5)}
+.hero-copy .line{display:block}
+.hero-brand{margin-top:1.5em;font-family:var(--ff-hand);font-weight:600;font-size:clamp(30px,4.4vw,50px);line-height:1.2;letter-spacing:.12em;
+  color:#fff;text-shadow:0 1px 4px rgba(8,26,74,.62),0 2px 20px rgba(8,26,74,.5)}
+.hero-brand span{display:block;margin-bottom:.5em;font-family:var(--ff-en);font-weight:300;font-size:clamp(13px,1.3vw,16px);letter-spacing:.4em}
+.scroll-cue{position:absolute;left:50%;bottom:26px;z-index:4;width:26px;height:44px;margin-left:-13px;border:2px solid rgba(255,255,255,.7);border-radius:14px}
+.scroll-cue span{position:absolute;left:50%;top:8px;width:4px;height:8px;margin-left:-2px;border-radius:2px;background:#fff;animation:cue 2s ease-in-out infinite}
+@keyframes cue{0%{opacity:0;transform:translateY(0)}40%{opacity:1}100%{opacity:0;transform:translateY(14px)}}
+
+/* 短い言葉 */
+.s-word{text-align:center}
+.big-word{font-family:var(--ff-hand);font-weight:600;font-size:clamp(32px,7vw,76px);line-height:1.5;letter-spacing:.06em;text-shadow:0 2px 24px rgba(10,20,70,.3)}
+.big-word+.big-word{margin-top:.25em}
+#play .big-word{font-size:clamp(24px,7vw,76px)}
+#choose>.mid-word{font-size:clamp(21px,4.6vw,48px);text-align:center}
+#choose>.mid-word+.blobs{margin-top:28px}
+.mid-word{font-family:var(--ff-hand);font-weight:600;font-size:clamp(24px,4.6vw,48px);line-height:1.7;letter-spacing:.08em;text-shadow:0 2px 20px rgba(10,20,70,.3)}
+
+/* 3 自分で選ぶ・決める・やってみる・夢中になる（ポスターの4つの丸） */
+.blobs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(8px,2vw,24px);max-width:1000px;margin:0 auto}
+.blob{display:grid;place-items:center;aspect-ratio:1;border-radius:50%;text-align:center;color:var(--ink);font-family:var(--ff-hand);font-weight:600;font-size:clamp(20px,3.2vw,36px);line-height:1.45;letter-spacing:.06em}
+.b-pink{background:radial-gradient(closest-side,#fbd0de 66%,rgba(251,208,222,.55) 84%,rgba(251,208,222,0))}
+.b-yellow{background:radial-gradient(closest-side,#fde7a6 66%,rgba(253,231,166,.55) 84%,rgba(253,231,166,0))}
+.b-mint{background:radial-gradient(closest-side,#cdeede 66%,rgba(205,238,222,.55) 84%,rgba(205,238,222,0))}
+.b-blue{background:radial-gradient(closest-side,#d6e8fb 66%,rgba(214,232,251,.55) 84%,rgba(214,232,251,0))}
+@media (max-width:640px){.blobs{grid-template-columns:repeat(2,minmax(0,1fr));max-width:420px}}
+
+/* 5 子どもたちの写真（上に3枚そろえて、いちばん下は1枚まるごと大きく） */
+.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(8px,1.4vw,16px);max-width:1080px;margin:0 auto}
+.g{border-radius:18px;overflow:hidden;background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 14px 34px rgba(10,20,70,.18)}
+.g .ph-box{border-radius:14px;margin:6px}
+.g .ph-box.filled{aspect-ratio:1}
+.g .ph-box.filled img{width:100%;height:100%;object-fit:cover}
+/* いちばん下の1枚は切らずに、写真そのままの形で大きく見せる */
+.g-full{grid-column:1/-1;justify-self:center;width:min(100%,760px)}
+.g-full .ph-box.filled{aspect-ratio:auto}
+.g-full .ph-box.filled img{height:auto}
+/* スマホでは横にスワイプして見る。1枚ずつ大きく見えるので、
+   遠足のバスのように「全体を見たい写真」も切らずに出せる */
+@media (max-width:640px){
+  .gallery{display:flex;grid-template-columns:none;gap:12px;align-items:center;
+    overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
+    padding:4px var(--gutter) 10px;margin-inline:calc(-1 * var(--gutter));
+    scroll-padding-inline:var(--gutter);max-width:none}
+  .gallery::-webkit-scrollbar{display:none}
+  .gallery{scrollbar-width:none}
+  .g{flex:0 0 78%;scroll-snap-align:center}
+  /* 横長の写真は幅を広くとる。そろえると縦長より小さく見えてしまうため
+     （帯の中では align-items:center で上下まんなかに来る） */
+  .g-mwide,.g-full{flex:0 0 94%}
+  /* 横スワイプのときは、どの写真も切らずにそのままの形で見せる */
+  .g .ph-box.filled{aspect-ratio:auto}
+  .g .ph-box.filled img{height:auto}
+  .g-full{width:auto}
+}
+
+/* 横スワイプできることの合図。スマホのときだけ出す */
+.swipe-hint{display:none}
+@media (max-width:640px){
+  .swipe-hint{display:block;margin-top:.8em;text-align:center;
+    font-size:11px;letter-spacing:.2em;opacity:.8}
+}
+
+/* 7 できること */
+.cans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,3vw,34px);max-width:760px;margin:2.4em auto 0}
+@media(max-width:640px){.cans{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.can{width:min(100%,220px);justify-self:center;text-align:center}
+.can .ico{display:block;width:min(100%,170px);margin-inline:auto;aspect-ratio:1;padding:20%;border-radius:52% 48% 50% 50%/48% 52% 48% 52%;background:var(--c);fill:none;stroke:var(--ink);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;box-shadow:0 14px 30px rgba(10,20,70,.18)}
+.can b{display:block;margin-top:.6em;font-family:var(--ff-hand);font-weight:600;font-size:clamp(18px,2.2vw,22px)}
+.can span{display:block;font-size:13px;line-height:1.6;opacity:.92}
+
+/* 8 1日の流れ */
+.flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(8px,1.6vw,20px);max-width:1000px;margin:2.6em auto 0;position:relative}
+.flow li{position:relative;text-align:center}
+.flow .ico{display:block;width:clamp(88px,9vw,112px);height:clamp(88px,9vw,112px);margin:0 auto;padding:14px;border-radius:50%;background:#fff9ef;fill:none;stroke:#27334d;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;box-shadow:0 10px 24px rgba(10,20,70,.2)}
+.flow .day-accent{fill:#e5a9be;stroke:#27334d}
+.flow b{display:block;margin-top:.7em;font-family:var(--ff-hand);font-weight:600;font-size:clamp(15px,1.8vw,19px);line-height:1.5}
+.flow li:not(:last-child)::after{content:"";position:absolute;top:clamp(38px,4.5vw,50px);right:calc(-1 * clamp(8px,1.6vw,20px) / 2 - 6px);width:12px;height:12px;border-top:2.5px solid rgba(255,255,255,.85);border-right:2.5px solid rgba(255,255,255,.85);rotate:45deg}
+/* スマホでは横にスワイプ。1画面に1つずつ出るので、1日が順に進んでいく感じになる */
+@media (max-width:640px){
+  .flow{display:flex;grid-template-columns:none;gap:14px;max-width:none;
+    overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
+    padding:4px var(--gutter) 10px;margin-inline:calc(-1 * var(--gutter));
+    scroll-padding-inline:var(--gutter);scrollbar-width:none}
+  .flow::-webkit-scrollbar{display:none}
+  .flow li{flex:0 0 58%;scroll-snap-align:center;text-align:center}
+  .flow .ico{width:112px;height:112px;padding:14px;margin:0 auto}
+  .flow b{margin-top:.7em}
+  /* 次へ進む矢印は、となりのカードとのあいだに出す */
+  .flow li:not(:last-child)::after{top:50px;right:-13px;left:auto;bottom:auto;rotate:45deg}
+}
+.today-big{margin-top:1.2em;text-align:center;font-family:var(--ff-hand);font-weight:600;font-size:clamp(44px,12vw,104px);line-height:1.38;letter-spacing:.03em;text-shadow:0 2px 8px rgba(60,40,120,.35),0 4px 30px rgba(40,30,100,.45)}
+.today-big .l{display:block;white-space:nowrap}
+.today-big .ch{display:inline-block;opacity:0;transform:translateY(.35em) scale(.85);transition:opacity .8s var(--ease),transform .8s cubic-bezier(.3,1.5,.5,1);transition-delay:calc(var(--i) * 60ms)}
+.today-big.is-in .ch{opacity:1;transform:none}
+
+/* 9 スタッフ */
+.staff-carousel{max-width:1100px;margin:2.2em auto 0}
+.staff-carousel .swipe-hint{text-align:center;font-size:13px;margin-bottom:14px}
+.staff-list{display:flex;align-items:stretch;gap:20px;overflow-x:auto;padding:6px 0 18px;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:thin;scrollbar-color:rgba(39,51,77,.5) rgba(255,255,255,.25)}
+.staff-list::after{content:"";flex:0 0 var(--staff-tail,0px)}
+.staff{flex:0 0 320px;min-width:0;border-radius:24px;overflow:hidden;text-align:left;color:var(--ink);background:rgba(255,255,255,.86);border:1px solid rgba(255,255,255,.65);scroll-snap-align:start}
+.staff-representative{display:grid;grid-template-columns:minmax(220px,.8fr) minmax(0,1.5fr);align-items:center;max-width:960px;margin:2.2em auto 0;padding:24px;gap:28px}
+.staff-representative .staff-photo{height:auto;padding:0;border-radius:16px}
+.staff-representative .staff-photo img{height:100%;max-height:none;object-position:50% 42%}
+.staff-representative .staff-copy{padding:8px 0}
+.staff-photo{width:100%;height:auto;aspect-ratio:3/2;display:grid;place-items:center;overflow:hidden;background:rgba(255,253,248,.7);padding:0}
+.staff-photo img{display:block;width:100%;height:100%;min-height:0;object-fit:cover;object-position:50% 35%}
+.staff-photo img[src*="kumiko-cherry"]{object-position:50% 60%;transform:none}
+.staff-photo img[src*="dr-rin"]{object-position:50% 14%;transform:none}
+.staff-photo img[src*="wakky"]{object-position:48% 20%}
+.staff-photo img[src*="nozomi"]{object-position:50% 28%}
+.staff-photo img[src*="apollo"]{object-fit:cover;object-position:center}
+.staff-photo img[src*="tomoe-placeholder"]{object-fit:contain;object-position:center;transform:none}
+.staff-photo-wide img{object-fit:cover;object-position:center;transform:none}
+.staff-photo-wide{padding:0}
+.staff-photo-placeholder{color:var(--ink-soft);font-size:13px;background:rgba(255,253,248,.45)}
+.staff-copy{padding:20px 24px 26px;overflow-wrap:anywhere}
+.staff h3{font-family:var(--ff-hand);font-weight:600;font-size:23px;line-height:1.5}
+.staff p{margin-top:.75em;font-size:14px;line-height:1.9}
+.staff .staff-role,.staff .staff-kind{font-size:12px;color:var(--ink-soft);line-height:1.8}
+.staff-extra-photo{width:84px;height:112px;object-fit:contain;margin-top:16px;border-radius:8px}
+.staff-controls{display:flex;justify-content:center;align-items:center;gap:24px;margin-top:14px;color:var(--ink)}
+.staff-controls[hidden]{display:none}
+.staff-controls button{min-height:44px;min-width:96px;padding:8px 16px;border:1px solid rgba(39,51,77,.2);border-radius:999px;background:rgba(255,255,255,.9);color:var(--ink);font:inherit;font-size:14px;cursor:pointer}
+.staff-controls button:disabled{opacity:.45;cursor:default}
+.staff-position{min-width:42px;padding:3px 10px;border-radius:999px;background:rgba(255,255,255,.85);font-size:12px;text-align:center;white-space:nowrap}
+.staff-list:focus-visible,.staff-controls button:focus-visible{outline:3px solid var(--star);outline-offset:3px}
+@media (max-width:640px){
+  .staff-list{gap:14px}
+  .staff{flex-basis:84%}
+  .staff-representative{display:block;padding:22px;margin-top:1.6em}
+  .staff-representative .staff-photo{max-width:260px;margin:0 auto 18px}
+  .staff-copy{padding:18px 20px 24px}
+  .staff h3{font-size:22px}
+  .staff-controls{gap:16px}
+}
+
+/* 10 保護者の声 */
+.voices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,2vw,22px);max-width:1000px;margin:2.4em auto 0}
+.voice{position:relative;padding:26px 22px;border-radius:26px;color:var(--ink);background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.55);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);font-size:14px;line-height:1.9}
+.voice::before{content:"“";position:absolute;top:-6px;left:16px;font-family:var(--ff-en);font-size:56px;line-height:1;color:rgba(255,255,255,.9)}
+@media (max-width:760px){.voices{grid-template-columns:1fr;max-width:480px}}
+
+/* 11 料金 */
+.s-price{text-align:center}
+.price-card{max-width:520px;margin:2.2em auto 0;padding:clamp(18px,3vw,28px) clamp(20px,4vw,36px);border-radius:28px;color:var(--ink);background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.55);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);box-shadow:0 22px 50px rgba(20,20,60,.22)}
+.prices>div{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:.8em 0;border-bottom:1px dashed rgba(39,51,77,.2)}
+.prices>div:last-child{border-bottom:0}
+.prices dt{font-weight:700}
+.prices dd{font-size:15px}
+.prices b{font-size:clamp(24px,3vw,30px)}
+.prices small{font-size:12px;color:var(--ink-soft)}
+.price-note{margin-top:1.4em;font-family:var(--ff-hand);font-weight:600;font-size:clamp(20px,2.8vw,28px);letter-spacing:.06em;text-shadow:0 2px 18px rgba(10,20,70,.3)}
+.price-sub{margin-top:.6em;font-size:14px;opacity:.9}
+
+/* 12 アクセス・利用時間 */
+.access-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:20px;max-width:960px;margin:2.4em auto 0;text-align:left}
+.info-card{padding:clamp(20px,3.6vw,32px);border-radius:26px;color:var(--ink);background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.55);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);box-shadow:0 22px 50px rgba(20,20,60,.22)}
+dl.info-card>div{display:grid;grid-template-columns:6.6em 1fr;gap:10px;padding:.75em 0;border-bottom:1px dashed rgba(39,51,77,.2);line-height:1.8}
+dl.info-card>div:last-child{border-bottom:0}
+.info-card dt{font-weight:700;color:var(--ink-soft)}
+.info-card dd small{display:block;font-size:13px;color:var(--ink-soft)}
+.info-card .num{font-size:19px}
+.tel{font-weight:700;text-underline-offset:3px}
+.map-card{display:flex;flex-direction:column;gap:10px;padding:12px}
+.map{flex:1;width:100%;min-height:260px;border:0;border-radius:18px;background:#eef1f7}
+.map-link{align-self:center;font-size:13px;font-weight:700;color:var(--ink)}
+@media (max-width:760px){.access-grid{grid-template-columns:1fr}}
+
+/* 13 よくある質問 */
+.faq{max-width:760px;margin:2.2em auto 0;display:grid;gap:10px}
+.faq details{border-radius:18px;color:var(--ink);background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.55);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+.faq summary{display:flex;justify-content:space-between;gap:12px;padding:16px 20px;font-weight:700;cursor:pointer;list-style:none}
+.faq summary::-webkit-details-marker{display:none}
+.faq-question-label{flex-shrink:0;margin-right:.5em;font-family:var(--ff-en);color:#e0899f}
+.faq-answer-label{margin-right:.65em;font-family:var(--ff-en);font-weight:700;color:var(--ink)}
+.faq summary::after{content:"＋";margin-left:auto}
+.faq details[open] summary::after{content:"−"}
+.faq summary:focus-visible{outline:3px solid var(--star);outline-offset:2px;border-radius:18px}
+.faq details p{padding:0 20px 18px;font-size:14px;line-height:1.9}
+
+/* 14 見学・お問い合わせ */
+.s-contact{text-align:center}
+.contact-lead{font-family:var(--ff-hand);font-weight:600;font-size:clamp(30px,6vw,60px);line-height:1.5;letter-spacing:.04em;text-shadow:0 2px 24px rgba(10,20,70,.35)}
+.contact-sub{margin-top:.6em;font-size:clamp(15px,1.9vw,19px);font-weight:700}
+.cta-buttons{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:0 16px;margin-top:.6em}
+.btn-sub{display:inline-flex;align-items:baseline;gap:.5em;margin-top:1.1em;padding:.95em 1.8em;border:1.5px solid rgba(255,255,255,.75);border-radius:999px;color:#fff;font-weight:700;letter-spacing:.06em;text-decoration:none;transition:background-color .2s}
+.btn-sub:hover{background:rgba(255,255,255,.12)}
+
+/* 途中にはさむ「見学してみる」。
+   いちばん下のCTAが本命なので、ここは一回り小さく、光らせない */
+.cta-mid{margin-top:clamp(34px,4.6vw,56px);text-align:center}
+.cta-mid p{font-size:clamp(14px,2vw,17px);line-height:1.95;letter-spacing:.05em}
+.btn-mid{display:inline-flex;align-items:center;justify-content:center;margin-top:1.1em;
+  padding:.88em 2.1em;border-radius:999px;
+  background:linear-gradient(135deg,#ffd35c,#ffb46b);color:#3a2a10;
+  font-weight:700;font-size:clamp(14px,1.7vw,17px);letter-spacing:.08em;text-decoration:none;
+  box-shadow:0 8px 22px rgba(255,180,90,.3);transition:transform .2s var(--ease),box-shadow .2s}
+.btn-mid:hover{transform:translateY(-2px);box-shadow:0 13px 30px rgba(255,180,90,.42)}
+/* Give the invitation below the children's voices room to breathe. */
+#kidsvoice .cta-mid .btn-mid{margin-top:clamp(28px,3.2vw,40px)}
+
+/* 15 星空へ */
+.s-future{text-align:center;padding-top:calc(var(--pad-y) * 1.2);padding-bottom:calc(var(--pad-y) * 1.4)}
+.future-quote{font-family:var(--ff-hand);font-weight:600;font-size:clamp(20px,5.6vw,64px);white-space:nowrap;line-height:1.6;letter-spacing:.05em;text-shadow:0 0 22px rgba(170,195,255,.55),0 0 60px rgba(120,150,255,.35)}
+.future-quote+.future-quote{margin-top:.5em}
+
+/* 流れ星：夜のあいだだけ、ときどき流れる（JSが1本ずつ作る） */
+.shoot-layer{position:fixed;left:0;right:0;top:-4vh;height:108vh;z-index:0;pointer-events:none;overflow:hidden}
+.shoot{position:absolute;height:2px;border-radius:2px;transform-origin:0 50%;
+  background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.55) 55%,#fff);
+  box-shadow:0 0 6px rgba(255,255,255,.55);animation:shoot var(--dur) ease-in forwards}
+@keyframes shoot{
+  0%{opacity:0;transform:rotate(var(--ang)) translateX(0) scaleX(.35)}
+  18%{opacity:1}
+  100%{opacity:0;transform:rotate(var(--ang)) translateX(var(--dist)) scaleX(1)}
+}
+
+
+/* ===== 読みもの（やわらかい本文）=====
+   見出しの下につく説明文。行間をゆったりとって、読む気になる長さに見せる */
+.read{max-width:640px;margin:2.4em auto 0;text-align:center;font-size:clamp(14px,2.1vw,17px);line-height:2.15;letter-spacing:.045em}
+.read p+p{margin-top:1.6em}
+.read b{font-weight:700}
+/* 見出しのすぐ下の一行（手書き風フォントで、少し大きめ） */
+.lead{margin-top:1.5em;text-align:center;font-family:var(--ff-hand);font-weight:600;font-size:clamp(15px,2.4vw,21px);line-height:2;letter-spacing:.06em}
+
+/* 写真のあとに置く、子どもの気持ちの言葉 */
+.photo-words{display:flex;justify-content:center;flex-wrap:wrap;gap:clamp(24px,6vw,70px);margin-top:clamp(30px,4.2vw,50px);text-align:center}
+.photo-words p{font-family:var(--ff-hand);font-weight:600;font-size:clamp(16px,2.6vw,24px);line-height:1.95;letter-spacing:.05em}
+
+/* できること／1日の流れ：それぞれに添える一言 */
+.can-note{display:block;margin-top:.75em;font-size:12px;line-height:1.8;opacity:.92}
+.flow-note{display:block;margin-top:.5em;font-size:11.5px;line-height:1.75;opacity:.9}
+
+/* ===== 子どもたちの声（実際に聞こえてきた言葉）=====
+   短い言葉は小さなふきだしでちらし、とくに効く2つは大きく見せる */
+.s-kidsvoice{text-align:center}
+.kv-list{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:clamp(9px,1.5vw,15px);max-width:860px;margin:2.6em auto 0}
+.kv{padding:.72em 1.2em;border-radius:999px;color:var(--ink);background:rgba(255,255,255,.82);
+  border:1px solid rgba(255,255,255,.6);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  font-size:clamp(12.5px,1.7vw,15px);line-height:1.65;box-shadow:0 8px 20px rgba(30,60,110,.14)}
+.kv-big{width:100%;max-width:560px;margin:.5em auto;padding:.9em 1.3em;border-radius:24px;
+  font-family:var(--ff-hand);font-weight:600;font-size:clamp(17px,2.9vw,26px);background:rgba(255,255,255,.92)}
+
+/* 保護者の声のうち、とくに効くものは横いっぱいで大きく */
+.voice-big{grid-column:1/-1;text-align:center}
+.voice-big p{font-family:var(--ff-hand);font-weight:600;font-size:clamp(16px,2.4vw,22px);line-height:1.8}
+@media (max-width:760px){.voice-big{grid-column:auto}}
+
+/* ===== 空が明るいところ（昼〜夕方の空の上）の文字 =====
+   文字は白のまま。ただし明るい空の上だと白はぼやけるので、
+   文字のすぐ裏に濃い影をぴたっと敷いて、輪郭を立てる。
+   （いちばん明るいピンクの空 #EC7EC9 の上では、白はコントラスト2.4しかない。
+     影がないと読めない）
+   どのセクションに付けるかは main.js が位置を見て決める（.on-light） */
+.on-light{color:#fff}
+.on-light .sec-title,.on-light .big-word,.on-light .mid-word,.on-light .today-big,
+.on-light .price-note,.on-light .contact-lead,.on-light .lead,.on-light .future-quote{
+  text-shadow:0 1px 3px rgba(10,22,66,.62),0 2px 18px rgba(10,22,66,.5)}
+.on-light .read,.on-light .photo-words,.on-light .can b,.on-light .can span,
+.on-light .can-note,.on-light .flow b,.on-light .flow-note,.on-light .cta-mid p,
+.on-light .sec-title small,.on-light .tbd-note,.on-light .h-info{
+  text-shadow:0 1px 2px rgba(10,22,66,.72),0 1px 10px rgba(10,22,66,.55)}
+
+/* ===== 夕日の帯（空の明るさが155〜172まで上がるところ）にのる文字 =====
+   ここだけは白だと沈んで読めないので、濃い藍むらさきにする。
+   空のピンク・むらさきと同じ系統の色なので、雰囲気は変わらない。
+   うしろに白い光をうすく敷いて、空から浮かせる。
+   どの文字に付けるかは main.js が空の明るさを見て決める（.on-deep）
+   ※同じセクションでも、空が暗くなるところから下は白のまま */
+.on-deep,.on-light .on-deep,.on-light .on-deep small,.on-light .on-deep p{color:#2e1a63;
+  text-shadow:0 1px 10px rgba(255,255,255,.62),0 0 26px rgba(255,255,255,.42)}
+.on-deep small{opacity:.72}
+/* ふきだしやカードは自前の色を持っているので、そのまま */
+.on-deep .kv,.on-deep .voice,.on-deep .btn-mid,.on-deep .btn-cta{text-shadow:none}
+
+/* Opt-in disclosure: the no-JavaScript page keeps every original voice visible. */
+.voices-list-collapsible > [hidden]{display:none!important}
+.voices-controls{display:flex;justify-content:center;margin:1.4em auto 0}
+.voices-toggle{min-width:140px;min-height:44px;padding:10px 24px;border:1px solid rgba(39,51,77,.22);border-radius:999px;background:rgba(255,253,248,.94);color:var(--ink);font:500 14px/1.6 var(--ff-body);letter-spacing:.06em;cursor:pointer;text-shadow:none}
+.voices-toggle:hover{background:#fffdf8}
+.voices-toggle:focus-visible{outline:3px solid #ffe1b2;outline-offset:4px}
+
+.staff-photo img[src*="tomoe-smile"]{object-position:50% 20%;transform:none}
+/* Keep the complete experiment photo within its gallery frame. */
+/* Match the adjacent 4:3 frames without cropping people or stretching the photo. */
+#can .science-photo{aspect-ratio:4/3;background:#e9eef6}
+#can .science-photo img{width:100%;height:100%;object-fit:contain;object-position:center;transform:none}
+
+/* Match only the first portrait pair; keep faces, hands and cake uncropped. */
+#photos .gallery > .g:nth-child(-n+2) .ph-box.filled{aspect-ratio:3/4}
+#photos .gallery > .g:nth-child(-n+2) .ph-box.filled img{width:100%;height:100%;object-fit:contain;object-position:center}
+
+/* Parent testimonials: compact centered cards, with natural wrapping on narrow screens. */
+#voices .voices{display:flex;flex-direction:column;align-items:center;max-width:680px}
+#voices .voice{width:fit-content;max-width:100%;padding:20px 22px;white-space:normal;overflow-wrap:anywhere}
