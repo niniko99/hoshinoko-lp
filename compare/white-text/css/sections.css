@@ -343,3 +343,10 @@ dl.info-card>div:last-child{border-bottom:0}
   #staff-title{font-size:clamp(21px,5.8vw,30px)}
   #future .future-quote{font-size:clamp(17px,4.5vw,28px);letter-spacing:.015em}
 }
+
+/* Requested white text only on the exposed pink/purple background. */
+#staff > .read,#staff > .read p,#staff > .read b,
+#voices > .sec-title,#voices > .sec-title small{
+  color:#fff;text-shadow:0 1px 3px rgba(10,22,66,.62),0 2px 18px rgba(10,22,66,.5)
+}
+#voices > .sec-title small{opacity:1}

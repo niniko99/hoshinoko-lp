@@ -85,8 +85,8 @@ main{position:relative;color:#fff}
    暗くなるほど濃く（濃さの変わりかたは main.js が決める）。
    3枚目はキラキラ（四方向に光がのびる、大きめの星） */
 .world-stars{position:absolute;inset:0;
-  background-image:var(--stars-a,none),var(--stars-b,none),var(--sparkle,none),var(--gold,none);
-  background-size:560px 560px,900px 900px,1500px 1500px,1700px 1700px}
+  background-image:var(--stars-a,none),var(--stars-b,none),var(--sparkle,none);
+  background-size:560px 560px,900px 900px,1500px 1500px}
 /* 天の川：細かい星が集まって、ゆるやかに流れる帯（位置と高さは main.js が決める） */
 .world-milky{position:absolute;left:0;right:0;top:-200px;height:0;overflow:hidden;
   -webkit-mask-image:linear-gradient(to bottom,transparent,#000 20%,#000 80%,transparent);
