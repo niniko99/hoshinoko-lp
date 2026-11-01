@@ -151,21 +151,19 @@ html:not(.js) .space-copy.c2,html:not(.js) .c2 .final,html:not(.js) .c2 .final-b
 .space-stage.is-photo-only > :not(.pbd-wrap){visibility:hidden!important}
 .space-stage.is-photo-only .dot-marker .ring{animation:none}
 
-/* Universe title panels: one real Hoshinoko logo and a distinct title for each story. */
+/* Center white titles over the blue area; retain the supplied image without redrawing. */
 .brand-story .story-heading{
-  flex-direction:column;flex-wrap:nowrap;gap:16px;padding:28px 18px;
-  background:linear-gradient(rgba(5,13,38,.24),rgba(5,13,38,.44)),url("../assets/src/sky-night2-pc.jpg") center/cover;
-  border:1px solid rgba(255,255,255,.16)
-}
-.brand-story .story-heading img{
-  width:64px;height:64px;order:0;object-fit:contain;
-  filter:drop-shadow(0 2px 10px rgba(255,255,255,.3))
+  position:relative;display:block;aspect-ratio:722/227;padding:0;
+  background:linear-gradient(rgba(5,13,38,.24),rgba(5,13,38,.44)),url("../assets/src/story-universe-supplied-20261101.jpg") center center/cover;
+  border:1px solid rgba(255,255,255,.16);overflow:hidden
 }
 .brand-story .story-heading h3{
-  flex:initial;order:0;color:#fff;font-size:clamp(20px,2.6vw,24px);
-  line-height:1.65;text-shadow:0 2px 12px rgba(0,0,0,.7)
+  position:absolute;left:8%;right:8%;top:50%;transform:translateY(-50%);
+  margin:0;color:#fff;font-size:clamp(16px,2vw,22px);line-height:1.5;
+  text-shadow:0 2px 12px rgba(0,0,0,.7)
 }
-@media(max-width:400px){
-  .brand-story .story-heading{padding:24px 12px;gap:14px}
-  .brand-story .story-heading img{width:56px;height:56px}
+.brand-story .story-title-break{display:block}
+@media(max-width:649px){
+  .brand-story .story-heading{aspect-ratio:2.15}
+    .brand-story .story-heading h3{left:8%;right:8%;top:50%;font-size:clamp(14px,4.1vw,18px);line-height:1.5;letter-spacing:0}
 }
