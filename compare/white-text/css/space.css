@@ -167,3 +167,11 @@ html:not(.js) .space-copy.c2,html:not(.js) .c2 .final,html:not(.js) .c2 .final-b
   .brand-story .story-heading{aspect-ratio:2.15}
     .brand-story .story-heading h3{left:8%;right:8%;top:50%;font-size:clamp(14px,4.1vw,18px);line-height:1.5;letter-spacing:0}
 }
+
+/* Only the octopus story: center the title and its small logo together. */
+.brand-story #story-section-1{display:flex;align-items:center;justify-content:center;gap:12px}
+.brand-story #story-section-1 img{width:40px;height:40px;flex:none;object-fit:contain;order:0}
+@media(max-width:649px){
+  .brand-story #story-section-1{gap:10px}
+  .brand-story #story-section-1 img{width:28px;height:28px}
+}
