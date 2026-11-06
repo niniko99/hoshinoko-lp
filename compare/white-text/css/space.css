@@ -151,27 +151,38 @@ html:not(.js) .space-copy.c2,html:not(.js) .c2 .final,html:not(.js) .c2 .final-b
 .space-stage.is-photo-only > :not(.pbd-wrap){visibility:hidden!important}
 .space-stage.is-photo-only .dot-marker .ring{animation:none}
 
-/* Center white titles over the blue area; retain the supplied image without redrawing. */
+/* November 6 supplied title cards: simple cream, navy lettering and small motifs.
+   Live text keeps both titles crisp and readable at every screen size. */
 .brand-story .story-heading{
-  position:relative;display:block;aspect-ratio:722/227;padding:0;
-  background:linear-gradient(rgba(5,13,38,.24),rgba(5,13,38,.44)),url("../assets/src/story-universe-supplied-20261101.jpg") center center/cover;
-  border:1px solid rgba(255,255,255,.16);overflow:hidden
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  gap:0;aspect-ratio:auto;min-height:230px;margin:0 0 30px;
+  padding:34px 16px;border:0;border-radius:18px;background:#fbf7f1;
+  text-align:center
 }
+.brand-story .story-ornament{
+  display:flex;align-items:center;justify-content:center;gap:20px;
+  min-height:60px;margin:0 0 12px;color:#c8ad6c;line-height:1
+}
+.brand-story .story-ornament img{order:initial;width:60px;height:60px;object-fit:contain}
+.brand-story .story-ornament>span{font-size:17px}
+.brand-story .story-stars{gap:12px;letter-spacing:.22em}
+.brand-story .story-stars svg{width:42px;height:42px;fill:#c8ad6c;flex:none}
 .brand-story .story-heading h3{
-  position:absolute;left:8%;right:8%;top:50%;transform:translateY(-50%);
-  margin:0;color:#fff;font-size:clamp(16px,2vw,22px);line-height:1.5;
-  text-shadow:0 2px 12px rgba(0,0,0,.7)
+  flex:none;order:initial;margin:0;color:#183955;
+  font:700 clamp(18px,3.5vw,29px)/1.6 var(--ff-body);
+  letter-spacing:.04em;word-break:normal;overflow-wrap:normal;text-wrap:balance
 }
-.brand-story .story-title-break{display:block}
-@media(max-width:649px){
-  .brand-story .story-heading{aspect-ratio:2.15}
-    .brand-story .story-heading h3{left:8%;right:8%;top:50%;font-size:clamp(14px,4.1vw,18px);line-height:1.5;letter-spacing:0}
+.brand-story .story-heading .story-subtitle{
+  margin:.3em 0 0;color:#528bb3;
+  font:700 clamp(13px,2.5vw,19px)/1.8 var(--ff-body);
+  letter-spacing:.045em;text-wrap:balance
 }
-
-/* Only the octopus story: center the title and its small logo together. */
-.brand-story #story-section-1{display:flex;align-items:center;justify-content:center;gap:12px}
-.brand-story #story-section-1 img{width:40px;height:40px;flex:none;object-fit:contain;order:0}
+.brand-story .story-heading-octopus .story-subtitle{color:#af6278}
 @media(max-width:649px){
-  .brand-story #story-section-1{gap:10px}
-  .brand-story #story-section-1 img{width:28px;height:28px}
+  .brand-story .story-heading{min-height:172px;padding:24px 8px;border-radius:14px}
+  .brand-story .story-heading h3{font-size:clamp(17px,4.8vw,26px);letter-spacing:0}
+  .brand-story .story-heading .story-subtitle{font-size:clamp(12px,3.3vw,18px);letter-spacing:0}
+  .brand-story .story-ornament{min-height:44px;margin-bottom:10px;gap:16px}
+  .brand-story .story-ornament img{width:44px;height:44px}
+  .brand-story .story-stars svg{width:32px;height:32px}
 }

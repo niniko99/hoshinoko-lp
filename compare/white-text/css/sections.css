@@ -353,7 +353,7 @@ dl.info-card>div:last-child{border-bottom:0}
 #future .future-quotes+.future-reading{margin-top:clamp(48px,8vw,96px)}
 @media(max-width:640px){
   #staff-title{font-size:clamp(21px,5.8vw,30px)}
-  #future .future-quote{font-size:clamp(17px,4.5vw,28px);letter-spacing:.015em}
+  #future .future-quote{font-size:clamp(19px,5.4vw,34px);letter-spacing:0}
 }
 
 /* Requested white text only on the exposed pink/purple background. */
@@ -362,3 +362,8 @@ dl.info-card>div:last-child{border-bottom:0}
   color:#fff;text-shadow:0 1px 3px rgba(10,22,66,.62),0 2px 18px rgba(10,22,66,.5)
 }
 #voices > .sec-title small{opacity:1}
+
+
+/* Requested access copy: keep the longer heading and both paragraphs readable. */
+dl.info-card>.access-pickup{grid-template-columns:1fr;gap:.6em}
+.access-pickup dd p+p{margin-top:1em}
