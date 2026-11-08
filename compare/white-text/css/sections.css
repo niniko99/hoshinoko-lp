@@ -383,3 +383,17 @@ dl.info-card>.access-pickup{grid-template-columns:1fr;gap:.6em}
 @media(max-width:640px){
   #voices>.scatter.tall .ph{width:calc((100% - var(--voice-photo-gap))/2)}
 }
+
+/* Price guidance: centered phrases over a softly darkened patch of sky. */
+#price .price-guidance{
+  position:relative;z-index:2;isolation:isolate;max-width:640px;
+  margin:clamp(32px,4.5vw,48px) auto 0;text-align:center
+}
+#price .price-guidance::before{
+  content:"";position:absolute;inset:-20px -18px;z-index:-1;pointer-events:none;
+  background:radial-gradient(ellipse closest-side at center,rgba(8,12,58,.26) 0 52%,rgba(8,12,58,.14) 76%,transparent 100%)
+}
+#price .price-note{margin-top:0;color:#fff}
+#price .price-note span{display:inline-block}
+#price .price-sub{margin:24px auto 0;opacity:1;line-height:2;color:#fff;text-shadow:0 1px 3px rgba(3,8,40,.35)}
+#price .price-sub p+p{margin-top:24px}
