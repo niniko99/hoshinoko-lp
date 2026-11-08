@@ -367,3 +367,19 @@ dl.info-card>div:last-child{border-bottom:0}
 /* Requested access copy: keep the longer heading and both paragraphs readable. */
 dl.info-card>.access-pickup{grid-template-columns:1fr;gap:.6em}
 .access-pickup dd p+p{margin-top:1em}
+
+/* Parent voices: let the cards, photos, reading and invitation breathe. */
+#voices>.voices{margin-top:clamp(56px,6vw,80px);gap:clamp(20px,2.5vw,30px)}
+#voices .voice{padding:24px 26px}
+#voices>.voices-controls{margin-top:clamp(32px,3.5vw,44px)}
+#voices>.scatter{
+  --voice-photo-gap:clamp(20px,3vw,36px);
+  margin-top:clamp(68px,8vw,104px);column-gap:var(--voice-photo-gap)
+}
+#voices>.scatter+.read{margin-top:clamp(60px,7.5vw,96px)}
+#voices>.read p+p{margin-top:clamp(30px,4vw,44px)}
+#voices>.cta-mid{margin-top:clamp(60px,7.5vw,96px)}
+#voices>.cta-mid .btn-mid{margin-top:clamp(28px,3vw,40px)}
+@media(max-width:640px){
+  #voices>.scatter.tall .ph{width:calc((100% - var(--voice-photo-gap))/2)}
+}
