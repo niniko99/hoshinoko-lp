@@ -397,3 +397,6 @@ dl.info-card>.access-pickup{grid-template-columns:1fr;gap:.6em}
 #price .price-note span{display:inline-block}
 #price .price-sub{margin:24px auto 0;opacity:1;line-height:2;color:#fff;text-shadow:0 1px 3px rgba(3,8,40,.35)}
 #price .price-sub p+p{margin-top:24px}
+
+/* Give the centered visit invitation room at the sides. */
+#contact>.read{max-width:600px;padding-inline:clamp(12px,3vw,24px)}
