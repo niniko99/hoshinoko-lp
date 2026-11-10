@@ -169,11 +169,10 @@ html.js .reveal.is-in{opacity:1;transform:none}
 
 /* Compact social links keep the visit guide visible, including on phones. */
 .header-actions>.header-cta{display:inline-flex;align-items:center;justify-content:center;min-height:44px}
-.social-link{display:inline-flex;align-items:center;justify-content:center;flex:0 0 44px;width:44px;height:44px;border-radius:10px;color:#fff;text-decoration:none;box-shadow:0 6px 18px rgba(3,8,35,.22);transition:transform .2s var(--ease),box-shadow .2s}
+.social-link{display:inline-flex;align-items:center;justify-content:center;flex:0 0 44px;width:44px;height:44px;border:1px solid rgba(255,255,255,.32);border-radius:8px;background:transparent;color:#fff;text-decoration:none;box-shadow:none;transition:transform .2s var(--ease),background-color .2s,border-color .2s}
 .social-link svg{width:28px;height:28px;flex-shrink:0}
-.social-link-line{background:#06c755}
-.social-link-instagram{background:radial-gradient(circle at 30% 100%,#ffd776 0,#f94f5b 45%,#b734b5 78%,#654bd2 100%)}
-.social-link:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(3,8,35,.3)}
+.social-link-line text{fill:#171717}
+.social-link:hover{transform:translateY(-2px);background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.5)}
 .social-link:focus-visible{outline:3px solid #ffe1b2;outline-offset:3px}
 @media (max-width:360px){
   .site-header{gap:6px}
@@ -184,7 +183,6 @@ html.js .reveal.is-in{opacity:1;transform:none}
 
 /* Keep the header quiet so the blue sky remains the focus. */
 .site-header .social-link{background:transparent;box-shadow:none;color:#fff}
-.site-header .social-link-line text{fill:#14294b}
 .site-header .social-link:hover{background:rgba(255,255,255,.08);box-shadow:none}
 .site-header .header-actions>.header-cta{
   position:relative;isolation:isolate;min-height:44px;padding:0 12px;

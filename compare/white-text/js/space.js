@@ -6,7 +6,7 @@
   var $ = function (s) { return stage.querySelector(s); };
 
   var photo = $('.pbd-photo'), earth = $('.earth'), marker = $('.dot-marker'), here = $('.here');
-  var dist = $('.distance'), dNum = $('.d-num'), replay = stage.parentNode.querySelector('.replay');
+  var dist = $('.distance'), dNum = $('.d-num'), replay = $('.replay');
 
   // NASA PIA23645 の元画像サイズと、地球（点）の位置（横・縦の割合）
   var IW = 5230, IH = 5175, DOT = { x: 0.5942, y: 0.5198 };
@@ -24,7 +24,7 @@
     c1: [8.6, 9.4, 11.8, 12.4],
     c2: [12.7, 13.7, 15.8, 17.0],        // この美しい世界を…
   };
-  var END = 19.0; // 最後の2秒と停止後は写真だけ。ブランド・再生ボタンは写真の下。
+  var END = 19.0; // 最後の2秒は写真だけ。終了後、写真の右下に再生ボタンを表示。
   var fades = [
     [marker, T.marker], [here, T.here], [$('.c1'), T.c1], [$('.c2'), T.c2], [$('.c2 .final'), T.c2]
   ];
@@ -105,26 +105,31 @@
     });
   }
 
+  function setReplayAvailable(ready) {
+    replay.classList.toggle('is-on', ready);
+    replay.disabled = !ready;
+  }
+
   var startAt = 0, running = false;
   function tick(now) {
     var t = (now - startAt) / 1000;
     render(Math.min(t, END));
     if (t < END) { requestAnimationFrame(tick); return; }
     running = false;
-    replay.classList.add('is-on');
+    setReplayAvailable(true);
   }
   function play() {
-    if (reduce) { render(END); replay.classList.add('is-on'); return; }
+    if (reduce) { render(END); setReplayAvailable(true); return; }
     if (running) return;
     running = true;
-    replay.classList.remove('is-on');
+    setReplayAvailable(false);
     requestAnimationFrame(function (now) { startAt = now; tick(now); });
   }
 
   layout();
   if (reduce) {
     render(END); // 動きを減らす設定の人には、写真だけの最終画面をそのまま見せる
-    replay.classList.add('is-on');
+    setReplayAvailable(true);
   } else {
     render(0);
     if ('IntersectionObserver' in window) {

@@ -56,13 +56,14 @@ main>section.s-space{padding:0}
 
 /* もう一度見る */
 .replay{
-  position:absolute;top:calc(18px + env(safe-area-inset-top));right:var(--gutter);z-index:3;
-  display:inline-flex;align-items:center;gap:.45em;padding:.6em 1.15em;border:1px solid rgba(255,255,255,.45);border-radius:999px;
-  background:rgba(255,255,255,.08);color:#fff;font:500 13px/1 var(--ff-body);letter-spacing:.08em;cursor:pointer;
-  opacity:0;pointer-events:none;transition:opacity .8s,background-color .2s;
+  position:absolute;right:var(--gutter);bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:3;
+  display:inline-flex;align-items:center;gap:.45em;min-height:44px;padding:.6em 1.15em;border:1px solid rgba(255,255,255,.45);border-radius:999px;
+  background:rgba(0,0,0,.24);color:#fff;font:500 13px/1 var(--ff-body);letter-spacing:.08em;cursor:pointer;
+  opacity:0;visibility:hidden;pointer-events:none;transition:opacity .8s,background-color .2s;
 }
 .replay::before{content:"↻";font-size:15px}
-.replay.is-on{opacity:1;pointer-events:auto}
+.replay.is-on{opacity:1;visibility:visible;pointer-events:auto}
+.replay:focus-visible{outline:2px solid #fff;outline-offset:3px}
 .replay:hover{background:rgba(255,255,255,.18)}
 
 /* スマホ：短くした画面の中に、ことば・PALE BLUE DOT が全部入るように文字を詰める */
@@ -138,17 +139,16 @@ html:not(.js) .space-copy.c2,html:not(.js) .c2 .final,html:not(.js) .c2 .final-b
 .story-title-break{display:none}
 @media(max-width:649px){.story-title-break{display:initial}}
 
-/* 写真上は余韻だけを残し、ブランドと操作はその下へ。 */
+/* ブランドとSNSは写真の下で、中央揃えを保つ。 */
 .space-signature{padding:32px var(--gutter) 40px;text-align:center;color:#fff}
 .space-signature .final-brand{font-family:var(--ff-hand);font-weight:600;font-size:clamp(26px,3.4vw,40px);line-height:1.3;letter-spacing:.12em}
 .space-signature .pbd-mark{object-fit:contain;filter:drop-shadow(0 0 8px rgba(90,160,255,.3))}
 .space-signature .company-block{margin-top:1.2em}
 .space-signature .company{font-size:clamp(24px,3vw,36px)}
-.space-signature .replay{position:static;margin:22px auto 0}
 @media(max-width:899px){.space-signature{padding:24px var(--gutter) 28px}.space-signature .final-brand{font-size:22px}.space-signature .company{font-size:18px}.space-signature .run-by{font-size:11px}}
 
-/* Final frame: only the untouched NASA photograph remains inside the stage. */
-.space-stage.is-photo-only > :not(.pbd-wrap){visibility:hidden!important}
+/* Final frame: the NASA photograph and, after playback, its replay control. */
+.space-stage.is-photo-only > :not(.pbd-wrap):not(.replay){visibility:hidden!important}
 .space-stage.is-photo-only .dot-marker .ring{animation:none}
 
 /* November 6 supplied title cards: simple cream, navy lettering and small motifs.
@@ -187,8 +187,8 @@ html:not(.js) .space-copy.c2,html:not(.js) .c2 .final,html:not(.js) .c2 .final-b
   .brand-story .story-stars svg{width:32px;height:32px}
 }
 
-/* Familiar square social icons directly below the replay button. */
+/* Match the header’s monochrome icons below the company name. */
 .space-signature{padding-bottom:clamp(44px,5vw,60px)}
 .footer-socials{display:flex;align-items:center;justify-content:center;gap:16px;margin:28px auto 0}
-.footer-socials .social-link{width:48px;height:48px;flex-basis:48px;border-radius:11px}
+.footer-socials .social-link{width:48px;height:48px;flex-basis:48px;border-radius:8px}
 .footer-socials .social-link svg{width:31px;height:31px}
