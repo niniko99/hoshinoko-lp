@@ -200,7 +200,7 @@ main section{padding:var(--pad-y) var(--gutter)}
 .info-card{padding:clamp(20px,3.6vw,32px);border-radius:26px;color:var(--ink);background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.55);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);box-shadow:0 22px 50px rgba(20,20,60,.22)}
 dl.info-card>div{display:grid;grid-template-columns:minmax(0,1fr);gap:.6em;padding:.75em 0;border-bottom:1px dashed rgba(39,51,77,.2);line-height:1.8}
 dl.info-card>div:last-child{border-bottom:0}
-.info-card dt{font-weight:700;color:var(--ink-soft)}
+.info-card dt{justify-self:start;padding:.2em .7em;border:1px solid rgba(39,51,77,.24);border-radius:6px;background:rgba(39,51,77,.08);font-weight:700;line-height:1.6;color:var(--ink)}
 .info-card dd small{display:block;font-size:13px;color:var(--ink-soft)}
 .info-card .num{font-size:19px}
 .tel{font-weight:700;text-underline-offset:3px}
