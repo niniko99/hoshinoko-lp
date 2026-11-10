@@ -182,6 +182,25 @@ html.js .reveal.is-in{opacity:1;transform:none}
   .header-actions>.header-cta{font-size:11px;padding-inline:.65em}
 }
 
+/* Keep the header quiet so the blue sky remains the focus. */
+.site-header .social-link{background:transparent;box-shadow:none;color:#fff}
+.site-header .social-link-line text{fill:#14294b}
+.site-header .social-link:hover{background:rgba(255,255,255,.08);box-shadow:none}
+.site-header .header-actions>.header-cta{
+  position:relative;isolation:isolate;min-height:44px;padding:0 12px;
+  font-size:12px;font-weight:500;color:#fff;background:transparent;box-shadow:none;
+}
+.site-header .header-cta::before{
+  content:"";position:absolute;inset:6px 0;z-index:-1;border-radius:inherit;
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.2);
+  transition:background-color .2s;
+}
+.site-header .header-cta:hover{transform:none;box-shadow:none}
+.site-header .header-cta:hover::before{background:rgba(255,255,255,.22)}
+@media (max-width:360px){
+  .site-header .header-actions>.header-cta{font-size:11px;padding-inline:10px}
+}
+
 /* ===== 仮置き（要確認）===== */
 .tbd{color:var(--tbd);font-weight:700}
 .tbd-note{font-size:13px;line-height:1.8;color:var(--ink-soft);margin-top:1.2em}
