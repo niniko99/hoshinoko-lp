@@ -400,16 +400,12 @@ dl.info-card>.access-pickup{grid-template-columns:1fr;gap:.6em}
 
 /* A clear invitation: complete heading phrases and a readable text column. */
 #contact{padding-top:clamp(144px,16vw,208px);padding-bottom:clamp(48px,7vw,88px)}
-#contact>.contact-lead{font-size:clamp(28px,4.4vw,52px);line-height:1.6}
-#contact .contact-phrase{display:inline-block;white-space:nowrap}
+#contact>.contact-lead{font-size:clamp(17px,4.8vw,52px);line-height:1.6;letter-spacing:0;white-space:nowrap}
 #contact>.read{
   max-width:32em;margin-top:clamp(56px,7vw,80px);padding-inline:0;
-  text-align:left;font-size:clamp(15px,1.8vw,17px);line-height:2.1;letter-spacing:.035em
+  text-align:center;font-size:clamp(15px,1.8vw,17px);line-height:2.1;letter-spacing:.035em
 }
-#contact>.read p{text-wrap:pretty}
+#contact>.read p{text-wrap:balance}
 #contact>.read p+p{margin-top:clamp(32px,4vw,44px)}
 #contact>.cta-buttons{margin-top:clamp(48px,6vw,64px)}
 #contact>.cta-buttons .btn-cta{margin-top:0}
-@media(max-width:960px){
-  #contact>.contact-lead br.sp{display:inline}
-}
