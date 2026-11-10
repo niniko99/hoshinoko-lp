@@ -403,6 +403,18 @@ dl.info-card>.access-pickup{grid-template-columns:1fr;gap:.6em}
 /* A clear invitation: complete heading phrases and a readable text column. */
 #contact{padding-top:clamp(144px,16vw,208px);padding-bottom:clamp(48px,7vw,88px)}
 #contact>.contact-lead{font-size:clamp(17px,4.8vw,52px);line-height:1.6;letter-spacing:0;white-space:nowrap}
+/* Give the 16-character invitation almost the full phone width without shrinking it horizontally. */
+@media(max-width:640px){
+  #contact>.contact-lead{
+    margin-inline:calc(12px - var(--gutter));
+    font-size:clamp(16px,calc(6.25vw - 1.75px),38.25px);
+    -webkit-text-stroke:.45px currentColor
+  }
+}
+/* Preserve readable text on unusually narrow viewports, including extreme zoom. */
+@media(max-width:283px){
+  #contact>.contact-lead{white-space:normal;overflow-wrap:anywhere}
+}
 #contact>.read{
   max-width:32em;margin-top:clamp(56px,7vw,80px);padding-inline:0;
   text-align:center;font-size:clamp(15px,1.8vw,17px);line-height:2.1;letter-spacing:.035em
