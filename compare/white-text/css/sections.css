@@ -406,6 +406,7 @@ dl.info-card>.access-pickup{grid-template-columns:1fr;gap:.6em}
   text-align:center;font-size:clamp(15px,1.8vw,17px);line-height:2.1;letter-spacing:.035em
 }
 #contact>.read p{text-wrap:balance}
+#contact .contact-keep{display:inline-block;white-space:nowrap}
 #contact>.read p+p{margin-top:clamp(32px,4vw,44px)}
 #contact>.cta-buttons{margin-top:clamp(48px,6vw,64px)}
 #contact>.cta-buttons .btn-cta{margin-top:0}
