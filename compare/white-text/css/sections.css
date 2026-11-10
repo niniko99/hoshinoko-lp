@@ -238,7 +238,7 @@ dl.info-card>div:last-child{border-bottom:0}
   box-shadow:0 8px 22px rgba(255,180,90,.3);transition:transform .2s var(--ease),box-shadow .2s}
 .btn-mid:hover{transform:translateY(-2px);box-shadow:0 13px 30px rgba(255,180,90,.42)}
 /* Give the invitation below the children's voices room to breathe. */
-#kidsvoice .cta-mid .btn-mid{margin-top:clamp(28px,3.2vw,40px)}
+#kidsvoice .cta-mid .btn-mid{margin-top:calc(clamp(28px,3.2vw,40px) + 12px)}
 
 /* 15 星空へ */
 .s-future{text-align:center;padding-top:calc(var(--pad-y) * 1.2);padding-bottom:calc(var(--pad-y) * 1.4)}
@@ -379,7 +379,7 @@ dl.info-card>.access-pickup{grid-template-columns:1fr;gap:.6em}
 #voices>.scatter+.read{margin-top:clamp(60px,7.5vw,96px)}
 #voices>.read p+p{margin-top:clamp(30px,4vw,44px)}
 #voices>.cta-mid{margin-top:clamp(60px,7.5vw,96px)}
-#voices>.cta-mid .btn-mid{margin-top:clamp(28px,3vw,40px)}
+#voices>.cta-mid .btn-mid{margin-top:calc(clamp(28px,3vw,40px) + 12px)}
 @media(max-width:640px){
   #voices>.scatter.tall .ph{width:calc((100% - var(--voice-photo-gap))/2)}
 }
@@ -408,5 +408,5 @@ dl.info-card>.access-pickup{grid-template-columns:1fr;gap:.6em}
 #contact>.read p{text-wrap:balance}
 #contact .contact-keep{display:inline-block;white-space:nowrap}
 #contact>.read p+p{margin-top:clamp(32px,4vw,44px)}
-#contact>.cta-buttons{margin-top:clamp(48px,6vw,64px)}
+#contact>.cta-buttons{margin-top:calc(clamp(48px,6vw,64px) + 12px)}
 #contact>.cta-buttons .btn-cta{margin-top:0}
