@@ -158,13 +158,28 @@ html.js .reveal.is-in{opacity:1;transform:none}
 .header-actions{display:flex;align-items:center;gap:8px;flex-shrink:0}
 .header-cta.line{background:linear-gradient(135deg,#ffd35c,#ffb46b);color:#3a2a10;box-shadow:0 6px 18px rgba(255,180,90,.35)}
 .header-cta.line:hover{box-shadow:0 10px 22px rgba(255,180,90,.45)}
-@media (max-width:480px){
+@media (max-width:680px){
   .site-header{gap:8px;padding-inline:14px}
   .brand{display:grid;grid-template-columns:24px minmax(0,1fr);gap:3px 8px;min-width:0;flex:1}
   .brand-area{grid-column:1/-1;margin-left:0;font-size:10.5px;letter-spacing:0;line-height:1.6}
   .brand-sub{display:none}
-  .header-cta{padding:.78em 1.05em;font-size:12px}
+  .header-cta{padding:.78em .75em;font-size:12px;letter-spacing:0}
   .header-actions{gap:6px}
+}
+
+/* Compact social links keep the visit guide visible, including on phones. */
+.header-actions>.header-cta{display:inline-flex;align-items:center;justify-content:center;min-height:44px}
+.header-social{display:inline-flex;align-items:center;justify-content:center;flex:0 0 44px;width:44px;height:44px;border-radius:50%;color:#fff;text-decoration:none;box-shadow:0 6px 18px rgba(3,8,35,.22);transition:transform .2s var(--ease),box-shadow .2s}
+.header-social svg{width:28px;height:28px;flex-shrink:0}
+.header-social-line{background:#06c755}
+.header-social-instagram{background:radial-gradient(circle at 30% 100%,#ffd776 0,#f94f5b 45%,#b734b5 78%,#654bd2 100%)}
+.header-social:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(3,8,35,.3)}
+.header-social:focus-visible{outline:3px solid #ffe1b2;outline-offset:3px}
+@media (max-width:360px){
+  .site-header{gap:6px}
+  .brand-name{font-size:20px;letter-spacing:.04em}
+  .header-actions{gap:4px}
+  .header-actions>.header-cta{font-size:11px;padding-inline:.65em}
 }
 
 /* ===== 仮置き（要確認）===== */
