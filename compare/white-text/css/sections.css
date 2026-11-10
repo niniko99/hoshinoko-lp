@@ -118,11 +118,13 @@ main section{padding:var(--pad-y) var(--gutter)}
 /* スマホでは横にスワイプ。1画面に1つずつ出るので、1日が順に進んでいく感じになる */
 @media (max-width:640px){
   .flow{display:flex;grid-template-columns:none;gap:14px;max-width:none;
-    overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
+    overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
     padding:4px var(--gutter) 10px;margin-inline:calc(-1 * var(--gutter));
     scroll-padding-inline:var(--gutter);scrollbar-width:none}
   .flow::-webkit-scrollbar{display:none}
   .flow li{flex:0 0 58%;scroll-snap-align:center;text-align:center}
+  /* Fade cards in without vertical travel inside the horizontal scroller. */
+  html.js .flow .reveal{transform:none}
   .flow .ico{width:112px;height:112px;padding:14px;margin:0 auto}
   .flow b{margin-top:.7em}
   /* 次へ進む矢印は、となりのカードとのあいだに出す */
