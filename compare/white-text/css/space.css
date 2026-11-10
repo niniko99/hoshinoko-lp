@@ -186,3 +186,9 @@ html:not(.js) .space-copy.c2,html:not(.js) .c2 .final,html:not(.js) .c2 .final-b
   .brand-story .story-ornament img{width:44px;height:44px}
   .brand-story .story-stars svg{width:32px;height:32px}
 }
+
+/* Familiar square social icons directly below the replay button. */
+.space-signature{padding-bottom:clamp(44px,5vw,60px)}
+.footer-socials{display:flex;align-items:center;justify-content:center;gap:16px;margin:28px auto 0}
+.footer-socials .social-link{width:48px;height:48px;flex-basis:48px;border-radius:11px}
+.footer-socials .social-link svg{width:31px;height:31px}

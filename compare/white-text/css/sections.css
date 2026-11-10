@@ -398,16 +398,17 @@ dl.info-card>.access-pickup{grid-template-columns:1fr;gap:.6em}
 #price .price-sub{margin:24px auto 0;opacity:1;line-height:2;color:#fff;text-shadow:0 1px 3px rgba(3,8,40,.35)}
 #price .price-sub p+p{margin-top:24px}
 
-/* Give the centered visit invitation room at the sides. */
-#contact>.read{max-width:600px;padding-inline:clamp(12px,3vw,24px)}
-
-/* Keep the invitation in complete phrases and balance its vertical spacing. */
-#contact{padding-top:clamp(112px,14vw,180px);padding-bottom:clamp(48px,7vw,88px)}
+/* A clear invitation: complete heading phrases and a readable text column. */
+#contact{padding-top:clamp(144px,16vw,208px);padding-bottom:clamp(48px,7vw,88px)}
 #contact>.contact-lead{font-size:clamp(28px,4.4vw,52px);line-height:1.6}
 #contact .contact-phrase{display:inline-block;white-space:nowrap}
-#contact>.read{margin-top:clamp(40px,5vw,56px)}
-#contact>.read p+p{margin-top:clamp(28px,3.6vw,40px)}
-#contact>.cta-buttons{margin-top:clamp(32px,4vw,48px)}
+#contact>.read{
+  max-width:32em;margin-top:clamp(56px,7vw,80px);padding-inline:0;
+  text-align:left;font-size:clamp(15px,1.8vw,17px);line-height:2.1;letter-spacing:.035em
+}
+#contact>.read p{text-wrap:pretty}
+#contact>.read p+p{margin-top:clamp(32px,4vw,44px)}
+#contact>.cta-buttons{margin-top:clamp(48px,6vw,64px)}
 #contact>.cta-buttons .btn-cta{margin-top:0}
 @media(max-width:960px){
   #contact>.contact-lead br.sp{display:inline}
