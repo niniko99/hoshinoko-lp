@@ -198,7 +198,7 @@ main section{padding:var(--pad-y) var(--gutter)}
 /* 12 アクセス・利用時間 */
 .access-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:20px;max-width:960px;margin:2.4em auto 0;text-align:left}
 .info-card{padding:clamp(20px,3.6vw,32px);border-radius:26px;color:var(--ink);background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.55);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);box-shadow:0 22px 50px rgba(20,20,60,.22)}
-dl.info-card>div{display:grid;grid-template-columns:6.6em 1fr;gap:10px;padding:.75em 0;border-bottom:1px dashed rgba(39,51,77,.2);line-height:1.8}
+dl.info-card>div{display:grid;grid-template-columns:minmax(0,1fr);gap:.6em;padding:.75em 0;border-bottom:1px dashed rgba(39,51,77,.2);line-height:1.8}
 dl.info-card>div:last-child{border-bottom:0}
 .info-card dt{font-weight:700;color:var(--ink-soft)}
 .info-card dd small{display:block;font-size:13px;color:var(--ink-soft)}
@@ -366,8 +366,7 @@ dl.info-card>div:last-child{border-bottom:0}
 #voices > .sec-title small{opacity:1}
 
 
-/* Requested access copy: keep the longer heading and both paragraphs readable. */
-dl.info-card>.access-pickup{grid-template-columns:1fr;gap:.6em}
+/* Access items share the same heading-above-content layout. */
 .access-pickup dd p+p{margin-top:1em}
 
 /* Parent voices: let the cards, photos, reading and invitation breathe. */
